@@ -1,0 +1,13 @@
+{
+  "armada": {
+    "repo": "https://github.com/armada-os/armada",
+    "commit": "b031deef99a095104ef234c5a0705850152dffe1",
+    "main_checked": "2026-11-13"
+  },
+  "houji": {
+    "repo": "https://github.com/yoni13/armada-houji",
+    "commit": "3311a74651c16be81ac5cc5de32382fa140cce61"
+  },
+  "kernel": "Linux 7.3 official source, exact Arch 7.3.0-1 headers",
+  "local_only_firmware": true
+}

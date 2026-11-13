@@ -1,0 +1,5 @@
+{
+  "base_initrd_bytes": 1915872805,
+  "overlay_sha256": "d7c004538b85ba74165b5207949bb98fe786277f44fea3be1e9090d5c6e207e6",
+  "session": "Direct Plasma on framebuffer Xorg/Openbox; Qt xcb software; no KWin"
+}

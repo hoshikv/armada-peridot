@@ -1,0 +1,36 @@
+{
+  "media_sha256": "b58ff65760578b03d30e56e5b00dfe2088bd149801d4b69bc79268617e612840",
+  "size_mib": 2040,
+  "phone_storage_writes": false,
+  "native_display_enabled": true,
+  "gpu_max_hz": 222000000,
+  "runtime_verified": true,
+  "wifi_enabled": true,
+  "purpose": "Thermal-controlled RAM test with native Steam UI",
+  "thermal_runtime_verified": true,
+  "cpu_max_target_khz": 1500000,
+  "cpu_boot_online": 1,
+  "cpu_runtime_online_target": 8,
+  "thermal_throttle_millicelsius": [
+    70000,
+    80000
+  ],
+  "thermal_reboot_millicelsius": 85000,
+  "thermal_emulation_test_verified": true,
+  "steam_ui_verified": true,
+  "physical_desktop_and_touch_user_confirmed": true,
+  "simulated_75c_test": {
+    "guard_limits_khz": [
+      960000,
+      1017600
+    ],
+    "cpu0_kernel_cooling_state_before": 0,
+    "cpu0_kernel_cooling_state_during": 1,
+    "normal_state_restored": true,
+    "actual_cpu_after_test_celsius": 48.6
+  },
+  "host_policy_tests_passed": 8,
+  "real_heating_stress_test_performed": false,
+  "battery_skin_charging_thermal_verified": false,
+  "steam_further_setup_deferred": true
+}

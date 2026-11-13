@@ -1,0 +1,8 @@
+{
+  "0049-drm-msm-a8xx-add-adreno-830-catalog.patch": "a11770c0287a5ca411753ad1a437da680f41f82afd6e6840b9cf63e98f276fc8",
+  "0039-wifi-ath12k-add-initial-hardware-definition-for-WCN7.patch": "6f0c957d40d7015337bc2b8f1a1bd8b10c88f72e5570b331a7018f6bff7d7d50",
+  "0040-wifi-ath12k-send-QDSS-config-when-CNSS_QDSS_CFG_MISS.patch": "eaaeed53463f90d7446b91025f5637eaba92b5ecb7a26247865f850c12d623d6",
+  "0041-wifi-ath12k-disable-CNSS_QDSS_CFG_MISS_V01-for-the-W.patch": "9df0891e92d03e5c7d7dfd2a7980928a3adcdb662a220366434a4d0abdbca407",
+  "0042-PCI-pwrctrl-pwrseq-add-support-for-WCN7860.patch": "91cc3414e46ea948bd797ba86f4476a1691ccb0e2474cd434f36b9b6106f238a",
+  "0043-power-sequencing-qcom-wcn-add-support-for-WCN7860.patch": "39e96dfe6f434ffc35e21fa8d0e5cf0556c2552fe5f07c51e586fc03cb534590"
+}

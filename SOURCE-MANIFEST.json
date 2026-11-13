@@ -1,0 +1,2209 @@
+{
+  "description": "Public source snapshot; no generated binaries or private phone captures",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "ea56518e1bd16ff10ee42fd65b6c0fab0527d06b37272948659531ee7f63a037"
+    },
+    {
+      "path": "QUICKSTART.md",
+      "sha256": "98a996d3bdfbc0cbfb8c6eab0c8531078e0bb0227e9306bf578dcd0226e11ff1"
+    },
+    {
+      "path": "README.md",
+      "sha256": "b9ff41e85e19a36c44820ce213755cba6e530df99d3b6b4b038cd631907bd6ba"
+    },
+    {
+      "path": "SOURCE-PROVENANCE.md",
+      "sha256": "37ad0a073dec8fe9797d1bc0fdb1824aea52b77a533c6f476ac7d677d3ae7151"
+    },
+    {
+      "path": "docs/BUILDING.md",
+      "sha256": "0228cedf70e4b40ae307f134d14c62d7228ee0535d5fed6c42d14c89f2292e10"
+    },
+    {
+      "path": "docs/THERMAL.md",
+      "sha256": "1b225e59c13f2ffa147016430ec971e82246e5b3519f2ea1d17ab0049206d9a2"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/driver/op13-touch.c",
+      "sha256": "aae85d34d23c0d0982f66b1b27c5e95733b27b7fd2bcd722093df33f140bb732"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/driver/op13_bitbang.c",
+      "sha256": "0451daa2dc2f270eab9b67460e70dee585b39ecf780e7be46945adfaaa0c82d5"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/driver/op13_bitbang.h",
+      "sha256": "15275179bba288070d326c2f776d6cb811f185b3fb1fe54fbfbf382aab4e2bee"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/driver/s3910.c",
+      "sha256": "83cb04e558df7bea9686b9acffdc5820d7b664b896efd8a3d2369fb24abf3a2b"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/driver/s3910.h",
+      "sha256": "e09dd69431c0b52d6fa0a562d42d3ee2b73790a5ce130622abcb08299589b2c6"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/driver/test-events.c",
+      "sha256": "dd58f8ef1654b70d8cb2556b74bbbaa29acc6df4ed2d97060cb14eada581d28c"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/driver/touch-events.h",
+      "sha256": "83c48c63b71b8310fd5a461630e746ab45c096a21aa40cde05e7be9a2a186385"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/make-media.py",
+      "sha256": "d0e84dc075f9c3cb3086bd27d0e2ba2269ab7063e088ed48c764948f333f7bb7"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/patch-fdt.py",
+      "sha256": "b3910153205853aa90ae78134d53313f85284980552c3e8b059477b11ba2b9c4"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/session/boot-shell.sh",
+      "sha256": "b16f1dd1213f9b6e58b2676bc477e810a03478bca34531912d432812a2f20390"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/session/gnome-session.sh",
+      "sha256": "6e737ff6d63495cf48a0e0a867f47b30c8159c5fa2076785bb65ba1b23286b08"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/session/show-diagnostics.sh",
+      "sha256": "17fadaec5023215f3e8cf2af9dcdd35a34ffdc1f978fe58d96c5d740b0e3e0f6"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/show-touch.sh",
+      "sha256": "0db85c857174497ced8469f39a6195915f002bf7c00abe40d39838529ac06681"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/touch-input.py",
+      "sha256": "b2311d9a60dadd193c2a945fc053f1c5d429e51f2515d8aa79bc26b65661907d"
+    },
+    {
+      "path": "experimental/arch-gnome-touch-v1/touch-usb.sh",
+      "sha256": "d588eada64f11fd9fbca0cf35c6e8b6a9817d49969f5ca2069a7a73b33c3dfb4"
+    },
+    {
+      "path": "experimental/arch-usb-control-v1/build-media.py",
+      "sha256": "fc2e317a867cf93d54418a76887420cf59206a81104ea5ce74d0af06efcd57ad"
+    },
+    {
+      "path": "experimental/arch-usb-control-v1/control-phone.py",
+      "sha256": "fe07e1aaff83b1374ab986ab98fe9316792f1c8cb0638f774551a028e18eac73"
+    },
+    {
+      "path": "experimental/arch-usb-control-v1/host-include/byteswap.h",
+      "sha256": "28ab376b5362c625ec761298b808fb102d43d9dafdd75b11d0c6ebbaf8343b79"
+    },
+    {
+      "path": "experimental/arch-usb-control-v1/host-include/elf.h",
+      "sha256": "65627fa3a7e712d559e9bb58566c044a660c4b5150f49460d8b7b645b5840385"
+    },
+    {
+      "path": "experimental/arch-usb-control-v1/patch-usb-fdt.py",
+      "sha256": "b1217929b6625a8e21aab7ee8bf205f9d3a3212b8e7bf99f544c2d2e8726fca1"
+    },
+    {
+      "path": "experimental/arch-usb-control-v1/usb-control.py",
+      "sha256": "c4e783f9df904c6e4e0f2560e12e2323897b7c3d2cd5ad4aa68fac7fc2d119a8"
+    },
+    {
+      "path": "experimental/arch-usb-control-v1/usb-startup.sh",
+      "sha256": "886ba7a173623a99cc9883970132125f1107eccd686a68c4dc896cae2e9f1222"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/STATUS.json",
+      "sha256": "bbef4b70ad47bfb1c90c2d61bc4a0dc573d89c76472e6bde9c725ff6e0807bbc"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/armada-desktop.sh",
+      "sha256": "564362f8837f05458f30c89923cc9ed4d6ec0ea83ed11909c7a3bb88b580fa92"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/armada-session.sh",
+      "sha256": "e451e2f565ce4eb7befa99882e5e9234226ddc1e5655a2f516f39667ba3eecf3"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/build-media.py",
+      "sha256": "fabe2d9f3a8144cd2f7e3e04e046ec1336b88e65ae6868ed6fae8ff651789ad9"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/control-phone.py",
+      "sha256": "d120ff174d6086c17ec4fdc8141ac7203423c195f0825f3df6d7247f2deef0b5"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/host-session.sh",
+      "sha256": "509b05170a064ef87f393a8cd07fde8fa51e4de3931629a41f013c32fa7a02d2"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/native-startup.sh",
+      "sha256": "b3544639948412d09f5b18a3fd315e504bd1ae7d0945d9d2e1cddca95b1ea569"
+    },
+    {
+      "path": "experimental/armada-fastfetch-v1/usb-control.py",
+      "sha256": "ec34395b274b904ef795062c1785575db4798eda18d9e6b4c7e69d0a1ef9fb01"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/SOURCES.json",
+      "sha256": "b07ad956964594a168801bc80d501497159978ebcd9c15947b3fa0bbf2e95ff3"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/STATUS.json",
+      "sha256": "9d8f309268574fbb69c5c3eeded8e5c1be673e410286eb1bc7fae142ec5911e6"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/armada-desktop.sh",
+      "sha256": "a0babbe0d6b04471e5952d07fa26740caefe57ee2cafe978934163c30e851e3c"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/armada-session.sh",
+      "sha256": "e451e2f565ce4eb7befa99882e5e9234226ddc1e5655a2f516f39667ba3eecf3"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/bluetooth-startup.sh",
+      "sha256": "e602535cfefa9a39c01e284649b842bc13517aeee63ce533ccbdce166d1d1dc3"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/build-fdt.py",
+      "sha256": "bd84b1d50725f0bdae13ad070cad75cf8bf202937330fd5a32f3ae636d06508e"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/build-media.py",
+      "sha256": "00a4bd5ceadbbcda3a822fc251b7065578b76cd5c2a12dcae323b55336d73cac"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/buttons.py",
+      "sha256": "a551783f49f5870e73c0b4a4d07fb5d4ee0983b157d4100f747b5609f2d904b1"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/control-phone.py",
+      "sha256": "9b774a65f65e62d8f9dbb97ddb710667499ce379ae82c6c2115f52726045fdf2"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/host-session.sh",
+      "sha256": "509b05170a064ef87f393a8cd07fde8fa51e4de3931629a41f013c32fa7a02d2"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/load-modules.sh",
+      "sha256": "34127cd82ce1e3e839fd3c4f90d08052fe100006a76c6aa92a76618281e344d5"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/native-startup.sh",
+      "sha256": "b3544639948412d09f5b18a3fd315e504bd1ae7d0945d9d2e1cddca95b1ea569"
+    },
+    {
+      "path": "experimental/armada-hardware-v1/usb-control.py",
+      "sha256": "edc09d07e6cf6afc5215a031025785fb334dd5fa03e53889f21d83234d3dc5a7"
+    },
+    {
+      "path": "experimental/armada-native-v1/SOURCES.json",
+      "sha256": "23113c3a70f80bbbbe5ddb2838b84627c2fc536d31523f6b49967c6b93e69eac"
+    },
+    {
+      "path": "experimental/armada-native-v1/STATUS.json",
+      "sha256": "ef06d1f5ececa2a8c103c5e5cdee72d8715453d4ada4eda317c68c764a9f747a"
+    },
+    {
+      "path": "experimental/armada-native-v1/armada-desktop.sh",
+      "sha256": "d77410b6dc5508efca640d0715443bccf3fc64e7ef3a37c8e9715674975f7073"
+    },
+    {
+      "path": "experimental/armada-native-v1/armada-info.sh",
+      "sha256": "e92f1bf0f503631462c10775190493ca15304e9d202d27fd68e42e0d3f2181a8"
+    },
+    {
+      "path": "experimental/armada-native-v1/armada-session.sh",
+      "sha256": "e9e328fcc96a966af74585d8ccdab06e8d93c7673f1f5d88cf757f35e36f91e6"
+    },
+    {
+      "path": "experimental/armada-native-v1/build-drivers.sh",
+      "sha256": "20bf6a11c3a618641b0dbaf44081ce38b4ea1742eafe2f8e66b5789727a2c13d"
+    },
+    {
+      "path": "experimental/armada-native-v1/build-gpu-fdt.py",
+      "sha256": "975f2d8e34924467ba7d1a40e8889ec544b992f944ac4d6e3b36c5135e40638b"
+    },
+    {
+      "path": "experimental/armada-native-v1/build-media.py",
+      "sha256": "58d993f1a5da6c13eb1528c3d288ebc6f57cb6c9172bb10e3cbeb3b87dc78054"
+    },
+    {
+      "path": "experimental/armada-native-v1/build-wifi-fdt.py",
+      "sha256": "8879f4afa6f582e23664addbe27352b0ee4eb382f916da195a74d5f1c591400a"
+    },
+    {
+      "path": "experimental/armada-native-v1/control-phone.py",
+      "sha256": "e8bdfb18bfa25e05edb0d2dd8d0e452e263b88e08082be319cafbd3de0c7baa6"
+    },
+    {
+      "path": "experimental/armada-native-v1/native-network-startup.sh",
+      "sha256": "2c4a7a48571634f7b96a806ab02bf0f73325e637a97a25a99591b9e80221edca"
+    },
+    {
+      "path": "experimental/armada-native-v1/native-startup.sh",
+      "sha256": "a5651a8d720e78b4c02cbd4b6001d7242a68608c37dde9c6f1ca809383760d76"
+    },
+    {
+      "path": "experimental/armada-native-v1/oneplus-peach-ce-profile.patch",
+      "sha256": "3e9355621728b3573073e2c0213d136edaac886ece7afc84513b6ed7c28b37d6"
+    },
+    {
+      "path": "experimental/armada-native-v1/patches.json",
+      "sha256": "92180be52d43e720f9ecf62bd16470096504cd71f09a6334995ada6baeeccc5e"
+    },
+    {
+      "path": "experimental/armada-native-v1/usb-control.py",
+      "sha256": "89641426c6abfc44cb0157d99fd84ec2b6070d8b2337fc1eeeae54f2fff4a27e"
+    },
+    {
+      "path": "experimental/armada-ram-v1/armada-desktop.sh",
+      "sha256": "bf17ebdffe139634feae3f2372753b54d325c9c26be03a945f5de34eef9e6427"
+    },
+    {
+      "path": "experimental/armada-ram-v1/armada-info.sh",
+      "sha256": "c4afd2b020e96004ac2d5bc3111657e3a9a6021f06a2cb35711ea58a7c045e27"
+    },
+    {
+      "path": "experimental/armada-ram-v1/armada-session.sh",
+      "sha256": "fe8bbda55d816986a70bba3d7d7aca4ee5722c6eba00358c01bdf9d8accd4989"
+    },
+    {
+      "path": "experimental/armada-ram-v1/build-media.py",
+      "sha256": "0d3bf4fdd3c676677f17b7f817f781a0b4772e38692f6b1475d271582c34fc99"
+    },
+    {
+      "path": "experimental/armada-ram-v1/build-plasma-x11.py",
+      "sha256": "38faf306513560f714c3d6b0328dc1403fcbe4df06ce372c5b0e3210acb725c6"
+    },
+    {
+      "path": "experimental/armada-ram-v1/build-retry.py",
+      "sha256": "1f12785a8e8c00535eaca91c8629b0f287ff4e7e507725fad025c0e176e3dc32"
+    },
+    {
+      "path": "experimental/armada-ram-v1/fetch-root.py",
+      "sha256": "523660a5843d5c9bfe0c65c3c7d7e4a320d1761d43709d3a50f788325fc17561"
+    },
+    {
+      "path": "experimental/armada-ram-v1/host-session.sh",
+      "sha256": "91f38a342c8eb5a72552c65479d280d8bb81fbfbaab4516bb70628acaf4c71a9"
+    },
+    {
+      "path": "experimental/armada-ram-v1/manifest.json",
+      "sha256": "0f0c990818303ae621c7bcbd10979409aa1143a12e2457f3c0c0452652d35d73"
+    },
+    {
+      "path": "experimental/armada-ram-v1/prepare-project-boot.py",
+      "sha256": "f8c56e4c0fc4f0aa2a33c164ec8462c6eb7b7dcd0682324b8743a557d2a21723"
+    },
+    {
+      "path": "experimental/armada-ram-v1/retry-overlay.json",
+      "sha256": "46bff2fbfdab98d564b180c95db945bb896c65263654bea8e5a00882ed16d842"
+    },
+    {
+      "path": "experimental/armada-ram-v1/selection.json",
+      "sha256": "a04a6a73471e632df2024c19064021fd0d7f1ce9cd282503cce9ec419d820dd8"
+    },
+    {
+      "path": "experimental/armada-steam-v1/armada-desktop.sh",
+      "sha256": "a9c9fafd9269720d342130bed7d39b55702ddebf6ce079a539e9e1ba4ac5fb05"
+    },
+    {
+      "path": "experimental/armada-steam-v1/armada-session.sh",
+      "sha256": "a3d481a5e3608b81b48701aee718771933091073c356e02323a609ad0594c5d8"
+    },
+    {
+      "path": "experimental/armada-steam-v1/build-media.py",
+      "sha256": "08e38d98be20226a14b06a821d302c644feb32e8edf28ec892e5b2cf113300d7"
+    },
+    {
+      "path": "experimental/armada-steam-v1/control-phone.py",
+      "sha256": "81038167bfb95710b57b90e15925924f4180c501c5814ba95b32bdccfc56f234"
+    },
+    {
+      "path": "experimental/armada-steam-v1/extract-client.py",
+      "sha256": "fa943dbcd4c133ac931412143db2a5a3a424e2961c871cb35ec5910d75249fb2"
+    },
+    {
+      "path": "experimental/armada-steam-v1/host-session.sh",
+      "sha256": "509b05170a064ef87f393a8cd07fde8fa51e4de3931629a41f013c32fa7a02d2"
+    },
+    {
+      "path": "experimental/armada-steam-v1/native-startup.sh",
+      "sha256": "1f39e637a6f87b372dff853073c7ed390692a25ca5880748f041d5d5debaa986"
+    },
+    {
+      "path": "experimental/armada-steam-v1/prepare-base.py",
+      "sha256": "4b30054b7bb028609e04357549874637c7a834d5ed20c067bcc2ca31dab5bcf2"
+    },
+    {
+      "path": "experimental/armada-steam-v1/soname-links.json",
+      "sha256": "ae39dbb2a67cd19cc723181b0b70219faf781318899e7dc39c4e30c1abbab135"
+    },
+    {
+      "path": "experimental/armada-steam-v1/steam-launch.sh",
+      "sha256": "a133be3a3da5a89ea7b7eaa088ac2e2c22b40b33fd2dd93ed7e5728426e031b1"
+    },
+    {
+      "path": "experimental/armada-steam-v1/steam-prepare.sh",
+      "sha256": "a3913a68daf817d78eddb74734c98eb5b896f548665a10af2c1e071a8ef01d97"
+    },
+    {
+      "path": "experimental/armada-steam-v1/steam-session.sh",
+      "sha256": "993afae0373216335d30a2757fd142aa7fb0962fc718e3038912990f3681d67c"
+    },
+    {
+      "path": "experimental/armada-steam-v1/usb-control.py",
+      "sha256": "43a7c91277557e6514c959e2e6313574b8dcc0b48b4b6c932ea03395bd3254ee"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/STATUS.json",
+      "sha256": "4a9b8d4c5e355bb9923f66bcef1a25f3cccda4dd7f011d1d67b49b34f95c79a8"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/build-fdt.py",
+      "sha256": "95f07f7454246e9a641bf8536c84055af1be0f21c8f84122471eb862e607524e"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/build-media.py",
+      "sha256": "43de6e9c75d58f9cb17dafb58d92b06a8883a91ad8dee024eccb4baa476dfa95"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/control-phone.py",
+      "sha256": "f8d6031499a164e5c88e84b21dd54e065ab9c755213a2e36c3180fd5d0e5a0ea"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/sm8750-thermal.dtsi",
+      "sha256": "a58c130f71aa15402adf3a66ca03d71b4fc72bbc531320d3078102d877fcb03a"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/test-thermal.py",
+      "sha256": "e01944cf069d43601b0b5e311c9298f9c0dee7b88148e515f680d50edea173ab"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/thermal-guard.py",
+      "sha256": "6eb861cc9c4cc1fa3e4b170dbe4b7bc018a990a1e751723bc7070cf411466523"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/thermal-test.py",
+      "sha256": "5543d1a63728abcf186930c48d5f4b361776dc59f4564b8ac2d9202309ffd443"
+    },
+    {
+      "path": "experimental/armada-thermal-v1/thermal-watchdog.py",
+      "sha256": "02043fca263fa543613e03a27ed2f941aa88c21112671aaa9706e922639949f6"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/SOURCES.json",
+      "sha256": "65d2f72c6609cb745e2b6935bd569449e42493b69cef6cba6f5c8c0903f6d1dd"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/armada-desktop.sh",
+      "sha256": "a0babbe0d6b04471e5952d07fa26740caefe57ee2cafe978934163c30e851e3c"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/armada-session.sh",
+      "sha256": "09f23fe934afd08edde30e0667ee9bb195be8f94f8cdcad6faf6e0cb72cb436d"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/build-fdt.py",
+      "sha256": "3a09f9bf7495eefe7b804a5f08bcdf96e600d75c5e522d8be7638ff568caf280"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/build-media.py",
+      "sha256": "3ea8e9b700afe52e804eb067cc79e20dc25acd0fec1364f05a105fa75b526ce9"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/control-phone.py",
+      "sha256": "e8bdfb18bfa25e05edb0d2dd8d0e452e263b88e08082be319cafbd3de0c7baa6"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/host-session.sh",
+      "sha256": "509b05170a064ef87f393a8cd07fde8fa51e4de3931629a41f013c32fa7a02d2"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/native-startup.sh",
+      "sha256": "71f5a2fc719d069022b3a95f6a265e84d92100dcd0b32505a8850546e34ce7d6"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/oneplus13-dsi-command-format.patch",
+      "sha256": "51df5a08ae81ae6f4554d2418637222cfbee1edebd3d36d3db0516f0a91fc73f"
+    },
+    {
+      "path": "experimental/armada-wayland-v1/usb-control.py",
+      "sha256": "49e391ae62bcad1da664525d4262329957370ed8d425664527e10e875f74dbd0"
+    },
+    {
+      "path": "licenses/linux/COPYING",
+      "sha256": "fb5a425bd3b3cd6071a3a9aff9909a859e7c1158d54d32e07658398cd67eb6a0"
+    },
+    {
+      "path": "licenses/linux/LICENSES/preferred/BSD-2-Clause",
+      "sha256": "6313108c23efffa36948f8b2cff1560a5935373b527b0e1a837cc77e6ed1bacd"
+    },
+    {
+      "path": "licenses/linux/LICENSES/preferred/BSD-3-Clause",
+      "sha256": "7a83b1aeb460458db9a4bd521d7f237c45b1650f6e60ea5ffc71e49472454de3"
+    },
+    {
+      "path": "licenses/linux/LICENSES/preferred/GPL-2.0",
+      "sha256": "8780e78a1a737e127f25a65f6d95269bffd36158dc261114de7859b490bfc5aa"
+    },
+    {
+      "path": "licenses/linux/LICENSES/preferred/MIT",
+      "sha256": "323c587d0ccf10e376f8bf9a7f31fb4ca6078105194b42e0b1e0ee2bc9bde71f"
+    },
+    {
+      "path": "patches/armada/0037-arm64-dts-qcom-sm8750-add-CPU-thermal-cooling.patch",
+      "sha256": "9df5cc3ba511b3f82ec960f4414efa482cc823eb8b1531c9f8b6208847fb97c1"
+    },
+    {
+      "path": "patches/armada/0039-wifi-ath12k-add-initial-hardware-definition-for-WCN7.patch",
+      "sha256": "6f0c957d40d7015337bc2b8f1a1bd8b10c88f72e5570b331a7018f6bff7d7d50"
+    },
+    {
+      "path": "patches/armada/0040-wifi-ath12k-send-QDSS-config-when-CNSS_QDSS_CFG_MISS.patch",
+      "sha256": "eaaeed53463f90d7446b91025f5637eaba92b5ecb7a26247865f850c12d623d6"
+    },
+    {
+      "path": "patches/armada/0041-wifi-ath12k-disable-CNSS_QDSS_CFG_MISS_V01-for-the-W.patch",
+      "sha256": "9df0891e92d03e5c7d7dfd2a7980928a3adcdb662a220366434a4d0abdbca407"
+    },
+    {
+      "path": "patches/armada/0042-PCI-pwrctrl-pwrseq-add-support-for-WCN7860.patch",
+      "sha256": "91cc3414e46ea948bd797ba86f4476a1691ccb0e2474cd434f36b9b6106f238a"
+    },
+    {
+      "path": "patches/armada/0043-power-sequencing-qcom-wcn-add-support-for-WCN7860.patch",
+      "sha256": "39e96dfe6f434ffc35e21fa8d0e5cf0556c2552fe5f07c51e586fc03cb534590"
+    },
+    {
+      "path": "patches/armada/0049-drm-msm-a8xx-add-adreno-830-catalog.patch",
+      "sha256": "a11770c0287a5ca411753ad1a437da680f41f82afd6e6840b9cf63e98f276fc8"
+    },
+    {
+      "path": "patches/dodge/056-mdss-enable-wake.patch",
+      "sha256": "73f44e3cdf392db6d5d053f90975e57156e4dc0231630e97480ba6fdd19e6576"
+    },
+    {
+      "path": "source/linux/drivers/bluetooth/btqca.c",
+      "sha256": "82c9d4bc050f73c87f23e6df4bb0a686bb2055b1a5f181511695fd30121a32ad"
+    },
+    {
+      "path": "source/linux/drivers/bluetooth/btqca.h",
+      "sha256": "0d795bcd1106b2c69a75e94813f1adca15078b433d90e041e34aabb0d2179187"
+    },
+    {
+      "path": "source/linux/drivers/bluetooth/hci_qca.c",
+      "sha256": "5e1f6ff32ab4e6c727e3fbc4f73f0a31d3950e05a69b28452e3d7d7c30f1edaa"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/Kconfig",
+      "sha256": "e399b2ec5dec86fcf3505f267b7aa57c5dd42ff6a8fd2052cf3720e4514ad066"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/Makefile",
+      "sha256": "7e42098b4bc162fa86131ef5fc8340fef2ff0bcf424a2149c6fb8b91a31113ae"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/NOTES",
+      "sha256": "b3e8c224fb980ec1c6a756198bc15e71d5b559adf0ac5802594a3154a577fa7b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a2xx_catalog.c",
+      "sha256": "ac9ccea797f4383e8db2c2ed99857a19dcf0a53c553f6a80fc93e24400330c70"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a2xx_gpu.c",
+      "sha256": "2b467971d2bec4a883d41198b24f8fc386041fe04e39bfdcd8c1f30c36a94a51"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a2xx_gpu.h",
+      "sha256": "d331d9d522584e785942893983f7008eb5ffca4fc2740908ab86c2895276e552"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a2xx_gpummu.c",
+      "sha256": "ad561fadc1d15b652b24b2ae10c31fec4b389ef46d9ae0178162694db4cb79d8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a3xx_catalog.c",
+      "sha256": "30e264d42396ee82d9cac387d262452f52fb44bd6c91fbd70efa42ff8ee6c26f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a3xx_gpu.c",
+      "sha256": "ad4c4619bc7baa43d2f89477884f0682e739312f522f1eff493c7019e1a3c888"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a3xx_gpu.h",
+      "sha256": "81b25f97121b3e7c3a42dae8e008bec480d6c28eab69c84f00f573f4b888fa7e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a4xx_catalog.c",
+      "sha256": "57435044e1aaefc663077e9cafefb97fdadbd0c6ce4d61f93fa3c24f3cba9525"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a4xx_gpu.c",
+      "sha256": "5c99b6a77368edc6df50209ab37482a5264ddddabba123e870bbe1d6918ac82e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a4xx_gpu.h",
+      "sha256": "4f06a89ed69793af5e3944c684dfde1753b807f09cc8d2e57390ccb4179d834e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a5xx_catalog.c",
+      "sha256": "0b337d00c964aed572edfc4f0e7dbc19ff225fffe63105d8b5cc638006d180e9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c",
+      "sha256": "30a0622b1c2e33b4d5edeb997db2058ef4a0c570db1cfac4db5579758084ad3d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a5xx_gpu.c",
+      "sha256": "ab116f0da706930fa4289126967fc1f2731432f38aca1049d8c64965e63c78e2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a5xx_gpu.h",
+      "sha256": "93c1a675822c0333d5ceec95dacfde1bb2a60f072f6f4b5aefb9d5f2083d90a7"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a5xx_power.c",
+      "sha256": "01c4eb28b92b10983e680c1cbfe419aafd980c34257117f3e5c45079c5daab42"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a5xx_preempt.c",
+      "sha256": "731ecafd96f834d0a1a8889484edcb8e59aa3df05529fc0ed47c7ef1b861002f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_catalog.c",
+      "sha256": "b1b605ddd87c11bea4ace0c5f59f71d22f20ea32638ed52bef2952be45de6382"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_gmu.c",
+      "sha256": "6d7a4c3f75bec2043ac28e3d27632717f11d2156d3e91e05279d30ee6bdd5038"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_gmu.h",
+      "sha256": "cfc3372ee52b9aac1cee1818a1f4d6fdd5e5bc7e091bf500422a70f834648b02"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_gpu.c",
+      "sha256": "8a7c8a090e721799bc607c19c9e5ebf413d8e95ede5509fb685693e595c938d7"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_gpu.h",
+      "sha256": "d37cbe3919f9d31b217d21a5a1985c3fded2534bb762c407a541fce465c85be5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c",
+      "sha256": "a911efd52b8d7105fe9def85ae4c84c29bde08f3926c73527ece36e81c96cbbe"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h",
+      "sha256": "8734337e345daee5d1f4e9a6ec565dd67276d14766fb3f73541a9491a1ef06ee"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_hfi.c",
+      "sha256": "3a545bcb6baf2505384b5cfd2e32464e5b8de04686af51d77a00917bb7d5343d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_hfi.h",
+      "sha256": "4b119ad717b0bf1e9d7914ea153f2a97f5078719cfa5d998eb6d5a018f0b9d21"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_preempt.c",
+      "sha256": "3975a996c49fc756cc58a7cbf546914a78632638241e39a752214ab0ec64941f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a6xx_preempt.h",
+      "sha256": "6c06ac1e26354e86f8cca55b33c4352de26a944777de0386c79c3b7dde02e02b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a8xx_gpu.c",
+      "sha256": "bf0aa884240bfd8badbee4b43c236880e200782fd4a45f10a0f6214eae727614"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/a8xx_preempt.c",
+      "sha256": "8a61066170fdac9833456c37124d1da54fca61232f67286a67eb793f5dc8c6bf"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/adreno_device.c",
+      "sha256": "7008288b1cbbe89d76902661413ce20929cdfd6e96def151aaca31335c345af1"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h",
+      "sha256": "e06896566ce7832b06e1de47436339a1b7bbdba1fb517227bdff0ff6f28f0ef4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/adreno_gen7_17_0_snapshot.h",
+      "sha256": "7d220b7078fdbd09465c98066ec1a58f9d42adb2f6bb2e501c97c2be791041d4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h",
+      "sha256": "1e8a9672b3f8a09cb10e0130b72e32ecf78a3b5e5cf36528fa3401dbeace0e5c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h",
+      "sha256": "c38ce242f9b2c95270f5d70fdf74d7fbe5385af8b470e0a9feefe0f39053a584"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/adreno_gpu.c",
+      "sha256": "ed4c302b6116c00eceb47ecb8016aba02e4f7b6bb345ab53c77eebc34e8bff98"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/adreno/adreno_gpu.h",
+      "sha256": "184cff66f8a5705fff0cd595169b2b38c3ed400a41d9c9703de03340202a4bae"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h",
+      "sha256": "7a64d08bc79c2efbb3f992e3d1508fdb8c1043d389672cee853840ee266ce2e3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_2_milos.h",
+      "sha256": "74d79e0c194f1868b8f472058fb811cc1192c8bd2b98e1e47e0fbcb81b961034"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_0_sm8750.h",
+      "sha256": "253994b67361b047a930681205373929c5d067cfa928e999e5e2f40e9c15062e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_2_glymur.h",
+      "sha256": "e3bcc5f6b3b93887bad6d1bd5b3efe1a14dab5435ed5804e0165f2e8d1cd2593"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_4_eliza.h",
+      "sha256": "81768421e77f45611f5d6bb99918bf256432089e81029d9a3612e14042f23a59"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h",
+      "sha256": "f6df80e7c1bebf4a97fec0f8dbd2683ab48a58698703b78beafef9ba67990ed0"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h",
+      "sha256": "4fd50cdfd1c401d349f9358d2d0219b8bf580e527a5255751b82f24256528004"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h",
+      "sha256": "1c5d987b8926290ebd53c0d10c062e9f092f9cd0eee79de58e50ef6a4c3b5723"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h",
+      "sha256": "5ade2f346d4dd9dca94355d507d74df957ca12ab9d85ef0eb716b745208ea8e9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h",
+      "sha256": "a941f0c00138a4c768056e2ee22a7dadf43f898d0991aa8e39dd896a2b996a38"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h",
+      "sha256": "d6acab6b4c8baa31a9adb92c6cfc136a2b2c038d7239c53a10df0ea81c1f5350"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h",
+      "sha256": "140886d568fb74035b89166da8af6b9338e711f1a9cc93075815beed3550a1fc"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h",
+      "sha256": "6a9be5fd62c6bf43aadf4645a71a075069a3cc5c87da68881edbbfaddbb21daf"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h",
+      "sha256": "c138b4bb5511ebdc3f0e32a4dfadbedf36f2f6777158f279126cdea57a367213"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h",
+      "sha256": "70735e074a24e6ad8954c9d1f587d9b3e2aadc7bd462df12f94520d49a772737"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h",
+      "sha256": "d0ee6534afba7abb910302f0a9458ef41e092492f45c05335ff465bd762a3f52"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h",
+      "sha256": "5a533a1a5dbfcc05c27c0ceaeb01b3351e34abdc3a605d28fab18b143b983f15"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h",
+      "sha256": "778ab8e25f69174695d41281b9d41f5848b77ae40ce7186a9b72390c46e48bea"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h",
+      "sha256": "708bf5007df7e5ce9ad12de6902646e1e44ddbca608fedc387b76e956052d130"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h",
+      "sha256": "17bb1673676dd4d876d61a29e9519286c42502ae8e0d91747045d4512184da41"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h",
+      "sha256": "cabcf7110d87f48ea871114363517c9e7f5fc2092a8fcdbbf21256b39e6af85c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h",
+      "sha256": "dcba6a5ee118a38bc548d32408cbc0dedfcd38a1162260419a7c6bcb4083228c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h",
+      "sha256": "081b7afd092105e3fee48c6686086d9f897fa7d21a7c35942c79d8eec4d1b019"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h",
+      "sha256": "1113e23cc38d4946ada1401fc9200e1d3eafab0e91143ab362c28b9c59327f68"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h",
+      "sha256": "455f546e54c82afdc139f5d52404a4a67cca8b5c5779ae3d9019afef89300fa8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h",
+      "sha256": "5ee07623df44ad7a8b8dddeaa5e4e6aca6bfd7d06b308a8457bf9967e99d32a5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h",
+      "sha256": "1e035cb1c119a4d0bee3bb32f7253218bdb166640415aeb9d616dffb9cfff4ff"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h",
+      "sha256": "4da18469e97c0ad5595cc5cb777bd1902ea42d44c5991239ae1fda22d081f2a0"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h",
+      "sha256": "c4864e928576526b9152a8427fe471dfc591408b7ecf9670ca201e6a58c2be8f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h",
+      "sha256": "c3625d330de9af68ad16cb218868e8897c0292eb01c9272abfb0c9ae9e46e70b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h",
+      "sha256": "bca1599668533984d0b4e0d4d8718d2f330e1a68e3bc08fb8e468d7f6affd055"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h",
+      "sha256": "9edec57cc5688b26a8191b0b9d42f1d600c76b619199ce72e16dcef5328e1248"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h",
+      "sha256": "1f5a743e666819d9169947ee0c2aea9a2ce2743313c8f07e508c8c83670cee37"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h",
+      "sha256": "4676efe547032286419aef9addc847318cb52114e4581033ca70b96d4e8cfc1e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h",
+      "sha256": "cf13d9b70b52485aa1dc67311c818dc787ddc8abb019fc340d825c2e54fefa2f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c",
+      "sha256": "b0c6af9a720cf26cc94fee5cc6e0b5d148fa7632d2eddde62b9fa7fc4c043f63"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h",
+      "sha256": "e8c9a53544f5811ef9094f59802fa5b339585fd0a0539e8c4b0fdf58b3e85fa5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c",
+      "sha256": "9101c12f65e8c25e771c5c3504fc0e45ea200568021216e50ef34812e0e6c5c2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h",
+      "sha256": "ae704a7f7fe35d7dae2f3d493929d7e31740dc5da39a894d14a8e41e35b3d4cf"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c",
+      "sha256": "61694c7539ae4f043590281a839052aff7c2daf18bc59d0faeb0bfde7aaf1d6b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h",
+      "sha256": "7b95ff1d13a82b5f00dd3482fccbbe0e40cea34ee86f1d392683589d13cf80f2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h",
+      "sha256": "70466e212c4e7fae6e20f5b04948779e4ceb0df78eab5ff0df1fa2d824070329"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c",
+      "sha256": "6a85e19769c1fd2c4f67b12b8131275269470a8d63f92031e83ccd45cb201d87"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c",
+      "sha256": "3ac6a5903bc11cdbedd1bc5ac66360245894d9e09c0a31604d640bd6f80a8c97"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c",
+      "sha256": "c05a8a85a30e90d8ea50b5432ecefdd48d9d5df40f4e1a092d2ea45300c2045d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c",
+      "sha256": "d47d80d0d1c54c93b4926c7470c14b3cdfbfeebbbec61fd32095a0034d5b80f8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h",
+      "sha256": "807962c0618a6f41b13293759b89fc63ac3dae653eaacad034795adc2ceded61"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c",
+      "sha256": "93e6532b1afd723678e4b90929b042f432904e02936a9d302031462c09d36d2d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h",
+      "sha256": "8bcce60c810ce81777a33d126703c599f93301300f6d0496aef036fa6751c1b8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c",
+      "sha256": "4c0e635f46289c6a49561549da2e718df64c37f4c9150a02daeda732e3e316c9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.h",
+      "sha256": "782403b299362d5b59448773367cc91c7e94b8ef664c12859fc011abbfaf75ad"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c",
+      "sha256": "d9c585e20e88d47a79911f15100eec2beaac0a5a6c202f6e80fa30e7fcf79909"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h",
+      "sha256": "9707f4185e67a1bd03e0c1320b39f85b6ae02f6d877b448f8844bd7d62164526"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.c",
+      "sha256": "76f90e8d232293d23c5358ce7f3a16acfedc840a16552b84f4119b61f010f732"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.h",
+      "sha256": "eeb57086327aa8cd8a6bb9106297cbd7928a5d5b84c431a7238fe5cc73681969"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c",
+      "sha256": "c0bf3b62f41e24b9c45a4ce91d52447dea4377e776ccc31559ec9dc099420881"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h",
+      "sha256": "e1ef563ec3c681b319e8364c119c36407f984c57500e839e3e15f917ec70796c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c",
+      "sha256": "59b2a3b59de21d74d64832ca1b08ce35ce0b3ecd441c00bd4735d0d0b125ea42"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c",
+      "sha256": "4fb933141191ec7a3871ae95fca6e9ebbb7816c67a9a413e1c7f68b1be3a7631"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h",
+      "sha256": "42078196aa2a08a277c3cd7638c9a92d439f6e2ce36350f4c64d7557d190f34b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c",
+      "sha256": "1dd229917115f420b6a5abdb55bc3764591e0613c130b1bccec577b62f084d96"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h",
+      "sha256": "53ffe7e74dead133e11692ba1027f075b5e640efea24ff585d18c46b08b09ecb"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c",
+      "sha256": "bfba5fb9089248f07e9e43b3dbc5a5a9c791ac24426efa1c237e053b033d8e21"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h",
+      "sha256": "676fca003acb7d1b9df528106bad7523544055a526719c2d7260b499fbdbea56"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c",
+      "sha256": "41edab9c68ae61f34e999b919a381cfe78d400cbb2532c37b75e53bf8d82ba2b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h",
+      "sha256": "9baa6f8587f96cfe67ba636b5874badb5815fcee76b6b838ccaf6ea561aa424e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h",
+      "sha256": "c66a80dde1a8cd1c5d8a3f09286ac7a94de0d6dc4e2f126297e9f9e4dd891ff3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c",
+      "sha256": "9d8a01034c5026d42c334e12f37c61bdb7f5b31f4b302165965e9063448429cb"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h",
+      "sha256": "48dc1abc113db56b996c2eedc6177c6b221c757ab8dd79b0a0a32d15f435faa0"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c",
+      "sha256": "8e030212a4a199a898cbf8bb1434754c5bf79165b9ea5a1ab93396a96390a651"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h",
+      "sha256": "238c6a9c88c71d8d7ff9dfc3e5f879f17d97ddbb46f7a1d259e38076eb2b15c8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c",
+      "sha256": "0d71a8c897aae490f63cfc8306a9bf62157a6b3288dbf07e7da06e3a74e45c22"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h",
+      "sha256": "e855b2904a931b81448f57ed2de126e8a093d41412edecbc9cbed0ce279fc852"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c",
+      "sha256": "77a4afe6c69fcb32b111201cdfbd45f941e465459397b31ccce9aab14c7c0020"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c",
+      "sha256": "6589d7676e5bb6721ab2d11104dd7ba0a03d128367565581109df15ec5e3dcd4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h",
+      "sha256": "51c0c61a85b8f0d95dbaf77fc881a680c9795409f9aa204a977eb1c3528d49d4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c",
+      "sha256": "53182dc2918efd6cd13c239e6819665b986893e3087fcdb4a4315fe49c82733f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h",
+      "sha256": "aa074953da15bfdbfac65c03b0ad582638a52c5dc4cde88689222a237b597e1c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c",
+      "sha256": "b866fb760a5fcd743a122b1227b86c8160dc1f9e420f5f65e3532ffd660b0576"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h",
+      "sha256": "cd4b3172b0555797b14ae32e18bc493eebf601c7f6bba120bd5a73809577e830"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c",
+      "sha256": "e8ebaab66b0303183c0a4d50e77972c7dcf9cfb307426349e4e643a3ac5e6b38"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h",
+      "sha256": "1dc911ed7c1f218d43aab18d07c8142249299cfbb77eeac09c0634cdba64cbaa"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h",
+      "sha256": "89ca70aafd0558e2a1cd17bc8b090664d361671f8e73b166e4b588713b8dbc08"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c",
+      "sha256": "f8cf490fe9a74c3deb219b28345b66b54085d4b0eef34f3e7e765465f4dfba99"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h",
+      "sha256": "bc16c61c0da39919d362d39656eefc8c337e22c1b04ef6aa40b8441ba465c79e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c",
+      "sha256": "89bfec7e1174fa1c357276074d926d92c13ee21c81a2429bf00d45bde6a498ae"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h",
+      "sha256": "d669d4306a6516a87d51b6876a0ceda2fcd6c04f3f473cb0709f093526f6a18e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c",
+      "sha256": "4390795c8d44b3901e9b9f7d7f8204f5326e7357b48a6e6989faf6f3a178da04"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h",
+      "sha256": "bd9cc24e2d5512615316863c04cae4dce58ed091ea6979d7dffcf643c9889b28"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h",
+      "sha256": "55aebdeeefc408a2ae7b549d8d05b5aa6611a892dad7fc1939ec8d6ea2beee17"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c",
+      "sha256": "80cdf2615a085c77e0c9dc6d5a869dbd0dac842a29f01e165869ba738feabb4e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.h",
+      "sha256": "e9e68d5b06472b020c75e952eac0d2f08387c13bccd4c2fb9426eb6c70e5be14"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c",
+      "sha256": "2c5d8dbbb6d4d00c63ac7ca9bf470c214c70bee05e73af1c945e5d75513fb5b0"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h",
+      "sha256": "61820e15a69d9d2f3969a96c7d5f30390040dcefd6e95ced4e8331bd652fb574"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c",
+      "sha256": "0f634923604c00e4cbda3dbaa633e0cb13b5fb66003fae9a68d9307e5178a305"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c",
+      "sha256": "32dcf8d68365144bb88c0d49540ff83ae7f255d32f8d9c29c408e79a55726ab8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c",
+      "sha256": "4f95a43a80aab5221d0e569da871c392a873ee5bc8cfb2c23a28beff86a9da3a"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c",
+      "sha256": "e4546a5f78f479382e86b877c8eb29ee33a7168e30fdf8e2f1d5068adacb1b82"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c",
+      "sha256": "04ac15cbab29ee0b15717a3edbf94fe5959763198b20d5ed2de1277cb758a090"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h",
+      "sha256": "5a0883d5e9f1e920593ea36498e50f533a6cfab6cfd860221b7e871144ad6fd9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c",
+      "sha256": "2b8663ca5e0bdc79a42615139428331a0c7d52ba9c8d3f2aefedd012e0e703a2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_pll.c",
+      "sha256": "742a5b7fd3d56fb4d2193305dc0319e73f62a7daed30ac1cab3b9af094ae30c3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c",
+      "sha256": "ddd20f6317e84c78099d3943d0d7a1f8b85795ee5b136e61bd85bf2832b7e5c4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c",
+      "sha256": "43f6e8d60360ac94a249b81b6b9913eebb8136ea5dacc28d04fae06553d86e84"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h",
+      "sha256": "0c267af9969ac32b89334df7848a1f3afbbd88982397dbd8b82e09aee6d9c8eb"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c",
+      "sha256": "bbe712113392faa58b81bd4268d630c210027f27b2fa659b1489912a60a8d7fd"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c",
+      "sha256": "3b9e511330c1ec95c6e32899f3569156e392f2330aaa4dab55f5590447dd526b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c",
+      "sha256": "a60f623eef929b007e9eba2e68056a9ce55d93143ac3870ec0ca1ec9d895c991"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h",
+      "sha256": "38ce88fe0a8fa9a53dfe388839d91b1eecbc15ca47f86c934251c3fd20ae511b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c",
+      "sha256": "b4e04e6f2ce4eed9901aadd34413be22857aea56444a43da1a1cc094059580a4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c",
+      "sha256": "90920cf8cfac685f5db4bcfc6e6a4601e61a39dbc5a9fec0122c62ac1c162b0c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c",
+      "sha256": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h",
+      "sha256": "0a2a0cc3f04451800529b49d43ae4b416f3a7b0160b7a1ced09eff4db7878c8c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c",
+      "sha256": "84a24d569dd5ec5a0407361b28bee3f46af65fc28a18278a72732b5ba2ee949f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.h",
+      "sha256": "1c30c70710c9c2d1413e2a056ecfb205baa483c40c2eb7a0d55bee901af277cd"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c",
+      "sha256": "48ed06c5012cee77f33a9ed3730cbbb16872542bd7dda31aff6428e941b27471"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h",
+      "sha256": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c",
+      "sha256": "29a644312abd6c01dc8948fd82939bc0f284a98ba14a717dbd742793231d7213"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c",
+      "sha256": "fe23e551c613f4225c68ed346fdd56e76e2c1ac434f9c616349fe26717c8fc46"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h",
+      "sha256": "47fa751bd6c2cba2a8f315ccd34f77de0ec6fa016c8736f47217854d15ecd9c5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp_format.c",
+      "sha256": "8088ff919b9deba8e9bc95fb85d7abcbb812d3c2d759deef730d88c8902e0102"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp_format.h",
+      "sha256": "a067b29fa4bc9409da81bfbd3660da99cf804eb6e7da7bfd26ef2b39777b6edc"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp_kms.c",
+      "sha256": "f1360b4a9a719ff387010982932492ac486b22113e8f612193c010fd393c0bbe"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/mdp_kms.h",
+      "sha256": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c",
+      "sha256": "8068d64d47a01c131f3f3e617ff2b289cbefc8e12423e9c7301f155138b36c63"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h",
+      "sha256": "0def786e03c904ed50b3f073488b0222e19e12b70ef630a4777daf7dac382e43"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c",
+      "sha256": "21d258e0cdfaf5fdc53b9d1f0b4b03c1658abd2de8e12b8144a8debac40d1c30"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_audio.c",
+      "sha256": "8d529a2b26e81bb216350846915f61098df36dc737b4ed47a506a592adc1370b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_audio.h",
+      "sha256": "7e097cd62c4c2faf98119f09de284f34920857cba2d706b17b2479d91f2ed486"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_aux.c",
+      "sha256": "241b80f7337bd3dd095c1b36c91a27ee1b47f9bea3b2512d7e9b6663fb04b891"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_aux.h",
+      "sha256": "962493010256972674fabbc78191c7383542926b7836ea75e9f660392b3c4f73"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_ctrl.c",
+      "sha256": "26694be5623718543c0a7c8c11fa9aa8edd42d616b94a8aeb164ca106597bbf5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_ctrl.h",
+      "sha256": "7a9036381ba78307c0ddb16a8f8721079e9f401ada1561e52eaf937fd0a2bac6"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_debug.c",
+      "sha256": "79b535a5cd544cb4b49908600cd8717cbad70f371d58792b22c80cd60dc2791e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_debug.h",
+      "sha256": "1c640d997047e5f9bc42ae4fa5181c87329111f40997babb72cc1f9284e764ea"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_display.c",
+      "sha256": "3fc9aaea689daaa46118520276ffed77bee8d55f5ac6f72cf598a66991ebb038"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_display.h",
+      "sha256": "bae4851587f87f723fc1368941d0f7bc8f396151017c5553353af62b7de3ead3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_drm.c",
+      "sha256": "7a77a5102171883ff3fbf2b776e24f3903f08776ead127b5a58bfb0c09b84b91"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_drm.h",
+      "sha256": "67f6373da8eb403e5ed5aff4a92f5999f51fb73f564494b1774dec3606c0908b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_link.c",
+      "sha256": "f326f013ae4d4106e1829bd5c7effdc9d31978987ddf02b0a7f06ddf273d5023"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_link.h",
+      "sha256": "57d11f78fbd4e2a461b45d7a5d00e17372960c77ff9d51af5b787e5028eb7a0b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_panel.c",
+      "sha256": "9f3190399697fdc17a4ae99b980d795eb11356ea6f93307d9977684f26874a6e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_panel.h",
+      "sha256": "2f6f405ce5ac88f49c634fe19595ad2c1c22f85ec41ccc86028e06c38e490bbe"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_reg.h",
+      "sha256": "cfa6552ecae8f0e45ada2ce212d03fbc8c01548eaeeaf37fd95a685be49b358f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_utils.c",
+      "sha256": "c033a93a2d8546c7a63cae02b4ef6d99913f043746ea6e2cd253c7e6c4c47320"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dp/dp_utils.h",
+      "sha256": "5480adad8324bebadb8cd2abd5e4c7083ab593e15794ae973cc64466acc57509"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/dsi.c",
+      "sha256": "75185cede4567fd6baddf406189f108b380927f7b4ef94bf5567587b270b883f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/dsi.h",
+      "sha256": "4907c5b7aed7662fc53f9bd6863befb56c5aca07ba8610779910bd50290753c5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/dsi_cfg.c",
+      "sha256": "2d405471ddd2e649906064a43867eb5a34c512d0f591cc9f121ae19df41912cb"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/dsi_cfg.h",
+      "sha256": "26520278d4d1a734b1b8114385bf92ca480ca1a376505fc0c54dfc48d06c85aa"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/dsi_host.c",
+      "sha256": "4f41b9ae6a3c99fbef2b101d0b554753297a7593f1d10b2ef90e98c84b6257d3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/dsi_manager.c",
+      "sha256": "a228288854c8a982293c675d497fffdf822fd4aa2d76f7ba6a9d3f820468cb9b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c",
+      "sha256": "9d14054f80097398bb333cf739340ae1d06cf496da5ba7e7bd00c4c1a5608e95"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h",
+      "sha256": "5e94636e9f63c21841660d2d77864b4f861dad254d893854a3096c5c89ebd8ef"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c",
+      "sha256": "f49b5f1db1705fd50a6fea417b51af8fc34b30dd3f9fdcd7ad7870c0650eedfc"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c",
+      "sha256": "90038dbf948626780ed7b919d1419fdabb8f383aada299a546b05253e4655982"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c",
+      "sha256": "5817617c6b5c44bf52d37dfb3998adb0ce0151ab72d3ae06a09a29da0306da03"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c",
+      "sha256": "dfe285e8ddd30ea7f532ee9345324fdff13012fb8d1dbd8873c3bc4cb7b34bb9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c",
+      "sha256": "9a0f5ade2901925b0831895b3273f72e11d8653e3a74f7824847c9dd495350a4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c",
+      "sha256": "176ac46f3fff451daf3486fe9026943bac56c7e4e8859225d4de9ab627cbb0e1"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a2xx.xml.h",
+      "sha256": "ca205ee91c698f3e329e4aa062e2b8ef68c983bb8004e2ac8ef1475894e30478"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a2xx_perfcntrs.json.c",
+      "sha256": "e3bb12a5168bbb1db49dcdb79e72ee508660a2a76187b6e3608523aafe4c2b78"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a3xx.xml.h",
+      "sha256": "5891de6c751630b1685d1483cca6984c0435c20653ad81de2cfe56f0c96d9577"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a4xx.xml.h",
+      "sha256": "66c1f1eadfcec00e53b1c11d0b95f37b4ba0fc052fccc633a31840818c618655"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a5xx.xml.h",
+      "sha256": "75d985329992d4b5ff21ab1a751e59d89cba90b2a061c2b639570bf937e54751"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a5xx_perfcntrs.json.c",
+      "sha256": "7e6f9d51c97198d8c38318da0abd72a90afe511183cbd909c47a2f8ae2893c6a"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a6xx.xml.h",
+      "sha256": "ce5d091490ba6604905cab8b65865a5192da6ead69e1a098b476dd9bba517ffa"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a6xx_descriptors.xml.h",
+      "sha256": "baee53125daa0884153b111cb3ac7c31d58a26f08d9874bf387410539cd4d77d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a6xx_enums.xml.h",
+      "sha256": "a2195a443d392c2f1967cfce5c5b9c3b57dc644b2855e8476a4f3c1c9fa0619c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a6xx_gmu.xml.h",
+      "sha256": "e5c9a46a25bf81fddf866c7af037dddbb8c36e1d5dd57b0ccc4d141ac1a028bf"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a6xx_perfcntrs.json.c",
+      "sha256": "787baaa0b6215de033733f5b5b467cf88c8144c6634f6ca71cb8196142f6c6a7"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a6xx_perfcntrs.xml.h",
+      "sha256": "7461c9d17e73d4b08c4af9e43d370d9c18d2ffc181b0ad8d045faf05aaf4e556"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a7xx_enums.xml.h",
+      "sha256": "502cb504c9f4c2670d6ab470fd5c9e90c97139d1793e9b8898b765e5d120a190"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a7xx_perfcntrs.json.c",
+      "sha256": "91a5eaccc6e52e5a9ff54adcf85f5f9f312135319a457bd14b461e26dccbbd69"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a7xx_perfcntrs.xml.h",
+      "sha256": "79404148de08829d1942575fd75e902155c269e1ecfdef4b06cf00e829a2b560"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a8xx_enums.xml.h",
+      "sha256": "0bc2c0a34d3ead643265d8b95497a0f290792500c1b524b38bce7367de446513"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/a8xx_perfcntrs.json.c",
+      "sha256": "eafb5c4b8f4e4cee094d7425fda3dafcc7192049248d02cff92f098af571c2d3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/adreno_common.xml.h",
+      "sha256": "d141cd0b689a86ba266ee3801d37f224e6b742964864ac7782d9730c3e05db01"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/adreno_pm4.xml.h",
+      "sha256": "8253409f517a2eb03edd5c889b9a654705e69c1d4b17b74d9b0b4edce5804e85"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/dsi.xml.h",
+      "sha256": "4c9ef33afda8ff97d40f24aab9e0b808d9d5ac2fd83be3a9470dcc90fa79d80b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/dsi_phy_10nm.xml.h",
+      "sha256": "9fb3d242d9ff0112b6111e2e4641fafbb77bf18a04b6e486a1e5e3bfd4d71c72"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/dsi_phy_14nm.xml.h",
+      "sha256": "4905e6ce40f6bba69d87be65dfed4030eb263e5fe57e0f9e7a80b400e52ca769"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/dsi_phy_20nm.xml.h",
+      "sha256": "d40dbb9ec5d7f350de9d27c1a1a6d4e8fd1bef44b23348fd72ef34799fa7346b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/dsi_phy_28nm.xml.h",
+      "sha256": "a29be50f65c5c77f4457113b51b513ee32fc66b09a20d3fd63fdab3dd698447d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/dsi_phy_28nm_8960.xml.h",
+      "sha256": "47058bb2a0df4743cc1abb9d47f0f74c6a9dbd86288e5164962449e7938acebc"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/dsi_phy_7nm.xml.h",
+      "sha256": "b27ce44ee05a5bdd3a99313f792494ca8bbe193b9a7d616faab2e81381e51d23"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/hdmi.xml.h",
+      "sha256": "e4c446fb2158a12586914ae46f1027cdc8e1929444d2dd5dfa8a305e204414f9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/mdp4.xml.h",
+      "sha256": "b7217bce71730d3e683ee28cc283ed6ec4920ad768a0171ea18307d3f7b07b19"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/mdp5.xml.h",
+      "sha256": "65df4b665a024ceeee0438bb553a485bbbf88c8c0954fab1305dbb1a3578de69"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/mdp_common.xml.h",
+      "sha256": "de3179938f41de502d132639d502369bb6cc9c14a30e09b6e25432e26dd0c6d7"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/mdss.xml.h",
+      "sha256": "6b33252880ea15463ec483e20bf8dde2048898f368c835fd16a5a43091389b68"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/generated/sfpb.xml.h",
+      "sha256": "a80e08436d1a0341e072424a2f116d9a3da1b47788d4c850c609f912c8388b57"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi.c",
+      "sha256": "7eb2438e5f4ebd42bb82403c061e565f67a35939ff0d28329d9952c741fc7983"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi.h",
+      "sha256": "f3ec40124a7301c68cdc0780fc787a1314b2735396dd3721c6a6df6d8c9255db"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_audio.c",
+      "sha256": "2a40b9e99629ff7243b321c0ba3563a6f3bad019b466280d95713bb1d74756d0"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c",
+      "sha256": "7748708d064d53ce099ccd8cac08446053d2066bc84ed26a89a3efb4b43ad8c5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_hdcp.c",
+      "sha256": "f6d73561a8bbf6059eb76a0c6b0d0bb0371137638c7d3b19d7959b00f01874b7"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c",
+      "sha256": "56872f3d0f02b20acd60ef87326af762571f4a66eca5fd90e4de05f689c03ae8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c",
+      "sha256": "12a15077f77d011e54a6f528eb330868dbeb9d5447fa272bc51d9d5ba027e5b3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_phy.c",
+      "sha256": "ad9d5f8e6532412706120c7ee5345f67576d1b49e2312938d4a2c257f45f36e5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_phy_8960.c",
+      "sha256": "24df62845671018f89b938ad6fa3d4ad26c2d4b606e81b396613667812cd3c1c"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c",
+      "sha256": "a3bc4963de3608cab87a11387749225b5218bfeb9645e6566ba148e3358e268a"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c",
+      "sha256": "90441eb66db6e8f1e0be7864dbc8b00e92bc15897ebace6e4f0fe15e59d96f5b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c",
+      "sha256": "ac9d212b6e8c05129ce9d02e1941a7ff42cd9a9f82625a2ab247e493c87a66a7"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_phy_8x74.c",
+      "sha256": "38d59c36be4ebc833f9d292cb9c8080a3ffd7ce9e65e76f8fda2d6685e44ee92"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c",
+      "sha256": "887a62c33c09da408a07598efccece8dcab6003a9f9f9e25950e9a13ffeac10e"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_atomic.c",
+      "sha256": "35c022dc37ef294902fed96833d6044e0e25fe4fe3c1b75fa5496d8de9fcb459"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_atomic_trace.h",
+      "sha256": "ceab85e98b09a764ae214ba48757afda0f6b083a712fd4de010ef7ac09306ae9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_atomic_tracepoints.c",
+      "sha256": "00d5a2dde405042095df869963dd2607197bdb40c43f38b8026a1dd37d0aa2b6"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_debugfs.c",
+      "sha256": "2a55b58b105b5dd9301181a7bfe5272215ab5ab7f458de2ce411e3d9541df1d3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_debugfs.h",
+      "sha256": "1501d3dff1171f2d61a0e9e4c92af49a5abddaf499c86f8dd6b9344fe0a7d311"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_drv.c",
+      "sha256": "6d42b86067dc20792d87f4e2100f7e5f0eb01df2dac519c7e30e44c7c79d4b34"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_drv.h",
+      "sha256": "34a7aef35a906a0806447328392afef49138866c364b47ea9f8b8df82236348f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_dsc_helper.h",
+      "sha256": "055eff0c521c00350e209b886e363bb661898b9a693461d3abf4f5a9bd0a1cfc"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_fb.c",
+      "sha256": "48ae914db1112c5e432037e9961e95ac8968ee7cd13f2d62e30444306ac9bf18"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_fbdev.c",
+      "sha256": "bd5b3d2b75f5c475c50fc8f4a8115c8c6c2575dd52f5542d7749d7fcd07452a8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_fence.c",
+      "sha256": "881e41c975f8cca2f269aebbece739d192c4bb791be171fd1667ef17e89ececa"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_fence.h",
+      "sha256": "9da3d89ccc338069e93b6aa1e55ccc8b071704e91d46b920a1d46c56bee16027"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gem.c",
+      "sha256": "60366e70b35fc5bf98768f39950f7a67e097b619dbafbca044e3afeacfc6fdc6"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gem.h",
+      "sha256": "8fc1b0ba437836caba8b0507455cee226105b17289952fba5770e78a2abc1eba"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gem_prime.c",
+      "sha256": "f63789ffdc318f0ead723953554efbfc96fbae878455f32f50638a0620a820cf"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gem_shrinker.c",
+      "sha256": "28a5ddfd293859b322438e1f46754bd496c04968c2e22c711416acbc7a346960"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gem_submit.c",
+      "sha256": "213138f2a493e958890569e8f463462839225a49c376e61c3f5de56b3cee1ed2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gem_vma.c",
+      "sha256": "cb2cad977f1c52918e6a5b865810d57d15f8f6ca0d327212395a034c30159b82"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gpu.c",
+      "sha256": "d6730df914b208b494cacf36865dba8b030681b99026e7ffe3c379e8b9569d09"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gpu.h",
+      "sha256": "25f31845895f7bb186eeecb9dada6c83568cca7d14fcef0546de89ea99cc85a1"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gpu_devfreq.c",
+      "sha256": "f37b00fbc90326f47da585cefa63bdc944ee3055c06d544edd2697a7244ae558"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gpu_trace.h",
+      "sha256": "19b9f6f8b74977ee7d849f510c56ff5508096426af6d50de7cbd3dc34c0722a6"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_gpu_tracepoints.c",
+      "sha256": "1c0f079ae0cf611b506bc8b88d064b07c48a63bc82f023a815a3c4b78f4ca77f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_io_utils.c",
+      "sha256": "040f03d42897f85aa37ca92a351c6c8fa35ae77f44666cd6465c4ff8187b2551"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_iommu.c",
+      "sha256": "912f862675b2dcd95b125dbfa17d028fb19ba558479a8f261058fb77f1a88b09"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_kms.c",
+      "sha256": "ff20096770fe79f0e04babe7b6203e4f8ce1b2107f82161b7e04891d3ea29bbc"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_kms.h",
+      "sha256": "d07f476291830efd2d62bb8d8d2b12c15029928206ecb948c6093cf15260425f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_mdss.c",
+      "sha256": "aea30655bdd62cb7ce81068192ffa61d2d6610e7f035a08b1053159a3cbf3649"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_mmu.h",
+      "sha256": "a87e07643e3fc6220fdf3a7394647be31762ce3599fe530cd620e3513c377a7d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_perfcntr.c",
+      "sha256": "1374670f7ef8a529217e6126fd1ed61819c04489fae485f28301df725b39c097"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_perfcntr.h",
+      "sha256": "b09c6b28e0f8798b52b35194f077e44ae694c149de82fa6f352d9082f3036898"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_rd.c",
+      "sha256": "84193fe60da40d8abd0aa0c87a8ec2921b419efb5a89846efe9e3da9072bc565"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_ringbuffer.c",
+      "sha256": "71fcbd3d9d3a67d1fe7561144bc07dd0a0e7d92a5ded1eac816cce2c41fd6bbe"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_ringbuffer.h",
+      "sha256": "e0bf100d94fdbd6663da6fcade2c8bd2d112f7dd26f33e89584575417ddae17f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_submitqueue.c",
+      "sha256": "9f8714245fe595057835f06dae99d7b85292b2787ef893fe00f2460360612bb5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_syncobj.c",
+      "sha256": "63660bd94fdc41738bb79fd5d09fe5158d937a8232db0e5ce1f7c66b0cc02094"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/msm_syncobj.h",
+      "sha256": "c3c2fd9bb4dc01462f660b76b2786c730742a9930e810bca2361ab137063c6cf"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a2xx.xml",
+      "sha256": "433e7a20c9779336ef603b8783dc850caa2f49241c839e11246b7a286ad00588"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a3xx.xml",
+      "sha256": "fde0ac796fd6d5c0352e65e9f9842282af73d5e68a93e287cff11214cebeae6f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a4xx.xml",
+      "sha256": "4004c641dcf27dec87faf00d7aac9546cc4e0f7d96cd3e633fbfb64fe82c5a5d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a5xx.xml",
+      "sha256": "91afac25dde756e809bac048b4704b62b7ff388908d8770d19aec98997678265"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a6xx.xml",
+      "sha256": "529cfbcb5f6729e4a5ffde2a7c9c73e4654821b44372ca9ea980f128b3095f33"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a6xx_descriptors.xml",
+      "sha256": "6eb6ecd53653a3beb1d09c5855e5550bedc318b410eac870b5a99d8a3c61ce7d"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a6xx_enums.xml",
+      "sha256": "08d56c3ee45ebaa151a8adc7adf7c372ecf89ca72fabc09da1d64645c31f06d4"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml",
+      "sha256": "f13f07aa3c975c1d671c1a7f5ba62ddaaf525aedb7a0e481186cbfffe461f88b"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.xml",
+      "sha256": "e9030cfe9aeff35ddddd05e4f58c487394d0decc30198750a77a75dc346b54ff"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a7xx_enums.xml",
+      "sha256": "8649a48eb99b71d3d882ed32021c0afb3400eb6623dc0a10afc2389bef40c497"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.xml",
+      "sha256": "c86cce2b27de6df79d4f68c18c145d42fbf449f4e48dff838bb8ad685af83ce2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a8xx_descriptors.xml",
+      "sha256": "9cd1aef6e79b34e70ab302357b1bf38cebe37fb375aad15b8a06520399eabf51"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a8xx_enums.xml",
+      "sha256": "18d5d8f4871125be7a0fc6d99c33269779532180ced872f33e508be02fc6ceeb"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.xml",
+      "sha256": "a0e5e561185977d8d0ce95309a5a836345cdbf003e9a31400212d2bb192e04f0"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/adreno_common.xml",
+      "sha256": "f898e4eee3de5f92d25597f003e5550a24fe50552d25555d6916dcd1b922d6f6"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml",
+      "sha256": "f8137e5d31a3cfce27cba0a8bc269e460067dca9ccb95e620404b7fc752913fb"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/dsi.xml",
+      "sha256": "d6f14dccd2b12969b1b8ba8a21d67a08a55cb8224719228dd16932c9b732adcb"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/dsi_phy_10nm.xml",
+      "sha256": "e59eeaaae90662f1dbf7593c28aff8e3f5ce9ea38a498858d5ea2d15c47d2931"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/dsi_phy_14nm.xml",
+      "sha256": "7ae38d69eb6d070185da800d26492e2e1e8f8de2a0147a34b639ce03369ec4a8"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/dsi_phy_20nm.xml",
+      "sha256": "92b10280bc1e26445f12911274692d93585d4fcba7008258c8f834dad2dfa313"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/dsi_phy_28nm.xml",
+      "sha256": "76a3013d8ec45e570ef24145dd2d10d3b53db6c6e5dda1c7cdab98001ef1ebb2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/dsi_phy_28nm_8960.xml",
+      "sha256": "143894b24a1c25a99544e8532fb6038eea30f9ba61670b993ee2f8b6b3b6eefc"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml",
+      "sha256": "de5dbdb0b2833106a04c5a03c558091275afc440b731d745e30451d79bdd1e26"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/edp.xml",
+      "sha256": "83052f80acbdadf21a87175414a93a351e070f2aec07d198be85d5e6ca7bbde3"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/hdmi.xml",
+      "sha256": "628b1dcf6ddf16cccd678a2dc25fa6602f2e32790b46d45f1ceb846bdfcdf7e2"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/mdp4.xml",
+      "sha256": "00e09a66b25e653801e3d81f6434eeee66c3adf8f7f5f830ebe60786ac31c204"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/mdp5.xml",
+      "sha256": "446792d1704ec04973505b84bc6e139c2d44a2431f0bb88abff33246312fafe9"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/mdp_common.xml",
+      "sha256": "1f3dd570281006c1414c4d40e53af16e96fdaf1c85cf4e2fb9db3c84cba1ded0"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/mdss.xml",
+      "sha256": "932d9b80b9c51df8cae826b26f6769db97ccf989eb0151f2550f3ac7a96fd53f"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/msm.xml",
+      "sha256": "47943a30bb2c892b0f6dddd222d4a64c285cb95abdc7248865edfaa61d38d248"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/display/sfpb.xml",
+      "sha256": "56d21bc2640763516986fe142cc2b69caa4e9a3780c2b7386865ce04cfc9f8c5"
+    },
+    {
+      "path": "source/linux/drivers/gpu/drm/msm/registers/freedreno_copyright.xml",
+      "sha256": "16e6fda4963d01a6d2fa6c938a26082d6f0afd0988db7f953c9e4dea38739f2f"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/Kconfig",
+      "sha256": "81b4cba3bdf79cf4912ab89b039197d02dbabd5dbf223c635d64ae2d9371282c"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/Makefile",
+      "sha256": "6214be01157b4530a61d81b0fa85c941fcde6c01fce3868a918db86922457430"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/acpi.c",
+      "sha256": "a425614b174c857ef1ebbd3ece63df9da1ff2d2486db94ae6a964d57934377b8"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/acpi.h",
+      "sha256": "fe9c4a66e266115d16876bafb4df738d9e3f53cd60ced19860b50a1b2325bb56"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/ahb.c",
+      "sha256": "e2aee23a657b57875f6959df5404f4bc0f0130295163ff49307a28a833807edd"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/ahb.h",
+      "sha256": "ebc769653517fab65b97a2a1eb150b45e3d72146b118dc61389090afe7179f34"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/ce.c",
+      "sha256": "2cc8f806c4155222635426b18d95df1cb5fd6387b35071255004ca198bccbbc1"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/ce.h",
+      "sha256": "95641dedd0f98a23605346b592fe5ca319f645ad9f7879f93bb2a3cefe9c4c7b"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/cmn_defs.h",
+      "sha256": "9c790ea157d58fbb9c0be8e5de54e6a1636407e04bd8ee82d5c2b0e8ece81ab5"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/core.c",
+      "sha256": "655abbf7dc89277e72c64264fa162d920705f134864d2919caff7db71bf270f9"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/core.h",
+      "sha256": "15b7c05b6a030478aabe1c25bf675c8dff5545004d2420354e0cd28a20708276"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/coredump.c",
+      "sha256": "49c1f4532e771ccacf026f1356673a865d8d9feaf907a535e705de1f891ad297"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/coredump.h",
+      "sha256": "600c54a28328d68f5bc8f40e0f8cfd4acaabd05715ff5d2b67b97e617eeb8d00"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dbring.c",
+      "sha256": "af9ebe8f36c6cf65b8ee64b94b96c4c90428892b96380ce1b5842f11b128de57"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dbring.h",
+      "sha256": "19ecdb217e2e9f16761125fc47950754d011a6f93c309ed20f5dcbf4c23a61e5"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debug.c",
+      "sha256": "9cfde6b28b961a1c00c912d454378e6563f5cc1bc01a3e19926c45913129c903"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debug.h",
+      "sha256": "650b4edfbadf07d069f6069da94645ab72b7d3bf7baf750e7e0bda7d3bedad14"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debugfs.c",
+      "sha256": "7d2e4ee7cf3ec347274eb8e9ebc028178e2d2a47818dd190b43008f2b65b6a4f"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debugfs.h",
+      "sha256": "ba2535689e0686779009fe035a4c7fe77e7376349e9975b77515e76434a10d57"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c",
+      "sha256": "e9eba376b317f772d2494652698d7ef2a34586cd8b07066ef8c6784d44c018d5"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.h",
+      "sha256": "2db7058d1228897bd403d80eab3de621819f34735ada6686308042d611e1497e"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debugfs_sta.c",
+      "sha256": "0d2802d2df190ea88f5898dc3e790d822c0cc774fad1f552908f6cfd14708a15"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/debugfs_sta.h",
+      "sha256": "f47cf0b9b61b69633c30c57916a402c65e639b25aa25115fcbbca4aa8bdde3ac"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp.c",
+      "sha256": "c20af82056c7090e5aea6adeaf871f09af86ffca27c8592dbd98ae1ecccf99f8"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp.h",
+      "sha256": "ee9e82fc170184c50a36b680b67ad1f9e3ba52a75d15291a31d69dbbd1418c6b"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_cmn.h",
+      "sha256": "d7ea9c2a996f0914e41ec23dd83f3ba3fd91dd8772cede9fd0104964e072a5bf"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_htt.c",
+      "sha256": "37017c0aea8c5713c2e3228185b5e4b104f6157b9cf3446a8d77a3edf34b28df"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_htt.h",
+      "sha256": "4d30e6ab24b05d796e4c21d33531b7c9bee7b078850c210fe324917aa998089b"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_mon.c",
+      "sha256": "d5e9349203baed9720d47aa2725cd08fb9dfd07d0405f0ee8e0d6176d75ec145"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_mon.h",
+      "sha256": "b096fc95d2d79f2a6eb5fdf09933fb1be549a2be7be74a253c01b71fc7dbadd6"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_peer.c",
+      "sha256": "4d58b38b5947ce6ae2a79db0267a2f689bf0b999d72854ede08174711fd141c5"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_peer.h",
+      "sha256": "5bbe425b2538daf41fbdcf496c3917e305721592ac04324555bddf7c3bc25041"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_rx.c",
+      "sha256": "28652b4d0cf9ce3703e352b3a8ffb3a8c8c2c9eccd9ed8723ff1dba864416493"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_rx.h",
+      "sha256": "eefadb3d03872bab20c9df9480c777f8ff70a2ea6ddc08041fb54f8337fa5eb3"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_tx.c",
+      "sha256": "7cd865f63fbbcf4ad52a987973d4fa168595ed897a34539a97d1d02cc5297d9e"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/dp_tx.h",
+      "sha256": "242df7004e05e4e8ced39f050747c9a8d73fb096a3024d43c0f5fdf2df2b8b0d"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/fw.c",
+      "sha256": "6569a96a4292834bb35d2eee410f1e2628a4e001cfe3d28e90acb96c8d01932f"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/fw.h",
+      "sha256": "12f0231af467a29df2348b7c6865f88334fa5d951ed6ea9abbc7699189aacdab"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/hal.c",
+      "sha256": "85b89220590a76515e22ac832fe144c6641947c2e84181adc2b8b748dd2cf6ce"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/hal.h",
+      "sha256": "b6e9870e13c58cedc297cafdd1a06d4773c919794246d03b51f0c997de77043e"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/hif.h",
+      "sha256": "e323738483ab2f475a40caa4d6a1d2eec762e468289fdf032d24d708dedce9d9"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/htc.c",
+      "sha256": "a3a445e4d5cebd2cb012390cae534b434d86681ba02cd987b7581bd670ff8395"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/htc.h",
+      "sha256": "2524d809d167b96c68a4373182777491db7bb9a7289a6f78a5d5e7dfd721df11"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/hw.h",
+      "sha256": "ea501853b282d4dec5f41730de9fe515de780c760713cd0c27deb84b04c5f4d9"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/mac.c",
+      "sha256": "145a1734d35788c4db36aa528557afb5aa1cd7c7a39b6e64e0f8c8243e17532b"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/mac.h",
+      "sha256": "8059434ec2fd209004715d3b2b67f1d91e661c1b23acb1d64b9939efbe0d1984"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/mhi.c",
+      "sha256": "64f89d411daa68e2148ff3b4d413f0e27d26c9c0442b1eff03d485a90763c331"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/mhi.h",
+      "sha256": "a4ddd4b0210e7f3344411f3afda9392f2cfd2f02be4cfe9d0f66b70ba15fea6e"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/p2p.c",
+      "sha256": "080c0a78a119bfede0a06f591f962b7f9db0cd9cbe97019b0acdf31254c54579"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/p2p.h",
+      "sha256": "3b90272dade42347a8eb7f50b1c0d2a1536d877d69d7ba8d795b743d3fbbf3c3"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/pci.c",
+      "sha256": "8b948beed3c53368fc313e1668b43ecb363e08ecef6b7220153433d810b09fb2"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/pci.h",
+      "sha256": "1db9f87a65d0ee3393d1b718551140ac1b0b3aaa2535c71987cf65fccef0040f"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/peer.c",
+      "sha256": "0c19e2dcf4f481d9765b1ee1cf868fbf5ea114e55c9f996315586ab7beca5b40"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/peer.h",
+      "sha256": "2ceb21519457960144387e4d5c29f61daf52319fc8ad7ac02bd70b32a2d1d1fa"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/qmi.c",
+      "sha256": "2e05c74031d2a57d1edde1e783a4f3932d921a2595dfd434b55c5465a2d3c535"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/qmi.h",
+      "sha256": "e4939c7c99a6a5df87fa80ff32412f56028daf344339d42f0fcff2167927caac"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/reg.c",
+      "sha256": "02953489b3b471dcb55fd5878d3873a3f725b6a6b34809005a4c14448cce1ea0"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/reg.h",
+      "sha256": "61509f928ea09ac762d2d4d0ff96bbd2aad927f4f5380f89084865d6c01dbf7d"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/testmode.c",
+      "sha256": "74763e1cc4925596ad555df0c288eb0e14df422a2261c076286320c394a5d83c"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/testmode.h",
+      "sha256": "f516c7aa2f2689f6afedb999170dad64f49214312a84161aa9584757ee110d41"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/thermal.c",
+      "sha256": "ac310ba6dc6ecaee1ea9072aa3ed1f9b0de85d45a1113a9a8036a64b5d841706"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/thermal.h",
+      "sha256": "07bcf1e77c57530f401696768b8a025c965922e66324c0bc06a738520a4c9022"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/trace.c",
+      "sha256": "e59eee6b7814e243e70e5eb1fff7e43f44501cf9b3f651d461f2c3399d7ecb37"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/trace.h",
+      "sha256": "5b92a4fe86f5b87724e448688bbd49e4ed61cc1afe9eb7ec946359d0af9ea704"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/Makefile",
+      "sha256": "2f15e2600347ffe8f9a997dd3bace0e9faaa5ff2715f4acb0de868ca1ac84fde"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/ahb.c",
+      "sha256": "ebd617f0b41b88888ce7a1ac54f51b6aa315e1fee190574e3aa7603cc49b9981"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/ahb.h",
+      "sha256": "7e4fcc36b8dc29bc6b6b0e262f1e0570b060b0aaed5a21132e25f53533994db2"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/ce.c",
+      "sha256": "f0b562978feb829cad93a49d8ec94e7c5114967c79cd3701c746d0106e947db3"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/ce.h",
+      "sha256": "8bac56dcac23ec6306ccce23e7565d9f13ab5919e7f13d684f6ebefad752e493"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/core.c",
+      "sha256": "5100eabdf2315e76accc8df48c8e6b1a4553c1cd684cf73818c68ae7d101ad41"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/core.h",
+      "sha256": "6d01a59d92b17b9c2f86f951017ce8a6e5b70395dad2e38733a1e4c776e1a636"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp.c",
+      "sha256": "7132c8ecb897ed2abd34b57375fef8364b71df8d86124a1f740e6779be7b9e5d"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp.h",
+      "sha256": "22e96590966ac002eb5a481fd3a46330ab2fddc7011607962bb7818840e3c393"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c",
+      "sha256": "1eb41a1f0f5c5e06da32311ecfc89db75e2c46070cda1d2a7ba7babd296534a7"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.h",
+      "sha256": "241189303274e1b98cf69eec1768c5ffb7cc3dfa0efa49232d2b047e00373eeb"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.c",
+      "sha256": "2732ee613bc3bbc95647ebc788e7d2565d8d011cb08d283a616b0c26f404fee7"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.h",
+      "sha256": "9c65c2094ee3e29b77820436a22c15d3fbffd579a9ac4d6112845cc01021dca3"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c",
+      "sha256": "6db04c94b9bcfa334ad712c985e1f7999e00467353f27d895e1cc7c6eda9fa3f"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.h",
+      "sha256": "2ed489644d0d5e99bf92e6fb4646615ac85a8821c77878ed074b718ce2ab9a24"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal.c",
+      "sha256": "af0f11df3e4206fd5a372f9be06ea49c412d27ecc82e8d6e08141f9edf1d9cde"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal.h",
+      "sha256": "b8f8aa17d2e5d0ac8d59886f2f5718080c02be2567e310011de0a289f7dd0207"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_desc.h",
+      "sha256": "c3d727f88c40329de754918dcd5e27529894d3b059dbf403bf78c4d63f29e9ee"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_qcc2072.c",
+      "sha256": "bd5d1bf84229d045169c9c4894a85401c6289256570080d730ea678a484c6b1d"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_qcc2072.h",
+      "sha256": "acf0615c491408e5b892af3a76b3dd93a9a8f42eb174ff40321134fd9ecb86ab"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_qcn9274.c",
+      "sha256": "1cfcc3b6f390c5548c0a4f38cc5d2708d4b0bbfbda22557e45fef89b0f8fa9b5"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_qcn9274.h",
+      "sha256": "438d7d6ae2cc8c1e92f976540962461dbb6f65a61b43de36a61baf6d80a39eef"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_rx.c",
+      "sha256": "c41c8cbf71da24ba329bce10b24c3c3ecc71e2fb37e8145794474dbf6321747d"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_rx.h",
+      "sha256": "15c560bb92a6ee47aee9b86fd3ce96a613c708a4a089e20240bc2e25c4dc1e98"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_rx_desc.h",
+      "sha256": "a321f1a56723647c0db5a648b42ca3b4421e4bbb8bca6f4093a6d0590cd0faf2"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_tx.c",
+      "sha256": "f6f466d49c361f3a99380b4c2b53cb8bb9e9dc840b282cbc2b0239c18e9da6f7"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_tx.h",
+      "sha256": "91aaecde9861d8ce317550aaec252a7228167a4c3fc72a8fe4836abe08a40b12"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_wcn7850.c",
+      "sha256": "805d54fec23869ae988b48c10d9ac051613523739c7e61ec2b7dcc5c3b4e5753"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hal_wcn7850.h",
+      "sha256": "336a1759cbd8eaad42f7044d8d74bd7a8b22f0e8b55991e484890e9ec5f32134"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hw.c",
+      "sha256": "6aac96fc4bad7d02a809a2269b9e86dc2f6747492a14637b60445e9417fef940"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/hw.h",
+      "sha256": "f8d8eee2bdb08ca7e33f1c4840ee96be27358ddb7f5073d5aab1e2c16d4a38ce"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/mhi.c",
+      "sha256": "d3cdb57dde68db33ae5b5049576c58a3b87fdac2b96451faf112282b0d25e1ca"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/mhi.h",
+      "sha256": "53c2566627a6c245fd952d04288ffac4ed8f9444f90f2a9cea4e482ee51c5b2d"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/pci.c",
+      "sha256": "fa25a7056bd6c8d28b2fef4052832efb306583e987ab374cbb4a9f75a796fbaa"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/pci.h",
+      "sha256": "3ad19a9de126ad6ca1e461e36422844fed1097408865b7fed2b3bb7d0c635b51"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/wmi.c",
+      "sha256": "38af6ba8605d1dfabaeb0c218746ca8d80a43659354c749347c89a11b7d03d49"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wifi7/wmi.h",
+      "sha256": "f2933578246991d825a5480b63afdb75f5fd284625cb42c106217007e0e0594f"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wmi.c",
+      "sha256": "fd9dd06db3f5850544c100b4ec33e0627ab907b1664b436b6c4f0f09f8e4e6d5"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wmi.h",
+      "sha256": "630a75254368205ec64ee5ac08da44c8afaeccad1fe00ec14c9db1f36d830d56"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wow.c",
+      "sha256": "25b0e90f7bafc42df1398fe5325b7645664f03660dd1ea7ce2119f27686d3fd8"
+    },
+    {
+      "path": "source/linux/drivers/net/wireless/ath/ath12k/wow.h",
+      "sha256": "bc3dfef8740628fbc6e6a3296e143cf1888d1c7787b8f83d69af519fcd97224e"
+    },
+    {
+      "path": "source/modules/display/Makefile",
+      "sha256": "8df11e783c1b0623b111cf90273716aa5b16e71594c53f714f60db2de117835f"
+    },
+    {
+      "path": "source/modules/display/panel-aa569-p-3-a0019-dsc.c",
+      "sha256": "51191cc4d662449fbb0bea95988fa27663f3f06a96ed2d835ecd20bd8ec01359"
+    },
+    {
+      "path": "source/modules/providers/Makefile",
+      "sha256": "f7080193289a733fa0410e90097dc535df6f245692e7210419adb8cd3c7d549d"
+    },
+    {
+      "path": "tools/boot-op13-armada.py",
+      "sha256": "5a886cdf5da64f587a25e8add482223f07ba856563146c15266ce9ca044e408e"
+    },
+    {
+      "path": "tools/boot-op13-multiboot.py",
+      "sha256": "57b5cdd01a5609ad0e2a21c8db1da6562c71aad8fc3900d9a42aba61ddfc77d6"
+    },
+    {
+      "path": "tools/make-op13-efi-media.py",
+      "sha256": "581a265786a25cb0ed428796fe8a124202b6b3460cf7fae373dd425c357b034d"
+    },
+    {
+      "path": "tools/op13_fdt.py",
+      "sha256": "3e8a913b40914d17ee12d56b4975e1d02f33bc1c1ec6f3f81eefd443469e6963"
+    },
+    {
+      "path": "validation/thermal-build.json",
+      "sha256": "c22ab8c3697524478cd2dc56e9cfe7879a2fa527f9cd3c43f8bab797d9d5acb6"
+    }
+  ]
+}

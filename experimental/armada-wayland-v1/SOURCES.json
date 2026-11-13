@@ -1,0 +1,18 @@
+{
+  "oneplus_panel": {
+    "repository": "https://github.com/mrlund/linux-omarchy-mobile",
+    "commit": "6cc4b65df980355e00417df3d4b7b8109e7d0d21",
+    "path": "drivers/gpu/drm/panel/panel-aa569-p-3-a0019-dsc.c",
+    "sha256": "51191cc4d662449fbb0bea95988fa27663f3f06a96ed2d835ecd20bd8ec01359"
+  },
+  "reference_notes": "https://github.com/derekross/omarchy-mobile/blob/main/device/dodge/NOTES.md",
+  "scope": "RAM only; no installer scripts run; known X11 image preserved",
+  "dsi_command_format_fix": "oneplus13-dsi-command-format.patch",
+  "display_modules": {
+    "msm.ko": "f30be832c87526291aa5bd83c4247eb6cd7b7968209ce0cdcb702b83110285b3",
+    "dispcc-sm8750.ko": "4a32ed205b74b0cf286c0620a61a426cad962d2cb09d4e6ff0ce4a077a31b9ed",
+    "panel-aa569-p-3-a0019-dsc.ko": "7d20eb9fbfc3007aaa4d953f0f4488a3a548b42db641b8963dcf7c68d6c579a3"
+  },
+  "omarchy_reference_audit": "omarchy-audit/AUDIT.txt",
+  "omarchy_userspace_commit": "12258d9168241568416390a5b1d755b7018d475b"
+}

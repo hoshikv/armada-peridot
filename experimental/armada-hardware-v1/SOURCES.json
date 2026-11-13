@@ -1,0 +1,32 @@
+{
+  "repository": "https://github.com/mrlund/linux-omarchy-mobile",
+  "commit": "6cc4b65df980355e00417df3d4b7b8109e7d0d21",
+  "sources": {
+    "reference/drivers/bluetooth/btqca.h": "0d795bcd1106b2c69a75e94813f1adca15078b433d90e041e34aabb0d2179187",
+    "reference/drivers/bluetooth/btqca.c": "82c9d4bc050f73c87f23e6df4bb0a686bb2055b1a5f181511695fd30121a32ad",
+    "reference/drivers/bluetooth/hci_qca.c": "5e1f6ff32ab4e6c727e3fbc4f73f0a31d3950e05a69b28452e3d7d7c30f1edaa"
+  },
+  "stock_kernel_package": "experimental/arch-gnome-touch-v1/packages/linux-aarch64-7.3-1-aarch64.pkg.tar.xz",
+  "audio_deferred_by_user": true,
+  "bt_enable_stock_dt": "qcom,bt-en-gpio => PM8550VE SID5 GPIO3",
+  "phone_storage_writes": false,
+  "mdss_warm_boot_fix": "../armada-wayland-v1/omarchy-audit/kernel-patch-reference/056-drivers_gpu_drm_msm_msm_mdss.c.patch",
+  "msm_wake_sha256": "48a2fd10bba94786561735bc0528eb7c3d1e0df4f67480fce0e65cd84514063a",
+  "module_order": [
+    "qcom_pon",
+    "gpio_keys",
+    "ecc",
+    "ecdh_generic",
+    "rfkill",
+    "bluetooth",
+    "btintel",
+    "btbcm",
+    "btrtl",
+    "btqca",
+    "hci_uart",
+    "rfcomm",
+    "bnep",
+    "hidp",
+    "uhid"
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "path": "libavutil.so.59",
+    "target": "libavutil.so"
+  },
+  {
+    "path": "libpulsecommon-16.1.so",
+    "target": "libpulsecommon-10.0.so"
+  },
+  {
+    "path": "libavfilter.so.10",
+    "target": "libavfilter.so"
+  },
+  {
+    "path": "libswscale.so.8",
+    "target": "libswscale.so"
+  },
+  {
+    "path": "libswresample.so.5",
+    "target": "libswresample.so"
+  },
+  {
+    "path": "libavcodec.so.61",
+    "target": "libavcodec.so"
+  },
+  {
+    "path": "libavformat.so.61",
+    "target": "libavformat.so"
+  }
+]
