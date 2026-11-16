@@ -1,0 +1,472 @@
+/*
+ * SM8635 (Snapdragon 8s Gen 3) SoC Device Tree
+ * Common definitions for all SM8635 devices
+ */
+
+#include <dt-bindings/arm/gic.h>
+#include <dt-bindings/clock/qcom,gcc-sm8635.h>
+#include <dt-bindings/clock/qcom,gpucc-sm8635.h>
+#include <dt-bindings/clock/qcom,dispcc-sm8635.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/pinctrl/qcom-pinctrl.h>
+#include <dt-bindings/power/qcom,rpmh-sm8635.h>
+#include <dt-bindings/thermal/qcom-thermal.h>
+
+/ {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    compatible = "qcom,sm8635";
+    interrupt-parent = <&intc>;
+
+    intc: interrupt-controller@17100000 {
+        compatible = "arm,gic-v3";
+        reg = <0x0 0x17100000 0x0 0x10000>,    /* GIC Distributor */
+              <0x0 0x17180000 0x0 0x200000>;   /* GIC Redistributors (8 cores * 0x40000) */
+        #interrupt-cells = <3>;
+        interrupt-controller;
+        ranges;
+        redistributor-stride = <0x40000>;
+    };
+
+    /* ─── Timer ─── */
+    timer {
+        compatible = "arm,armv8-timer";
+        interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,  /* EL1 phys */
+                     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,  /* EL1 virt */
+                     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,  /* EL1 non-secure */
+                     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;  /* EL2 */
+        clock-frequency = <19200000>;
+        arm,cpu-registers-not-fw-configured;
+    };
+
+    /* ─── PSCI ─── */
+    psci {
+        compatible = "arm,psci-1.0";
+        method = "hvc";
+    };
+
+    /* ─── SOCINFO (for identification) ─── */
+    socinfo: socinfo {
+        compatible = "qcom,socinfo";
+        qcom,soc-id = <555>;  /* SM8635 */
+        qcom,soc-version = <0x2001>;
+        qcom,foundry-id = <1>;  /* TSMC */
+    };
+
+    /* ─── Reserved Memory (common) ─── */
+    reserved-memory {
+        #address-cells = <2>;
+        #size-cells = <2>;
+        ranges;
+
+        /* Linux kernel reserved memory */
+        linux_ram: linux-ram@80000000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x80000000 0x0 0x80000000>;
+            no-map;
+            reusable;
+            status = "okay";
+        };
+    };
+
+    /* ─── GCC (Global Clock Controller) ─── */
+    gcc: clock-controller@100000 {
+        compatible = "qcom,gcc-sm8635";
+        reg = <0x0 0x00100000 0x0 0x100000>;
+        #clock-cells = <1>;
+        #reset-cells = <1>;
+        clocks = <&xo_board>, <&xo_div4>;
+        clock-names = "xo_board", "xo_div4";
+        status = "okay";
+
+        /* XO clocks */
+        xo_board: xo-board {
+            #clock-cells = <0>;
+            compatible = "fixed-clock";
+            clock-frequency = <19200000>;
+            clock-output-names = "xo_board";
+        };
+
+        xo_div4: xo-div4 {
+            #clock-cells = <0>;
+            compatible = "fixed-factor-clock";
+            clocks = <&xo_board>;
+            clock-div = <4>;
+            clock-mult = <1>;
+            clock-output-names = "xo_div4";
+        };
+
+        /* PLLs */
+        gpll0: gpll0 {
+            #clock-cells = <0>;
+            compatible = "qcom,gcc-pll";
+            clocks = <&xo_board>;
+            clock-output-names = "gpll0";
+        };
+
+        gpll0_div2: gpll0-div2 {
+            #clock-cells = <0>;
+            compatible = "fixed-factor-clock";
+            clocks = <&gpll0>;
+            clock-div = <2>;
+            clock-mult = <1>;
+            clock-output-names = "gpll0_div2";
+        };
+
+        dpll0: dpll0 {
+            #clock-cells = <0>;
+            compatible = "qcom,gcc-pll";
+            clocks = <&xo_board>;
+            clock-output-names = "dpll0";
+        };
+    };
+
+    /* ─── TLMM (GPIO) ─── */
+    tlmm: pinctrl@F100000 {
+        compatible = "qcom,tlmm-sm8635";
+        reg = <0x0 0x0F100000 0x0 0x100000>;
+        interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+        gpio-controller;
+        #gpio-cells = <2>;
+        interrupt-controller;
+        #interrupt-cells = <2>;
+        status = "okay";
+    };
+
+    /* ─── SPMI (PMIC Arbiter) ─── */
+    spmi: spmi@C440000 {
+        compatible = "qcom,spmi-pmic-arb";
+        reg = <0x0 0x0C440000 0x0 0x10000>;
+        interrupts = <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        status = "okay";
+    };
+
+    /* ─── RPMh ─── */
+    rpmh: rpmh@18200000 {
+        compatible = "qcom,rpmh-sm8635";
+        reg = <0x0 0x18200000 0x0 0x10000>;
+        interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+        status = "okay";
+
+        cmd_db: cmd-db@80860000 {
+            compatible = "qcom,rpmh-cmd-db";
+            reg = <0x0 0x80860000 0x0 0x10000>;
+        };
+    };
+
+    /* ─── IPCC ─── */
+    ipcc: ipcc@408000 {
+        compatible = "qcom,ipcc";
+        reg = <0x0 0x00408000 0x0 0x1000>;
+        interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+        #mbox-cells = <1>;
+        status = "okay";
+    };
+
+    /* ─── AOP Mailbox ─── */
+    aop_mbox: mbox@C300000 {
+        compatible = "qcom,aop-mbox";
+        reg = <0x0 0x0C300000 0x0 0x10000>;
+        interrupts = <GIC_SPI 270 IRQ_TYPE_LEVEL_HIGH>;
+        #mbox-cells = <1>;
+        status = "okay";
+    };
+
+    /* ─── TSENS (Thermal Sensors) - 3 blocks ─── */
+    tsens0: tsens@C222000 {
+        compatible = "qcom,tsens";
+        reg = <0x0 0x0C222000 0x0 0x1000>;
+        #thermal-sensor-cells = <1>;
+        qcom,num-sensors = <27>;
+        clocks = <&gcc GCC_TSENS0_CLK>;
+        clock-names = "core";
+        interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    tsens1: tsens@C223000 {
+        compatible = "qcom,tsens";
+        reg = <0x0 0x0C223000 0x0 0x1000>;
+        #thermal-sensor-cells = <1>;
+        qcom,num-sensors = <27>;
+        clocks = <&gcc GCC_TSENS1_CLK>;
+        clock-names = "core";
+        interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    tsens2: tsens@C224000 {
+        compatible = "qcom,tsens";
+        reg = <0x0 0x0C224000 0x0 0x1000>;
+        #thermal-sensor-cells = <1>;
+        qcom,num-sensors = <27>;
+        clocks = <&gcc GCC_TSENS2_CLK>;
+        clock-names = "core";
+        interrupts = <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    /* ─── GPU (Adreno 735) ─── */
+    gpucc: clock-controller@3D90000 {
+        compatible = "qcom,gpucc-sm8635";
+        reg = <0x0 0x03D90000 0x0 0xA000>;
+        #clock-cells = <1>;
+        #reset-cells = <1>;
+        clocks = <&gcc GCC_GPU_CFG_AHB>,
+                 <&gcc GCC_GPU_MEMNOC_GFX>,
+                 <&gcc GCC_GPU_SNOC_DVM_GFX>,
+                 <&gcc GCC_DDRSS_GPU_AXI>;
+        clock-names = "cfg_ahb", "memnoc_gfx", "snoc_dvm_gfx", "ddrss_gpu_axi";
+        status = "okay";
+    };
+
+    kgsl_3d0: gpu@3D00000 {
+        compatible = "qcom,kgsl-3d0";
+        reg = <0x0 0x03D00000 0x0 0x100000>,   /* GBIF + 3D core */
+              <0x0 0x03D68000 0x0 0x37000>,    /* GMU */
+              <0x0 0x03D9E000 0x0 0x1000>,     /* CX_MISC */
+              <0x0 0x03D50000 0x0 0x1000>;     /* RSCC */
+        reg-names = "gbif", "gmu", "cx_misc", "rscc";
+
+        interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
+                     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
+                     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>;
+        interrupt-names = "gpu", "gmu", "rscc";
+
+        clocks = <&gpucc GPUCC_CX_GMU_CBCR>,
+                 <&gpucc GPUCC_AHB_CBCR>,
+                 <&gcc GCC_GPU_CFG_AHB>,
+                 <&gcc GCC_GPU_MEMNOC_GFX>,
+                 <&gcc GCC_GPU_SNOC_DVM_GFX>,
+                 <&gcc GCC_DDRSS_GPU_AXI>;
+        clock-names = "gmu", "ahb", "cfg_ahb", "memnoc_gfx", "snoc_dvm_gfx", "ddrss_gpu_axi";
+
+        power-domains = <&gpu_gdsc>;
+        iommus = <&gpu_smmu>;
+        #iommu-cells = <0>;
+
+        qcom,gpu-id = <0x43030B00>;
+        qcom,gmu-version = <0x07020100>;
+        status = "okay";
+    };
+
+    gpu_gdsc: gdsc@3D9106C {
+        compatible = "qcom,gdsc";
+        reg = <0x0 0x03D9106C 0x0 0x100>;
+        #power-domain-cells = <0>;
+        clocks = <&gpucc GPUCC_CX_GDSCR>, <&gpucc GPUCC_GX_GDSCR>;
+        clock-names = "cx_gdsc", "gx_gdsc";
+        status = "okay";
+    };
+
+    gpu_smmu: iommu@3DA0000 {
+        compatible = "arm,mmu-500";
+        reg = <0x0 0x03DA0000 0x0 0x40000>;
+        #iommu-cells = <0>;
+        interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
+        interrupt-names = "combined";
+        clocks = <&gcc GCC_GPU_SMMU_CLK>;
+        clock-names = "clk";
+        power-domains = <&gpu_gdsc>;
+        status = "okay";
+    };
+
+    /* ─── Display (DPU) ─── */
+    dispcc: clock-controller@AF00000 {
+        compatible = "qcom,dispcc-sm8635";
+        reg = <0x0 0x0AF00000 0x0 0x10000>;
+        #clock-cells = <1>;
+        #reset-cells = <1>;
+        clocks = <&gcc GCC_DISP_AHB_CLK>, <&gcc GCC_DISP_MNOC_CLK>, <&gcc GCC_DISP_SNOC_CLK>;
+        clock-names = "ahb", "mnoc", "snoc";
+        status = "okay";
+    };
+
+    dpu: dpu@AE00000 {
+        compatible = "qcom,dpu-sm8635";
+        reg = <0x0 0x0AE00000 0x0 0x30000>,
+              <0x0 0x0AE36000 0x0 0x10000>;
+        reg-names = "dpu", "intf";
+
+        interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
+                     <GIC_SPI 161 IRQ_TYPE_LEVEL_HIGH>;
+        interrupt-names = "dpu", "intf";
+
+        clocks = <&dispcc DISPCC_DPU_CORE_CLK>,
+                 <&dispcc DISPCC_DPU_AHB_CLK>,
+                 <&dispcc DISPCC_DPU_PIXEL_CLK>,
+                 <&dispcc DISPCC_DSI0_CLK>,
+                 <&dispcc DISPCC_DSI0_PHY_CLK>,
+                 <&gcc GCC_DISP_AHB_CLK>,
+                 <&gcc GCC_DISP_MNOC_CLK>,
+                 <&gcc GCC_DISP_SNOC_CLK>;
+        clock-names = "core", "ahb", "pixel", "dsi0", "dsi0_phy",
+                      "gcc_ahb", "gcc_mnoc", "gcc_snoc";
+
+        power-domains = <&disp_gdsc>;
+        iommus = <&apps_smmu>;
+        #iommu-cells = <0>;
+        status = "okay";
+
+        dsi0: dsi@AE36000 {
+            compatible = "qcom,dsi-ctrl";
+            reg = <0x0 0x0AE36000 0x0 0x10000>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            clocks = <&dispcc DISPCC_DSI0_CLK>, <&dispcc DISPCC_DSI0_PHY_CLK>;
+            clock-names = "ctrl", "phy";
+            power-domains = <&disp_gdsc>;
+            status = "okay";
+
+            dsi0_phy: phy@AE36000 {
+                compatible = "qcom,dsi-phy";
+                reg = <0x0 0x0AE36000 0x0 0x10000>;
+                clocks = <&dispcc DISPCC_DSI0_PHY_CLK>;
+                clock-names = "phy";
+                #phy-cells = <0>;
+                status = "okay";
+            };
+
+            port@0 {
+                #address-cells = <1>;
+                #size-cells = <0>;
+                panel_endpoint: endpoint@0 {
+                    reg = <0>;
+                    remote-endpoint = <&panel_in>;
+                    data-lanes = <4>;
+                    qcom,mdss-dsi-phy-type = "dphy";
+                    qcom,mdss-dsi-mode = "video";
+                    qcom,mdss-dsi-video-mode = "sync_pulse";
+                    qcom,mdss-dsi-eot-packet;
+                    qcom,mdss-dsi-dsc;
+                };
+            };
+        };
+    };
+
+    disp_gdsc: gdsc@AE00000 {
+        compatible = "qcom,gdsc";
+        reg = <0x0 0x0AE00000 0x0 0x100>;
+        #power-domain-cells = <0>;
+        clocks = <&dispcc DISPCC_DISP_GDSCR>;
+        clock-names = "gdsc";
+        status = "okay";
+    };
+
+    /* ─── APPS SMMU ─── */
+    apps_smmu: iommu@15000000 {
+        compatible = "arm,smmu-v3";
+        reg = <0x0 0x15000000 0x0 0x100000>;
+        #iommu-cells = <0>;
+        interrupts = <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
+                     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    /* ─── CPUSYS SRAM ─── */
+    cpusys_sram: mmio-sram@14600000 {
+        compatible = "mmio-sram";
+        reg = <0x0 0x14600000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges = <0 0x0 0x14600000 0x10000>;
+
+        scmi_mailbox: scmi-mailbox@0 {
+            compatible = "qcom,scmi-mailbox";
+            reg = <0x0 0x1000>;
+            interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+            qcom,smmu = <&apps_smmu>;
+        };
+    };
+
+    /* ─── CPACP SRAM ─── */
+    cpacp_sram: mmio-sram@14610000 {
+        compatible = "mmio-sram";
+        reg = <0x0 0x14610000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+    };
+
+    /* ─── QUPv3 SPI Controllers ─── */
+    qupv3_0_geni_se: spi@888000 {
+        compatible = "qcom,qupv3-spi";
+        reg = <0x0 0x00888000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        clocks = <&gcc GCC_QUPV3_0_GENI_SE_CLK>;
+        clock-names = "se_clk";
+        interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
+        status = "disabled";
+    };
+
+    qupv3_1_geni_se: spi@A90000 {
+        compatible = "qcom,qupv3-spi";
+        reg = <0x0 0x00A90000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        clocks = <&gcc GCC_QUPV3_1_GENI_SE_CLK>;
+        clock-names = "se_clk";
+        interrupts = <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>;
+        status = "disabled";
+    };
+
+    /* ─── UFS ─── */
+    ufshc@1D84000 {
+        compatible = "qcom,ufshc";
+        reg = <0x0 0x01D84000 0x0 0x10000>;
+        interrupts = <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>;
+        clocks = <&gcc GCC_UFS_AXI_CLK>, <&gcc GCC_UFS_PHY_CLK>, <&gcc GCC_UFS_ICE_CLK>;
+        clock-names = "axi", "phy", "ice";
+        power-domains = <&ufs_gdsc>;
+        status = "disabled";
+    };
+
+    ufs_gdsc: gdsc@1D84000 {
+        compatible = "qcom,gdsc";
+        reg = <0x0 0x01D84000 0x0 0x100>;
+        #power-domain-cells = <0>;
+        clocks = <&gcc GCC_UFS_GDSCR>;
+        clock-names = "gdsc";
+        status = "okay";
+    };
+
+    /* ─── PCIe (for WiFi) ─── */
+    pcie@1C00000 {
+        compatible = "qcom,pcie-sm8635";
+        reg = <0x0 0x01C00000 0x0 0x100000>;
+        #address-cells = <3>;
+        #size-cells = <2>;
+        ranges = <0x82000000 0x0 0x40000000 0x0 0x40000000 0x0 0x10000000>,
+                 <0x81000000 0x0 0x50000000 0x0 0x50000000 0x0 0x10000000>;
+        device_type = "pci";
+        bus-range = <0x0 0xFF>;
+        interrupt-map-mask = <0 0 0 7>;
+        interrupt-map = <0 0 0 1 &intc 0 160 0x4>,
+                        <0 0 0 2 &intc 0 161 0x4>,
+                        <0 0 0 3 &intc 0 162 0x4>,
+                        <0 0 0 4 &intc 0 163 0x4>;
+        clocks = <&gcc GCC_PCIE_0_AUX_CLK>, <&gcc GCC_PCIE_0_PIPE_CLK>,
+                 <&gcc GCC_PCIE_0_AXI_CLK>, <&gcc GCC_PCIE_0_AXI_M_CLK>,
+                 <&gcc GCC_PCIE_0_AUX_M_CLK>;
+        clock-names = "aux", "pipe", "axi", "axi_m", "aux_m";
+        power-domains = <&pcie_gdsc>;
+        resets = <&gcc GCC_PCIE_0_BCR>;
+        reset-names = "pcie";
+        status = "disabled";
+    };
+
+    pcie_gdsc: gdsc@1C00000 {
+        compatible = "qcom,gdsc";
+        reg = <0x0 0x01C00000 0x0 0x100>;
+        #power-domain-cells = <0>;
+        clocks = <&gcc GCC_PCIE_0_GDSCR>;
+        clock-names = "gdsc";
+        status = "okay";
+    };
+};

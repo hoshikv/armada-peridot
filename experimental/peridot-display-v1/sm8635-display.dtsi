@@ -1,0 +1,271 @@
+/*
+ * SM8635 (Snapdragon 8s Gen 3) Display Device Tree for Peridot
+ * MIPI DSI Display Controller (DPU) with DSC support
+ *
+ * Panel: 1220 x 2712 @ 120 Hz, 4-lane DSI, DSC, 10-bit RGB
+ * Adapted from armada-dodge SM8750 display DT for OnePlus 13
+ */
+
+#include <dt-bindings/clock/qcom,gcc-sm8635.h>
+#include <dt-bindings/clock/qcom,dispcc-sm8635.h>
+#include <dt-bindings/power/qcom,rpmh-sm8635.h>
+
+/ {
+    /* ─── Display Clock Controller (DISPCC) ─── */
+    dispcc: clock-controller@AF00000 {
+        compatible = "qcom,dispcc-sm8635";
+        reg = <0x0 0x0AF00000 0x0 0x10000>;
+        #clock-cells = <1>;
+        #reset-cells = <1>;
+        clocks = <&gcc GCC_DISP_AHB_CLK>,
+                 <&gcc GCC_DISP_MNOC_CLK>,
+                 <&gcc GCC_DISP_SNOC_CLK>;
+        clock-names = "ahb", "mnoc", "snoc";
+        status = "okay";
+    };
+
+    /* ─── DPU (Display Processing Unit) ─── */
+    dpu: dpu@AE00000 {
+        compatible = "qcom,dpu-sm8635";
+        reg = <0x0 0x0AE00000 0x0 0x30000>,    /* DPU core */
+              <0x0 0x0AE36000 0x0 0x10000>;    /* INTF (DSI) */
+        reg-names = "dpu", "intf";
+
+        interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,  /* DPU IRQ */
+                     <GIC_SPI 161 IRQ_TYPE_LEVEL_HIGH>;  /* INTF IRQ */
+        interrupt-names = "dpu", "intf";
+
+        clocks = <&dispcc DISPCC_DPU_CORE_CLK>,
+                 <&dispcc DISPCC_DPU_AHB_CLK>,
+                 <&dispcc DISPCC_DPU_PIXEL_CLK>,
+                 <&dispcc DISPCC_DSI0_CLK>,
+                 <&dispcc DISPCC_DSI0_PHY_CLK>,
+                 <&gcc GCC_DISP_AHB_CLK>,
+                 <&gcc GCC_DISP_MNOC_CLK>,
+                 <&gcc GCC_DISP_SNOC_CLK>;
+        clock-names = "core", "ahb", "pixel", "dsi0", "dsi0_phy",
+                      "gcc_ahb", "gcc_mnoc", "gcc_snoc";
+
+        power-domains = <&disp_gdsc>;
+        iommus = <&apps_smmu>;
+        #iommu-cells = <0>;
+
+        /* DSI Host */
+        dsi0: dsi@AE36000 {
+            compatible = "qcom,dsi-ctrl";
+            reg = <0x0 0x0AE36000 0x0 0x10000>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            clocks = <&dispcc DISPCC_DSI0_CLK>,
+                     <&dispcc DISPCC_DSI0_PHY_CLK>;
+            clock-names = "ctrl", "phy";
+            power-domains = <&disp_gdsc>;
+            status = "okay";
+
+            /* DSI PHY */
+            dsi0_phy: phy@AE36000 {
+                compatible = "qcom,dsi-phy";
+                reg = <0x0 0x0AE36000 0x0 0x10000>;
+                clocks = <&dispcc DISPCC_DSI0_PHY_CLK>;
+                clock-names = "phy";
+                #phy-cells = <0>;
+                status = "okay";
+            };
+
+            /* Panel - Port 0 */
+            port@0 {
+                #address-cells = <1>;
+                #size-cells = <0>;
+
+                panel_endpoint: endpoint@0 {
+                    reg = <0>;
+                    remote-endpoint = <&panel_in>;
+                    data-lanes = <4>;
+                    qcom,mdss-dsi-phy-type = "dphy";
+                    qcom,mdss-dsi-mode = "video";
+                    qcom,mdss-dsi-video-mode = "sync_pulse";
+                    qcom,mdss-dsi-eot-packet;
+                    qcom,mdss-dsi-dsc;
+                };
+            };
+        };
+    };
+
+    /* ─── Display Power Domain (GDSC) ─── */
+    disp_gdsc: gdsc@AE00000 {
+        compatible = "qcom,gdsc";
+        reg = <0x0 0x0AE00000 0x0 0x100>;
+        #power-domain-cells = <0>;
+        clocks = <&dispcc DISPCC_DISP_GDSCR>;
+        clock-names = "gdsc";
+        status = "okay";
+    };
+
+    /* ─── Panel (Peridot) ─── */
+    panel: panel@0 {
+        compatible = "xiaomi,peridot-panel", "xiaomi,peridot-dsc-panel";
+        reg = <0>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        status = "okay";
+
+        /* Power supplies */
+        vddi-supply = <&vddi_1p8>;
+        vdda-supply = <&vdda_3p3>;
+        vdd-supply = <&vdd_panel>;
+
+        /* Reset GPIO */
+        reset-gpios = <&tlmm 130 GPIO_ACTIVE_LOW>;  /* GPIO 130 for panel reset */
+
+        /* Panel timing */
+        width-mm = <69>;   /* Approximate: 6.1" diagonal ~ 69mm width */
+        height-mm = <154>; /* ~154mm height */
+
+        /* DSI connection */
+        port {
+            panel_in: endpoint {
+                remote-endpoint = <&panel_endpoint>;
+                data-lanes = <4>;
+            };
+        };
+
+        /* DSC configuration */
+        dsc {
+            slice-count = <2>;
+            slice-height = <8>;
+            bits-per-pixel = <128>;  /* 10 bpc * 3 * 4/3 */
+            block-pred-enable;
+            convert-rgb;
+        };
+    };
+};
+
+/* ─── DISPCC Clocks ─── */
+&dispcc {
+    DISPCC_DPU_CORE_CLK: dpu-core-clk {
+        compatible = "qcom,dispcc-clk-rcg2";
+        reg = <0x1000>;
+        clocks = <&gcc GCC_DPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    DISPCC_DPU_AHB_CLK: dpu-ahb-clk {
+        compatible = "qcom,dispcc-clk-bcr";
+        reg = <0x1010>;
+        clocks = <&gcc GCC_DISP_AHB_CLK>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    DISPCC_DPU_PIXEL_CLK: dpu-pixel-clk {
+        compatible = "qcom,dispcc-clk-rcg2";
+        reg = <0x1020>;
+        clocks = <&gcc GCC_DPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    DISPCC_DSI0_CLK: dsi0-clk {
+        compatible = "qcom,dispcc-clk-rcg2";
+        reg = <0x2000>;
+        clocks = <&gcc GCC_DPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    DISPCC_DSI0_PHY_CLK: dsi0-phy-clk {
+        compatible = "qcom,dispcc-clk-bcr";
+        reg = <0x2010>;
+        clocks = <&gcc GCC_DISP_MNOC_CLK>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    DISPCC_DISP_GDSCR: disp-gdscr {
+        compatible = "qcom,dispcc-gdscr";
+        reg = <0x9000>;
+        #power-domain-cells = <0>;
+    };
+};
+
+/* ─── GCC Clocks for Display ─── */
+&gcc {
+    GCC_DISP_AHB_CLK: disp-ahb-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x72000>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_DISP_MNOC_CLK: disp-mnoc-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x72008>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_DISP_SNOC_CLK: disp-snoc-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x72010>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_DPLL0_DIV2: dpll0-div2 {
+        compatible = "qcom,gcc-clk-fixed-factor";
+        clocks = <&gcc GCC_DPLL0>;
+        clock-names = "parent";
+        clock-div = <2>;
+        clock-mult = <1>;
+        #clock-cells = <0>;
+    };
+};
+
+/* ─── PMIC Regulators for Panel (via SPMI) ─── */
+&spmi {
+    /* VDDI 1.8V - LDO */
+    vddi_1p8: vddi-1p8@0 {
+        compatible = "qcom,spmi-regulator";
+        reg = <0x0>;
+        regulator-name = "vddi_1p8";
+        regulator-min-microvolt = <1800000>;
+        regulator-max-microvolt = <1800000>;
+        regulator-always-on;
+        regulator-boot-on;
+    };
+
+    /* VDDA 3.3V - LDO */
+    vdda_3p3: vdda-3p3@0 {
+        compatible = "qcom,spmi-regulator";
+        reg = <0x1>;
+        regulator-name = "vdda_3p3";
+        regulator-min-microvolt = <3300000>;
+        regulator-max-microvolt = <3300000>;
+        regulator-always-on;
+        regulator-boot-on;
+    };
+
+    /* VDD Panel - LDO (voltage TBD) */
+    vdd_panel: vdd-panel@0 {
+        compatible = "qcom,spmi-regulator";
+        reg = <0x2>;
+        regulator-name = "vdd_panel";
+        regulator-min-microvolt = <1800000>;
+        regulator-max-microvolt = <3300000>;
+        regulator-boot-on;
+    };
+};
+
+/* ─── TLMM (GPIO) for Panel Reset ─── */
+&tlmm {
+    panel_reset_gpio: panel-reset@130 {
+        gpio-hog;
+        gpios = <130 GPIO_ACTIVE_LOW>;
+        output-low;
+        line-name = "panel_reset";
+    };
+};

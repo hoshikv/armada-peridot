@@ -1,0 +1,233 @@
+/*
+ * SM8635 (Snapdragon 8s Gen 3) GPU Device Tree for Peridot
+ * Adreno 735 (chip ID 0x43030B00, GMU version 0x07020100)
+ *
+ * Adapted from armada-dodge SM8750 GPU DT for OnePlus 13 (Adreno 830)
+ */
+
+#include <dt-bindings/clock/qcom,gcc-sm8635.h>
+#include <dt-bindings/clock/qcom,gpucc-sm8635.h>
+#include <dt-bindings/power/qcom,rpmh-sm8635.h>
+
+/ {
+    /* ─── GPU Clock Controller ─── */
+    gpucc: clock-controller@3D90000 {
+        compatible = "qcom,gpucc-sm8635";
+        reg = <0x0 0x03D90000 0x0 0xA000>;
+        #clock-cells = <1>;
+        #reset-cells = <1>;
+        clocks = <&gcc GCC_GPU_CFG_AHB>,
+                 <&gcc GCC_GPU_MEMNOC_GFX>,
+                 <&gcc GCC_GPU_SNOC_DVM_GFX>,
+                 <&gcc GCC_DDRSS_GPU_AXI>;
+        clock-names = "cfg_ahb", "memnoc_gfx", "snoc_dvm_gfx", "ddrss_gpu_axi";
+        assigned-clocks = <&gpucc GPUCC_CX_GMU_CBCR>,
+                          <&gpucc GPUCC_AHB_CBCR>;
+        assigned-clock-rates = <19200000>, <19200000>;
+        status = "okay";
+    };
+
+    /* ─── GPU Power Domains (GDSCs) ─── */
+    gpu_gdsc: gdsc@3D9106C {
+        compatible = "qcom,gdsc";
+        reg = <0x0 0x03D9106C 0x0 0x100>;
+        #power-domain-cells = <0>;
+        clocks = <&gpucc GPUCC_CX_GDSCR>,
+                 <&gpucc GPUCC_GX_GDSCR>;
+        clock-names = "cx_gdsc", "gx_gdsc";
+        power-domains = <&gcc GDSC_GFX3D>;
+        status = "okay";
+    };
+
+    /* ─── GPU 3D Core (GBIF) ─── */
+    kgsl_3d0: gpu@3D00000 {
+        compatible = "qcom,kgsl-3d0";
+        reg = <0x0 0x03D00000 0x0 0x100000>,   /* GBIF + 3D core */
+              <0x0 0x03D68000 0x0 0x37000>,    /* GMU */
+              <0x0 0x03D9E000 0x0 0x1000>,     /* CX_MISC */
+              <0x0 0x03D50000 0x0 0x1000>;     /* RSCC */
+        reg-names = "gbif", "gmu", "cx_misc", "rscc";
+
+        interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,  /* GPU IRQ */
+                     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,  /* GMU IRQ */
+                     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>;  /* RSCC IRQ */
+        interrupt-names = "gpu", "gmu", "rscc";
+
+        clocks = <&gpucc GPUCC_CX_GMU_CBCR>,
+                 <&gpucc GPUCC_AHB_CBCR>,
+                 <&gcc GCC_GPU_CFG_AHB>,
+                 <&gcc GCC_GPU_MEMNOC_GFX>,
+                 <&gcc GCC_GPU_SNOC_DVM_GFX>,
+                 <&gcc GCC_DDRSS_GPU_AXI>;
+        clock-names = "gmu", "ahb", "cfg_ahb", "memnoc_gfx", "snoc_dvm_gfx", "ddrss_gpu_axi";
+
+        power-domains = <&gpu_gdsc>;
+        power-domain-names = "gpu";
+
+        iommus = <&gpu_smmu>;
+        #iommu-cells = <0>;
+
+        qcom,gpu-id = <0x43030B00>;  /* Adreno 735 */
+        qcom,gmu-version = <0x07020100>;
+
+        /* Firmware */
+        firmware = "a660_gmu.bin", "a660_zap.mdt", "a660_sqe.fw";
+
+        /* Thermal */
+        cooling-min-level = <0>;
+        cooling-max-level = <10>;
+        #cooling-cells = <2>;
+
+        /* Performance */
+        qcom,max-gpuclk = <800000000>;
+        qcom,min-gpuclk = <100000000>;
+        qcom,default-gpuclk = <200000000>;
+
+        /* DCVS */
+        qcom,dcvs-enabled;
+
+        status = "okay";
+    };
+
+    /* ─── GPU SMMU (MMU-500) ─── */
+    gpu_smmu: iommu@3DA0000 {
+        compatible = "arm,mmu-500";
+        reg = <0x0 0x03DA0000 0x0 0x40000>;
+        #iommu-cells = <0>;
+        interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
+        interrupt-names = "combined";
+        clocks = <&gcc GCC_GPU_SMMU_CLK>;
+        clock-names = "clk";
+        power-domains = <&gpu_gdsc>;
+        status = "okay";
+    };
+
+    /* ─── Reserved Memory for GPU ─── */
+    reserved-memory {
+        #address-cells = <2>;
+        #size-cells = <2>;
+        ranges;
+
+        /* GPU uncached memory for GMU logs, etc. */
+        gpu_uc_mem: gpu-uc@86000000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x86000000 0x0 0x1000000>;  /* 16MB at 0x86000000 */
+            no-map;
+            reusable;
+        };
+
+        /* GPU cached memory for firmware, ringbuffers */
+        gpu_cached_mem: gpu-cached@87000000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x87000000 0x0 0x4000000>;  /* 64MB at 0x87000000 */
+            no-map;
+            reusable;
+        };
+    };
+};
+
+/* ─── GCC Clock Controller (Global) ─── */
+&gcc {
+    /* GPU clocks */
+    GCC_GPU_CFG_AHB: gpu-cfg-ahb {
+        compatible = "qcom,gcc-clk-rcg2";
+        reg = <0x71004>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_GPU_MEMNOC_GFX: gpu-memnoc-gfx {
+        compatible = "qcom,gcc-clk-rcg2";
+        reg = <0x71010>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_GPU_SNOC_DVM_GFX: gpu-snoc-dvm-gfx {
+        compatible = "qcom,gcc-clk-rcg2";
+        reg = <0x71018>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_DDRSS_GPU_AXI: ddrss-gpu-axi {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x7115C>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_GPU_SMMU_CLK: gpu-smmu-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x71160>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+};
+
+/* ─── GPUCC Clocks (local GPU clock controller) ─── */
+&gpucc {
+    /* GPUCC register offsets for SM8635 */
+    GPUCC_CX_GDSCR: cx-gdscr {
+        compatible = "qcom,gpucc-gdscr";
+        reg = <0x908C>;
+        #power-domain-cells = <0>;
+    };
+
+    GPUCC_GX_GDSCR: gx-gdscr {
+        compatible = "qcom,gpucc-gdscr";
+        reg = <0x9034>;
+        #power-domain-cells = <0>;
+    };
+
+    GPUCC_CX_GMU_CBCR: cx-gmu-cbcr {
+        compatible = "qcom,gpucc-clk-bcr";
+        reg = <0x90E4>;
+        clocks = <&gcc GCC_GPU_CFG_AHB>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GPUCC_AHB_CBCR: ahb-cbcr {
+        compatible = "qcom,gpucc-clk-bcr";
+        reg = <0x90C8>;
+        clocks = <&gcc GCC_GPU_CFG_AHB>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+};
+
+/* ─── RPMh Power Domains for GPU ─── */
+&rpmh {
+    /* GPU CX rail */
+    gpu_cx_rail: gpu-cx {
+        compatible = "qcom,rpmhpd";
+        regulator-name = "gpu_cx";
+        rpmh-id = <RPMH_GPU_CX>;
+        mode = <RPMH_MODE_ACTIVE>;
+        enable;
+    };
+
+    /* GPU MX rail */
+    gpu_mx_rail: gpu-mx {
+        compatible = "qcom,rpmhpd";
+        regulator-name = "gpu_mx";
+        rpmh-id = <RPMH_GPU_MX>;
+        mode = <RPMH_MODE_ACTIVE>;
+        enable;
+    };
+
+    /* GPU XO rail */
+    gpu_xo_rail: gpu-xo {
+        compatible = "qcom,rpmhpd";
+        regulator-name = "gpu_xo";
+        rpmh-id = <RPMH_GPU_XO>;
+        mode = <RPMH_MODE_ACTIVE>;
+        enable;
+    };
+};

@@ -1,0 +1,116 @@
+/*
+ * SM8635 (Snapdragon 8s Gen 3) Touchscreen Device Tree for Peridot
+ * Goodix GT9916R (Berlin-D) on QUPv3 SPI (SE4)
+ *
+ * Adapted from xnu-kernel-peridot hakios.goodix.c and armada-dodge touch DT
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/qcom-pinctrl.h>
+
+/ {
+    /* ─── QUPv3 SPI Controller (SE4) for Touch ─── */
+    qupv3_1_geni_se: spi@A90000 {
+        compatible = "qcom,qupv3-spi";
+        reg = <0x0 0x00A90000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        clocks = <&gcc GCC_QUPV3_1_GENI_SE_CLK>;
+        clock-names = "se_clk";
+        interrupts = <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+
+        /* Goodix GT9916R Touch Controller */
+        goodix_ts: touch@0 {
+            compatible = "goodix,gt9916r", "xiaomi,peridot-touch";
+            reg = <0>;  /* Chip select 0 */
+            spi-max-frequency = <4000000>;  /* 4 MHz */
+            spi-cpha;   /* Mode 0 */
+            spi-cpol;
+            status = "okay";
+
+            /* GPIOs */
+            reset-gpios = <&tlmm 128 GPIO_ACTIVE_LOW>;  /* RESET = GPIO 128 */
+            interrupt-gpios = <&tlmm 129 GPIO_ACTIVE_LOW>;  /* INT = GPIO 129 */
+
+            /* Power supplies via RPMh */
+            vdd_1v8-supply = <&ldob23>;
+            vdd_3v3-supply = <&ldob13>;
+
+            /* Touch properties */
+            touch-screen-size-x = <19520>;
+            touch-screen-size-y = <43400>;
+            touch-max-points = <10>;
+
+            /* Goodix-specific */
+            goodix,swap-xy = <0>;
+            goodix,invert-x = <0>;
+            goodix,invert-y = <0>;
+        };
+    };
+};
+
+/* ─── TLMM (GPIO) Configuration ─── */
+&tlmm {
+    /* Touch SPI pins (QUPv3 SE4) */
+    touch_spi_pins: touch-spi-pins {
+        pins = "gpio16", "gpio17", "gpio18", "gpio19";
+        function = "qupv3_1_geni_se";
+        drive-strength = <8>;
+        bias-disable;
+    };
+
+    /* Touch RESET (GPIO 128) */
+    touch_reset_pin: touch-reset {
+        pins = "gpio128";
+        function = "gpio";
+        drive-strength = <4>;
+        bias-pull-up;
+        output-high;
+    };
+
+    /* Touch INT (GPIO 129) */
+    touch_int_pin: touch-int {
+        pins = "gpio129";
+        function = "gpio";
+        drive-strength = <4>;
+        bias-pull-up;
+        input-enable;
+    };
+};
+
+/* ─── PMIC Regulators via RPMh for Touch ─── */
+&rpmh {
+    /* LDOB23 - 1.8V for touch */
+    ldob23: ldob23 {
+        compatible = "qcom,rpmh-regulator";
+        regulator-name = "ldob23";
+        regulator-min-microvolt = <1800000>;
+        regulator-max-microvolt = <1800000>;
+        regulator-always-on;
+        regulator-boot-on;
+        rpmh-id = <RPMH_LDO_B23>;
+    };
+
+    /* LDOB13 - 3.3V for touch */
+    ldob13: ldob13 {
+        compatible = "qcom,rpmh-regulator";
+        regulator-name = "ldob13";
+        regulator-min-microvolt = <3300000>;
+        regulator-max-microvolt = <3300000>;
+        regulator-always-on;
+        regulator-boot-on;
+        rpmh-id = <RPMH_LDO_B13>;
+    };
+};
+
+/* ─── GCC Clock for QUPv3 SE4 ─── */
+&gcc {
+    GCC_QUPV3_1_GENI_SE_CLK: qupv3-1-geni-se-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x73000>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+};

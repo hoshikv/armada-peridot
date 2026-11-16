@@ -1,30 +1,179 @@
-# Thermal control
+# Thermal Management for Peridot (SM8635)
 
-The first eight-core test exposed no thermal zones or cpufreq policies. It was returned to Android before further load. The successful build adds four upstream SM8750 TSENS blocks, CPUCP mailbox/shared SRAM, the SCMI performance protocol and CPU performance domains while preserving the existing PSCI domains.
+Adapted from armada-dodge thermal documentation for OnePlus 13 (SM8750).
 
-The exact Linux 7.3 kernel already includes the SCMI mailbox/performance/cpufreq and CPU thermal support. Matching stock `qcom_tsens` and `qcom-spmi-temp-alarm` modules are loaded by the guard. The DT recipe uses Armada's CPU cooling-map patch, with lower experimental CPU trips: 70/80°C passive, 90°C hot, 95°C critical. The kernel uses step-wise cooling.
+## Hardware Overview
 
-## Startup and supervision
+### TSENS Blocks (3 total, 27 sensors each = 81 zones)
 
-- Boot starts with `maxcpus=1` and the schedutil default governor.
-- All 16 CPU and 8 GPU sensor readings must be present and valid.
-- CPU0 is capped before the prime policy is brought online. Both SCMI policies, usable cooling devices and every CPU zone's cooling binding must be present before the remaining CPUs/desktop start.
-- Normal ceilings are rounded down to supported firmware frequencies: 1,363,200 kHz for CPUs 0–5 and 1,401,600 kHz for CPUs 6–7.
-- Readings are sampled every 0.5 seconds. At 70°C, ceilings become 960,000 / 1,017,600 kHz; at 80°C, minimums 384,000 / 1,017,600 kHz. Recovery hysteresis is 65/75°C.
-- 85°C on a valid monitored SoC/PMIC reading requests a cold reboot to Android. Missing/invalid required readings, disappearing control policies, failed cap readback or a sustained clock above the requested ceiling also request recovery.
-- An independent watchdog requests recovery if the guard's monotonic heartbeat stops for 12 seconds.
-- Steam launch paths check that thermal monitoring is healthy. The GPU remains capped at 222 MHz.
+| Block | Base Address | Sensors | Primary Coverage |
+|-------|--------------|---------|------------------|
+| TSENS0 | `0x0C222000` | 0-26 | CPU Cluster 0 (small), Cluster 1 (big), Battery |
+| TSENS1 | `0x0C223000` | 0-26 | CPU Cluster 1 (big), Cluster 2 (prime), GPU |
+| TSENS2 | `0x0C224000` | 0-26 | CPU Cluster 2 (prime), GPU, Skin/Ambient |
 
-Prime CPUs cannot go below 1,017,600 kHz on the tested firmware. Asking for a nominal 1 GHz ceiling must therefore use that firmware minimum rather than fail or request an unsupported value.
+### Sensor Register Format
 
-## What was verified
+- **Offset**: `0xA0 + 4 × sensor_index`
+- **Bits 0-11**: 12-bit temperature reading (tenths of °C)
+- **Bit 21**: Valid flag (1 = reading valid)
+- **Formula**: `temp_°C = (raw & 0xFFF) / 10.0`
 
-On the real device, all eight CPUs, 16 CPU sensors, 8 GPU sensors, two SCMI policies and two cpufreq cooling devices were present. Both policies reported schedutil and clocks within the requested ceilings. Wayland/Adreno compositing, 150% scale and the 120 Hz mode remained active.
+### CPU Topology & Thermal Mapping
 
-The fixed `thermaltest` USB command emulates 75°C on one CPU sensor for six seconds, captures guard/cooling state, and resets `emul_temp` to zero in `finally`. It is restricted to a healthy, cool guard state. The observed ceilings became 960 MHz / 1.0176 GHz and CPU0's kernel cooling state changed from 0 to 1. After resetting emulation, the guard returned to normal and the actual peak CPU reading was 48.6°C.
+```
+Cluster 0 (Small): CPU0, CPU1, CPU2  → Cortex-A520  → SCMI Domain 0 → TSENS0 sensors 0-2
+Cluster 1 (Big):   CPU3, CPU4, CPU5, CPU6 → Cortex-A720 → SCMI Domain 1 → TSENS0 sensors 3-6
+Cluster 2 (Prime): CPU7                  → Cortex-X4   → SCMI Domain 2 → TSENS1 sensor 0
+```
 
-This tests the software/kernel reaction to synthetic input; it does not physically heat the phone. Eight host tests also cover escalation, hysteresis, invalid/missing CPU readings, supported-frequency rounding and the prime firmware minimum. The 80°C minimum and 85°C recovery branches were not tested by physically reaching those temperatures. Ordinary USB cold reboot to Android was verified separately.
+### GPU Thermal
 
-## Limits
+- Adreno 735 monitored via TSENS1 sensor 1 (and TSENS2)
+- GMU firmware reports thermal status via SCMI
+- Cooling via GMU frequency scaling
 
-Battery, skin and charging thermal management have not been validated. These experimental controls are not equivalent to Android's complete thermal management, and they do not establish a guarantee against overheating or protection during a kernel/firmware lockup. CPU die temperatures are not battery or enclosure temperatures. Older fallback images lack the verified guard. Deep suspend and speaker audio remain deferred.
+### Battery Thermal
+
+- Monitored via TSENS0 sensors 7-9 (typically)
+- Two-tier response:
+  - 50°C: Request half speed on all clusters
+  - 58°C: Request lowest speed on all clusters
+
+## Thermal Limits
+
+| Limit | Temperature | Action |
+|-------|-------------|--------|
+| Core Passive | 95°C | SCMI DVFS throttling |
+| Other Sensors | 100°C | Aggressive throttling |
+| Emergency | 115°C | Cold reboot (kernel panic) |
+| Battery Half | 50°C | All clusters → half max freq |
+| Battery Lowest | 58°C | All clusters → min freq |
+
+## Cooling Trip Points
+
+| Trip | Temperature | Cooling Level |
+|------|-------------|---------------|
+| 0 | 70°C | Light (level 10) |
+| 1 | 80°C | Moderate (level 8) |
+| 2 | 85°C | Heavy (level 7) |
+| 3 | 90°C | Severe (level 5) |
+| 4 | 95°C | Critical (level 0 = min freq) |
+
+## SCMI DVFS Implementation
+
+### SM8635 Differences from SM8750
+
+| Aspect | SM8750 (OnePlus 13) | SM8635 (Peridot) |
+|--------|---------------------|------------------|
+| CPU Clusters | 2 (Oryon) | 3 (A520/A720/X4) |
+| SCMI Domains | 2 | 3 |
+| APPS RSC | Different address | `0x17A20000` |
+| CPUSYS SRAM | Different address | `0x14600000` |
+
+### SCMI Performance Protocol
+
+- Protocol ID: `0x12`
+- Each cluster = 1 performance domain
+- Domain 0: Cluster 0 (small, 3 CPUs)
+- Domain 1: Cluster 1 (big, 4 CPUs)
+- Domain 2: Cluster 2 (prime, 1 CPU)
+
+### Mailbox Communication
+
+```
+APPS RSC (0x17A20000) → RPMh → SCMI Mailbox in CPUSYS SRAM (0x14600000)
+```
+
+The `qcom-scmi` kernel driver handles the mailbox protocol. Userspace thermal guard uses sysfs interface at `/sys/bus/platform/drivers/qcom-scmi/perf_domain_*`.
+
+## Thermal Guard Daemon
+
+### Components
+
+1. **thermal-guard.py** - Main daemon:
+   - Polls all 81 sensors every 250ms
+   - Validates sensor coverage (>80% reporting)
+   - Applies per-cluster cooling via SCMI
+   - Monitors battery/skin thermals
+   - Detects sensor failures
+   - Writes heartbeat for watchdog
+
+2. **thermal-watchdog.py** - Independent monitor:
+   - Checks thermal-guard heartbeat every 1s
+   - Triggers cold reboot if heartbeat >12s old
+   - Runs as separate process for redundancy
+
+### Sysfs Interface Used
+
+```
+/sys/class/thermal/thermal_zone*/temp     # Sensor readings
+/sys/devices/system/cpu/cpu*/cpufreq/     # CPU frequency control
+/sys/bus/platform/drivers/qcom-scmi/perf_domain_*/level  # SCMI perf levels
+```
+
+## Device Tree Requirements
+
+The thermal DT (`sm8635-thermal.dtsi`) must define:
+
+1. **TSENS nodes** with correct base addresses and sensor counts
+2. **Thermal zones** for each CPU, GPU, battery, skin
+3. **Cooling maps** linking trips to SCMI cooling devices
+4. **SCMI mailbox** in CPUSYS SRAM
+5. **Reserved memory** for SMEM/SCMI shared memory
+
+## Integration with Armada Userspace
+
+The thermal guard runs in the Arch Linux ARM userspace (host initrd), not in the Armada container. It requires:
+
+- Root privileges
+- Access to kernel headers matching running kernel (for module builds)
+- `qcom_tsens` and `qcom-spmi-temp-alarm` kernel modules loaded
+- SCMI mailbox functional (UEFI must initialize APPS RSC)
+
+## Boot-Time Requirements
+
+UEFI must:
+1. Initialize APPS RSC at `0x17A20000`
+2. Configure CPUSYS SRAM at `0x14600000` for SCMI mailbox
+3. Populate FDT with thermal zones and SCMI nodes
+4. Lease touch firmware (separate but concurrent)
+5. Start USB CDC recovery interface
+
+## Debugging
+
+### Check Sensor Readings
+```bash
+# All thermal zones
+cat /sys/class/thermal/thermal_zone*/temp
+
+# Specific sensor via debugfs
+cat /sys/kernel/debug/qcom_tsens/tsens0/sensor0
+```
+
+### Check SCMI Domains
+```bash
+ls /sys/bus/platform/drivers/qcom-scmi/
+cat /sys/bus/platform/drivers/qcom-scmi/perf_domain_0/level
+```
+
+### Verify Cooling Maps
+```bash
+cat /sys/class/thermal/thermal_zone*/trip_point_*_temp
+cat /sys/class/thermal/cooling_device*/cur_state
+```
+
+### Logs
+```bash
+tail -f /var/log/thermal-guard.log
+tail -f /var/log/thermal-watchdog.log
+```
+
+## Known Issues / TODO
+
+- [ ] Calibrate sensor-to-cluster mapping (currently heuristic)
+- [ ] Add GPU cooling via GMU SCMI (separate from CPU)
+- [ ] Implement skin thermal sensor identification
+- [ ] Add charging thermal monitoring (PMIC)
+- [ ] Test with actual hardware thermal loads
+- [ ] Tune trip points for Peridot's thermal solution

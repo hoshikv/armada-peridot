@@ -1,0 +1,260 @@
+/*
+ * SM8635 (Snapdragon 8s Gen 3) WiFi/BT Device Tree for Peridot
+ * WCN6750: WiFi (ath11k PCIe) + BT (H4 UART)
+ *
+ * WiFi: WPSS at 0x9BB00000 (25MB), PCIe Gen 3 x1
+ * BT: H4 UART on QUPv3 SE2 @ 0x00888000
+ *
+ * Adapted from xnu-kernel-peridot hakios.wifi.c, hakios.bt.c
+ * and armada-dodge WCN7860 WiFi/BT DT
+ */
+
+#include <dt-bindings/clock/qcom,gcc-sm8635.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/power/qcom,rpmh-sm8635.h>
+
+/ {
+    /* ─── WPSS (WiFi DSP) Memory Region ─── */
+    reserved-memory {
+        #address-cells = <2>;
+        #size-cells = <2>;
+        ranges;
+
+        wpss_mem: wpss@9BB00000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x9BB00000 0x0 0x1900000>;  /* 25MB at 0x9BB00000 */
+            no-map;
+            reusable;
+        };
+    };
+
+    /* ─── WCN6750 WiFi (ath11k PCIe) ─── */
+    /* PCIe RC for WiFi - typically on PCIe_0 or PCIe_1 */
+    pcie_wifi: pcie@1C00000 {
+        compatible = "qcom,pcie-sm8635";
+        reg = <0x0 0x01C00000 0x0 0x100000>;  /* PCIe RC base */
+        #address-cells = <3>;
+        #size-cells = <2>;
+        ranges = <0x82000000 0x0 0x40000000 0x0 0x40000000 0x0 0x10000000>,  /* Config space */
+                 <0x81000000 0x0 0x50000000 0x0 0x50000000 0x0 0x10000000>;  /* I/O space */
+
+        device_type = "pci";
+        bus-range = <0x0 0xFF>;
+        interrupt-map-mask = <0 0 0 7>;
+        interrupt-map = <0 0 0 1 &intc 0 160 0x4>,
+                        <0 0 0 2 &intc 0 161 0x4>,
+                        <0 0 0 3 &intc 0 162 0x4>,
+                        <0 0 0 4 &intc 0 163 0x4>;
+
+        clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+                 <&gcc GCC_PCIE_0_PIPE_CLK>,
+                 <&gcc GCC_PCIE_0_AXI_CLK>,
+                 <&gcc GCC_PCIE_0_AXI_M_CLK>,
+                 <&gcc GCC_PCIE_0_AUX_M_CLK>;
+        clock-names = "aux", "pipe", "axi", "axi_m", "aux_m";
+
+        power-domains = <&pcie_gdsc>;
+        resets = <&gcc GCC_PCIE_0_BCR>;
+        reset-names = "pcie";
+
+        status = "okay";
+
+        /* WCN6750 WiFi Device */
+        wifi: wifi@0 {
+            compatible = "qcom,wcn6750-wifi", "qcom,ath11k-pci";
+            reg = <0x0 0x0 0x0 0x0 0x0>;
+            reg-names = "pci_cfg";
+
+            /* PCIe BARs assigned by kernel */
+            #address-cells = <3>;
+            #size-cells = <2>;
+
+            /* WPSS memory */
+            memory-region = <&wpss_mem>;
+
+            /* Power via RPMh */
+            power-domains = <&wifi_cx_rail>, <&wifi_mx_rail>, <&wifi_xo_rail>;
+
+            /* Firmware */
+            firmware-name = "ath11k/WCN6750/hw2.0/firmware.bin";
+            board-data-name = "ath11k/WCN6750/hw2.0/board.bin";
+            board-data-2-name = "ath11k/WCN6750/hw2.0/board-2.bin";
+
+            /* BDF (Board Data File) for Peridot */
+            qcom,bdf-name = "n16t";  /* From xnu-kernel-peridot */
+
+            /* IRQs */
+            interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
+            interrupt-names = "wifi";
+
+            status = "okay";
+        };
+    };
+
+    /* ─── WCN6750 Bluetooth (H4 UART) ─── */
+    bluetooth: bluetooth@888000 {
+        compatible = "qcom,wcn6750-bt", "qcom,bt-uart";
+        reg = <0x0 0x00888000 0x0 0x10000>;  /* QUPv3 SE2 */
+        clocks = <&gcc GCC_QUPV3_0_GENI_SE_CLK>;
+        clock-names = "uart_clk";
+        interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+
+        /* H4 UART settings */
+        qcom,bt-uart-baudrate = <3000000>;  /* 3 Mbps for WCN6750 */
+        qcom,bt-uart-flow-control;
+
+        /* Power via RPMh (shared with WiFi) */
+        power-domains = <&wifi_cx_rail>, <&wifi_mx_rail>;
+
+        /* Firmware */
+        firmware-name = "qca/btfw32.tlv";
+        config-name = "qca/btfw32.cfg";
+
+        /* Shutdown GPIO (optional) */
+        shutdown-gpios = <&tlmm 131 GPIO_ACTIVE_LOW>;
+
+        /* Wake host GPIO */
+        wake-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
+    };
+};
+
+/* ─── QUPv3 SE2 for BT UART ─── */
+&qupv3_0_geni_se {
+    /* Already defined in SoC DT, just enable for BT */
+    status = "okay";
+
+    bt_uart: serial@888000 {
+        compatible = "qcom,qupv3-uart";
+        reg = <0x0 0x00888000 0x0 0x10000>;
+        clocks = <&gcc GCC_QUPV3_0_GENI_SE_CLK>;
+        clock-names = "uart_clk";
+        interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
+        current-speed = <3000000>;
+        status = "okay";
+    };
+};
+
+/* ─── TLMM Pinmux for BT UART ─── */
+&tlmm {
+    bt_uart_pins: bt-uart-pins {
+        pins = "gpio20", "gpio21";  /* TX, RX for QUPv3 SE2 */
+        function = "qupv3_0_geni_se";
+        drive-strength = <4>;
+        bias-disable;
+    };
+
+    bt_shutdown_pin: bt-shutdown {
+        pins = "gpio131";
+        function = "gpio";
+        drive-strength = <4>;
+        bias-pull-up;
+        output-high;
+    };
+
+    bt_wake_pin: bt-wake {
+        pins = "gpio132";
+        function = "gpio";
+        drive-strength = <4>;
+        bias-pull-up;
+        input-enable;
+    };
+};
+
+/* ─── GCC Clocks ─── */
+&gcc {
+    /* PCIe 0 clocks */
+    GCC_PCIE_0_AUX_CLK: pcie0-aux-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x74000>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_PCIE_0_PIPE_CLK: pcie0-pipe-clk {
+        compatible = "qcom,gcc-clk-rcg2";
+        reg = <0x74010>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_PCIE_0_AXI_CLK: pcie0-axi-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x74020>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_PCIE_0_AXI_M_CLK: pcie0-axi-m-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x74030>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_PCIE_0_AUX_M_CLK: pcie0-aux-m-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x74040>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+
+    GCC_PCIE_0_BCR: pcie0-bcr {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x74050>;
+        #reset-cells = <0>;
+    };
+
+    /* QUPv3 SE2 for BT */
+    GCC_QUPV3_0_GENI_SE_CLK: qupv3-0-geni-se-clk {
+        compatible = "qcom,gcc-clk-bcr";
+        reg = <0x73010>;
+        clocks = <&gcc GCC_GPLL0_DIV2>;
+        clock-names = "src";
+        #clock-cells = <0>;
+    };
+};
+
+/* ─── RPMh Power Rails for WCN6750 ─── */
+&rpmh {
+    /* WiFi CX rail */
+    wifi_cx_rail: wifi-cx {
+        compatible = "qcom,rpmhpd";
+        regulator-name = "wifi_cx";
+        rpmh-id = <RPMH_WIFI_CX>;
+        mode = <RPMH_MODE_ACTIVE>;
+        enable;
+    };
+
+    /* WiFi MX rail */
+    wifi_mx_rail: wifi-mx {
+        compatible = "qcom,rpmhpd";
+        regulator-name = "wifi_mx";
+        rpmh-id = <RPMH_WIFI_MX>;
+        mode = <RPMH_MODE_ACTIVE>;
+        enable;
+    };
+
+    /* WiFi XO rail */
+    wifi_xo_rail: wifi-xo {
+        compatible = "qcom,rpmhpd";
+        regulator-name = "wifi_xo";
+        rpmh-id = <RPMH_WIFI_XO>;
+        mode = <RPMH_MODE_ACTIVE>;
+        enable;
+    };
+
+    /* PCIe GDSC */
+    pcie_gdsc: pcie-gdsc {
+        compatible = "qcom,rpmhpd";
+        regulator-name = "pcie_gdsc";
+        rpmh-id = <RPMH_PCIE_0_GDSC>;
+        mode = <RPMH_MODE_ACTIVE>;
+        enable;
+    };
+};

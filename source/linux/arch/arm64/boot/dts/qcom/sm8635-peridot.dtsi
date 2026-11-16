@@ -1,0 +1,420 @@
+/*
+ * Xiaomi Peridot (POCO F6 / Redmi Turbo 3) Specific Device Tree Overlay
+ * SoC: SM8635 (Snapdragon 8s Gen 3)
+ *
+ * This file contains Peridot-specific customizations on top of the base SM8635 DT.
+ */
+
+/ {
+    model = "Xiaomi POCO F6 / Redmi Turbo 3 (Peridot)";
+    compatible = "xiaomi,peridot", "qcom,sm8635";
+
+    /* Memory configuration for Peridot (8GB/12GB variants) */
+    memory@80000000 {
+        reg = <0x0 0x80000000 0x0 0x80000000>,  /* 2GB lowmem */
+              <0x0 0x100000000 0x0 0x80000000>; /* 2GB highmem (4GB base) */
+        /* For 8GB: add <0x0 0x180000000 0x0 0x80000000> */
+        /* For 12GB: add <0x0 0x200000000 0x0 0x80000000> */
+    };
+
+    /* Reserved memory for Peridot */
+    reserved-memory {
+        /* SMEM - 2MB at 0x81D00000 */
+        smem: smem@81D00000 {
+            reg = <0x0 0x81D00000 0x0 0x200000>;
+        };
+
+        /* AOP CMD DB - 128KB at 0x81C60000 */
+        aop_cmd_db: aop-cmd-db@81C60000 {
+            reg = <0x0 0x81C60000 0x0 0x20000>;
+        };
+
+        /* WPSS (WiFi) - 25MB at 0x9BB00000 */
+        wpss_mem: wpss@9BB00000 {
+            reg = <0x0 0x9BB00000 0x0 0x1900000>;
+        };
+
+        /* ADSP (Audio) - 56MB at 0x9D400000 */
+        adsp_mem: adsp@9D400000 {
+            reg = <0x0 0x9D400000 0x0 0x3800000>;
+        };
+
+        /* MPSS (Modem) - 205MB at 0x8BC00000 (disabled for RAM boot) */
+        mpss_mem: mpss@8BC00000 {
+            reg = <0x0 0x8BC00000 0x0 0xCD00000>;
+            status = "disabled";
+        };
+
+        /* GPU uncached - 16MB at 0x86000000 */
+        gpu_uc_mem: gpu-uc@86000000 {
+            reg = <0x0 0x86000000 0x0 0x1000000>;
+        };
+
+        /* GPU cached - 64MB at 0x87000000 */
+        gpu_cached_mem: gpu-cached@87000000 {
+            reg = <0x0 0x87000000 0x0 0x4000000>;
+        };
+
+        /* Framebuffer - 43MB at 0xE3940000 (UEFI GOP) */
+        splash_mem: splash@E3940000 {
+            reg = <0x0 0xE3940000 0x0 0x2B00000>;
+        };
+
+        /* SCMI shared memory - 64KB at 0x81D20000 */
+        scmi_shmem: scmi-shmem@81D20000 {
+            reg = <0x0 0x81D20000 0x0 0x10000>;
+        };
+    };
+
+    /* ─── CPU Boot Configuration ─── */
+    cpus {
+        /* Boot CPU is CPU7 (prime/X4 core) */
+        boot-cpu = <&cpu7>;
+    };
+
+    /* ─── Thermal Zones for Peridot ─── */
+    thermal-zones {
+        /* CPU Cluster 0 (Small: A520 x3) */
+        cpu0_thermal: cpu0-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 0>;
+            trips { /* 70, 80, 85, 90, 95°C */ };
+            cooling-maps { /* CPU0 cooling via SCMI domain 0 */ };
+        };
+        cpu1_thermal: cpu1-thermal { thermal-sensors = <&tsens0 1>; };
+        cpu2_thermal: cpu2-thermal { thermal-sensors = <&tsens0 2>; };
+
+        /* CPU Cluster 1 (Big: A720 x4) */
+        cpu3_thermal: cpu3-thermal { thermal-sensors = <&tsens0 3>; };
+        cpu4_thermal: cpu4-thermal { thermal-sensors = <&tsens0 4>; };
+        cpu5_thermal: cpu5-thermal { thermal-sensors = <0&tsens0 5>; };
+        cpu6_thermal: cpu6-thermal { thermal-sensors = <&tsens0 6>; };
+
+        /* CPU Cluster 2 (Prime: X4 x1) */
+        cpu7_thermal: cpu7-thermal { thermal-sensors = <&tsens1 0>; };
+
+        /* GPU Thermal */
+        gpu_thermal: gpu-thermal { thermal-sensors = <&tsens1 1>; };
+
+        /* Battery Thermal */
+        battery_thermal: battery-thermal { thermal-sensors = <&tsens0 7>; };
+
+        /* Skin/Ambient Thermal */
+        skin_thermal: skin-thermal { thermal-sensors = <&tsens2 0>; };
+    };
+
+    /* ─── Panel (Display) ─── */
+    panel: panel@0 {
+        compatible = "xiaomi,peridot-panel", "xiaomi,peridot-dsc-panel";
+        status = "okay";
+
+        /* Power supplies */
+        vddi-supply = <&vddi_1p8>;
+        vdda-supply = <&vdda_3p3>;
+        vdd-supply = <&vdd_panel>;
+
+        /* Reset GPIO */
+        reset-gpios = <&tlmm 130 GPIO_ACTIVE_LOW>;
+
+        /* Timing */
+        width-mm = <69>;
+        height-mm = <154>;
+
+        port {
+            panel_in: endpoint {
+                remote-endpoint = <&panel_endpoint>;
+                data-lanes = <4>;
+            };
+        };
+
+        dsc {
+            slice-count = <2>;
+            slice-height = <8>;
+            bits-per-pixel = <128>;
+            block-pred-enable;
+            convert-rgb;
+        };
+    };
+
+    /* ─── Touchscreen (Goodix GT9916R) ─── */
+    &qupv3_1_geni_se {
+        status = "okay";
+
+        goodix_ts: touch@0 {
+            compatible = "goodix,gt9916r", "xiaomi,peridot-touch";
+            reg = <0>;
+            spi-max-frequency = <4000000>;
+            spi-cpha;
+            spi-cpol;
+            status = "okay";
+
+            reset-gpios = <&tlmm 128 GPIO_ACTIVE_LOW>;
+            interrupt-gpios = <&tlmm 129 GPIO_ACTIVE_LOW>;
+
+            vdd_1v8-supply = <&ldob23>;
+            vdd_3v3-supply = <&ldob13>;
+
+            touch-screen-size-x = <19520>;
+            touch-screen-size-y = <43400>;
+            touch-max-points = <10>;
+        };
+    };
+
+    /* ─── Bluetooth UART (QUPv3 SE2) ─── */
+    &qupv3_0_geni_se {
+        status = "okay";
+
+        bt_uart: serial@888000 {
+            compatible = "qcom,qupv3-uart";
+            reg = <0x0 0x00888000 0x0 0x10000>;
+            clocks = <&gcc GCC_QUPV3_0_GENI_SE_CLK>;
+            clock-names = "uart_clk";
+            interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
+            current-speed = <3000000>;
+            status = "okay";
+        };
+    };
+
+    /* ─── WCN6750 WiFi (PCIe) ─── */
+    &pcie@1C00000 {
+        status = "okay";
+
+        wifi: wifi@0 {
+            compatible = "qcom,wcn6750-wifi", "qcom,ath11k-pci";
+            reg = <0x0 0x0 0x0 0x0 0x0>;
+            memory-region = <&wpss_mem>;
+            power-domains = <&wifi_cx_rail>, <&wifi_mx_rail>, <&wifi_xo_rail>;
+            firmware-name = "ath11k/WCN6750/hw2.0/firmware.bin";
+            board-data-name = "ath11k/WCN6750/hw2.0/board.bin";
+            board-data-2-name = "ath11k/WCN6750/hw2.0/board-2.bin";
+            qcom,bdf-name = "n16t";
+            interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
+            interrupt-names = "wifi";
+            status = "okay";
+        };
+    };
+
+    /* ─── WCN6750 Bluetooth ─── */
+    bluetooth: bluetooth@888000 {
+        compatible = "qcom,wcn6750-bt", "qcom,bt-uart";
+        reg = <0x0 0x00888000 0x0 0x10000>;
+        clocks = <&gcc GCC_QUPV3_0_GENI_SE_CLK>;
+        clock-names = "uart_clk";
+        interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+
+        qcom,bt-uart-baudrate = <3000000>;
+        qcom,bt-uart-flow-control;
+
+        power-domains = <&wifi_cx_rail>, <&wifi_mx_rail>;
+
+        firmware-name = "qca/btfw32.tlv";
+        config-name = "qca/btfw32.cfg";
+
+        shutdown-gpios = <&tlmm 131 GPIO_ACTIVE_LOW>;
+        wake-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
+    };
+
+    /* ─── RPMh Power Rails for WCN6750 ─── */
+    &rpmh {
+        wifi_cx_rail: wifi-cx {
+            compatible = "qcom,rpmhpd";
+            regulator-name = "wifi_cx";
+            rpmh-id = <RPMH_WIFI_CX>;
+            mode = <RPMH_MODE_ACTIVE>;
+            enable;
+        };
+
+        wifi_mx_rail: wifi-mx {
+            compatible = "qcom,rpmhpd";
+            regulator-name = "wifi_mx";
+            rpmh-id = <RPMH_WIFI_MX>;
+            mode = <RPMH_MODE_ACTIVE>;
+            enable;
+        };
+
+        wifi_xo_rail: wifi-xo {
+            compatible = "qcom,rpmhpd";
+            regulator-name = "wifi_xo";
+            rpmh-id = <RPMH_WIFI_XO>;
+            mode = <RPMH_MODE_ACTIVE>;
+            enable;
+        };
+
+        pcie_gdsc: pcie-gdsc {
+            compatible = "qcom,rpmhpd";
+            regulator-name = "pcie_gdsc";
+            rpmh-id = <RPMH_PCIE_0_GDSC>;
+            mode = <RPMH_MODE_ACTIVE>;
+            enable;
+        };
+    };
+
+    /* ─── PMIC Regulators for Touch/Display ─── */
+    &spmi {
+        /* LDOB23 - 1.8V for touch */
+        ldob23: ldob23@0 {
+            compatible = "qcom,spmi-regulator";
+            reg = <0x0>;
+            regulator-name = "ldob23";
+            regulator-min-microvolt = <1800000>;
+            regulator-max-microvolt = <1800000>;
+            regulator-always-on;
+            regulator-boot-on;
+        };
+
+        /* LDOB13 - 3.3V for touch */
+        ldob13: ldob13@0 {
+            compatible = "qcom,spmi-regulator";
+            reg = <0x1>;
+            regulator-name = "ldob13";
+            regulator-min-microvolt = <3300000>;
+            regulator-max-microvolt = <3300000>;
+            regulator-always-on;
+            regulator-boot-on;
+        };
+
+        /* VDDI 1.8V for panel */
+        vddi_1p8: vddi-1p8@0 {
+            compatible = "qcom,spmi-regulator";
+            reg = <0x2>;
+            regulator-name = "vddi_1p8";
+            regulator-min-microvolt = <1800000>;
+            regulator-max-microvolt = <1800000>;
+            regulator-always-on;
+            regulator-boot-on;
+        };
+
+        /* VDDA 3.3V for panel */
+        vdda_3p3: vdda-3p3@0 {
+            compatible = "qcom,spmi-regulator";
+            reg = <0x3>;
+            regulator-name = "vdda_3p3";
+            regulator-min-microvolt = <3300000>;
+            regulator-max-microvolt = <3300000>;
+            regulator-always-on;
+            regulator-boot-on;
+        };
+
+        /* VDD Panel */
+        vdd_panel: vdd-panel@0 {
+            compatible = "qcom,spmi-regulator";
+            reg = <0x4>;
+            regulator-name = "vdd_panel";
+            regulator-min-microvolt = <1800000>;
+            regulator-max-microvolt = <3300000>;
+            regulator-boot-on;
+        };
+    };
+
+    /* ─── TLMM Pinmux for Peridot ─── */
+    &tlmm {
+        /* Touch SPI pins (QUPv3 SE4) - GPIOs 16-19 */
+        touch_spi_pins: touch-spi-pins {
+            pins = "gpio16", "gpio17", "gpio18", "gpio19";
+            function = "qupv3_1_geni_se";
+            drive-strength = <8>;
+            bias-disable;
+        };
+
+        /* Touch RESET (GPIO 128) */
+        touch_reset_pin: touch-reset {
+            pins = "gpio128";
+            function = "gpio";
+            drive-strength = <4>;
+            bias-pull-up;
+            output-high;
+        };
+
+        /* Touch INT (GPIO 129) */
+        touch_int_pin: touch-int {
+            pins = "gpio129";
+            function = "gpio";
+            drive-strength = <4>;
+            bias-pull-up;
+            input-enable;
+        };
+
+        /* Panel RESET (GPIO 130) */
+        panel_reset_gpio: panel-reset {
+            pins = "gpio130";
+            function = "gpio";
+            drive-strength = <4>;
+            bias-pull-up;
+            output-high;
+        };
+
+        /* BT SHUTDOWN (GPIO 131) */
+        bt_shutdown_pin: bt-shutdown {
+            pins = "gpio131";
+            function = "gpio";
+            drive-strength = <4>;
+            bias-pull-up;
+            output-high;
+        };
+
+        /* BT WAKE (GPIO 132) */
+        bt_wake_pin: bt-wake {
+            pins = "gpio132";
+            function = "gpio";
+            drive-strength = <4>;
+            bias-pull-up;
+            input-enable;
+        };
+
+        /* BT UART pins (QUPv3 SE2) - GPIOs 20, 21 */
+        bt_uart_pins: bt-uart-pins {
+            pins = "gpio20", "gpio21";
+            function = "qupv3_0_geni_se";
+            drive-strength = <4>;
+            bias-disable;
+        };
+    };
+
+    /* ─── GCC Clock Additions for Peridot ─── */
+    &gcc {
+        /* QUPv3 SE4 clock for touch SPI */
+        GCC_QUPV3_1_GENI_SE_CLK: qupv3-1-geni-se-clk {
+            compatible = "qcom,gcc-clk-bcr";
+            reg = <0x73000>;
+            clocks = <&gcc GCC_GPLL0_DIV2>;
+            clock-names = "src";
+            #clock-cells = <0>;
+        };
+
+        /* QUPv3 SE2 clock for BT UART */
+        GCC_QUPV3_0_GENI_SE_CLK: qupv3-0-geni-se-clk {
+            compatible = "qcom,gcc-clk-bcr";
+            reg = <0x73010>;
+            clocks = <&gcc GCC_GPLL0_DIV2>;
+            clock-names = "src";
+            #clock-cells = <0>;
+        };
+
+        /* TSENS clocks */
+        GCC_TSENS0_CLK: tsens0-clk {
+            compatible = "qcom,gcc-clk-bcr";
+            reg = <0x75000>;
+            clocks = <&gcc GCC_GPLL0_DIV2>;
+            clock-names = "src";
+            #clock-cells = <0>;
+        };
+
+        GCC_TSENS1_CLK: tsens1-clk {
+            compatible = "qcom,gcc-clk-bcr";
+            reg = <0x75010>;
+            clocks = <&gcc GCC_GPLL0_DIV2>;
+            clock-names = "src";
+            #clock-cells = <0>;
+        };
+
+        GCC_TSENS2_CLK: tsens2-clk {
+            compatible = "qcom,gcc-clk-bcr";
+            reg = <0x75020>;
+            clocks = <&gcc GCC_GPLL0_DIV2>;
+            clock-names = "src";
+            #clock-cells = <0>;
+        };
+    };
+};

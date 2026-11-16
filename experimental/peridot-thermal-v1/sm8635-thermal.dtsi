@@ -1,0 +1,394 @@
+/*
+ * SM8635 (Snapdragon 8s Gen 3) Thermal Device Tree for Peridot
+ * Adapted from armada-dodge sm8750-thermal.dtsi for OnePlus 13
+ *
+ * Peridot (Xiaomi POCO F6 / Redmi Turbo 3) specifics:
+ * - 3 TSENS blocks (vs 4 on SM8750)
+ * - 8 CPUs in 3 clusters (A520/A720/X4) vs 8 Oryon in 2 clusters
+ * - SCMI DVFS domains: 3 (one per cluster) vs 2
+ * - APPS RSC at 0x17A20000 for RPMh/SCMI mailbox
+ */
+
+/ {
+    #address-cells = <2>;
+    #size-cells = <2>;
+
+    /* ─── CPUSYS SRAM (for SCMI mailbox) ─── */
+    cpusys_sram: cpusys-sram@14600000 {
+        compatible = "mmio-sram";
+        reg = <0x0 0x14600000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges = <0 0x0 0x14600000 0x10000>;
+
+        scmi_mailbox: scmi-mailbox@0 {
+            compatible = "qcom,scmi-mailbox";
+            reg = <0x0 0x1000>;
+            interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+            qcom,smmu = <&apps_smmu>;
+        };
+    };
+
+    /* ─── CPACP SRAM ─── */
+    cpacp_sram: cpacp-sram@14610000 {
+        compatible = "mmio-sram";
+        reg = <0x0 0x14610000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+    };
+
+    /* ─── TSENS Thermal Sensors ─── */
+    /* Peridot has 3 TSENS blocks with 27 sensors each = 81 total */
+
+    tsens0: tsens@c222000 {
+        compatible = "qcom,tsens";
+        reg = <0x0 0x0C222000 0x0 0x1000>;
+        #thermal-sensor-cells = <1>;
+        qcom,num-sensors = <27>;
+        clocks = <&gcc GCC_TSENS0_CLK>;
+        clock-names = "core";
+        interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    tsens1: tsens@c223000 {
+        compatible = "qcom,tsens";
+        reg = <0x0 0x0C223000 0x0 0x1000>;
+        #thermal-sensor-cells = <1>;
+        qcom,num-sensors = <27>;
+        clocks = <&gcc GCC_TSENS1_CLK>;
+        clock-names = "core";
+        interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    tsens2: tsens@c224000 {
+        compatible = "qcom,tsens";
+        reg = <0x0 0x0C224000 0x0 0x1000>;
+        #thermal-sensor-cells = <1>;
+        qcom,num-sensors = <27>;
+        clocks = <&gcc GCC_TSENS2_CLK>;
+        clock-names = "core";
+        interrupts = <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    /* ─── Thermal Zones ─── */
+    thermal-zones {
+        /* CPU Cluster 0 (Small: A520 x3) - sensors from tsens0 */
+        cpu0_thermal: cpu0-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 0>;
+            trips {
+                cpu0_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu0_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu0_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu0_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu0_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu0_alert0>; cooling-device = <&cpu0_cooling 0 10>; };
+                map1 { trip = <&cpu0_alert1>; cooling-device = <&cpu0_cooling 0 9>; };
+                map2 { trip = <&cpu0_alert2>; cooling-device = <&cpu0_cooling 0 8>; };
+                map3 { trip = <&cpu0_alert3>; cooling-device = <&cpu0_cooling 0 7>; };
+                map4 { trip = <&cpu0_crit>; cooling-device = <&cpu0_cooling 0 0>; };
+            };
+        };
+
+        cpu1_thermal: cpu1-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 1>;
+            trips {
+                cpu1_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu1_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu1_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu1_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu1_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu1_alert0>; cooling-device = <&cpu1_cooling 0 10>; };
+                map1 { trip = <&cpu1_alert1>; cooling-device = <&cpu1_cooling 0 9>; };
+                map2 { trip = <&cpu1_alert2>; cooling-device = <&cpu1_cooling 0 8>; };
+                map3 { trip = <&cpu1_alert3>; cooling-device = <&cpu1_cooling 0 7>; };
+                map4 { trip = <&cpu1_crit>; cooling-device = <&cpu1_cooling 0 0>; };
+            };
+        };
+
+        cpu2_thermal: cpu2-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 2>;
+            trips {
+                cpu2_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu2_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu2_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu2_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu2_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu2_alert0>; cooling-device = <&cpu2_cooling 0 10>; };
+                map1 { trip = <&cpu1_alert1>; cooling-device = <&cpu2_cooling 0 9>; };
+                map2 { trip = <&cpu2_alert2>; cooling-device = <&cpu2_cooling 0 8>; };
+                map3 { trip = <&cpu2_alert3>; cooling-device = <&cpu2_cooling 0 7>; };
+                map4 { trip = <&cpu2_crit>; cooling-device = <&cpu2_cooling 0 0>; };
+            };
+        };
+
+        /* CPU Cluster 1 (Big: A720 x4) - sensors from tsens0/tsens1 */
+        cpu3_thermal: cpu3-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 3>;
+            trips {
+                cpu3_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu3_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu3_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu3_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu3_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu3_alert0>; cooling-device = <&cpu3_cooling 0 10>; };
+                map1 { trip = <&cpu3_alert1>; cooling-device = <&cpu3_cooling 0 9>; };
+                map2 { trip = <&cpu3_alert2>; cooling-device = <&cpu3_cooling 0 8>; };
+                map3 { trip = <&cpu3_alert3>; cooling-device = <&cpu3_cooling 0 7>; };
+                map4 { trip = <&cpu3_crit>; cooling-device = <&cpu3_cooling 0 0>; };
+            };
+        };
+
+        cpu4_thermal: cpu4-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 4>;
+            trips {
+                cpu4_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu4_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu4_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu4_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu4_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu4_alert0>; cooling-device = <&cpu4_cooling 0 10>; };
+                map1 { trip = <&cpu4_alert1>; cooling-device = <&cpu4_cooling 0 9>; };
+                map2 { trip = <&cpu4_alert2>; cooling-device = <&cpu4_cooling 0 8>; };
+                map3 { trip = <&cpu4_alert3>; cooling-device = <&cpu4_cooling 0 7>; };
+                map4 { trip = <&cpu4_crit>; cooling-device = <&cpu4_cooling 0 0>; };
+            };
+        };
+
+        cpu5_thermal: cpu5-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 5>;
+            trips {
+                cpu5_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu5_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu5_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu5_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu5_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu5_alert0>; cooling-device = <&cpu5_cooling 0 10>; };
+                map1 { trip = <&cpu5_alert1>; cooling-device = <&cpu5_cooling 0 9>; };
+                map2 { trip = <&cpu5_alert2>; cooling-device = <&cpu5_cooling 0 8>; };
+                map3 { trip = <&cpu5_alert3>; cooling-device = <&cpu5_cooling 0 7>; };
+                map4 { trip = <&cpu5_crit>; cooling-device = <&cpu5_cooling 0 0>; };
+            };
+        };
+
+        cpu6_thermal: cpu6-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens0 6>;
+            trips {
+                cpu6_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu6_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu6_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu6_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu6_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu6_alert0>; cooling-device = <&cpu6_cooling 0 10>; };
+                map1 { trip = <&cpu6_alert1>; cooling-device = <&cpu6_cooling 0 9>; };
+                map2 { trip = <&cpu6_alert2>; cooling-device = <&cpu6_cooling 0 8>; };
+                map3 { trip = <&cpu6_alert3>; cooling-device = <&cpu6_cooling 0 7>; };
+                map4 { trip = <&cpu6_crit>; cooling-device = <&cpu6_cooling 0 0>; };
+            };
+        };
+
+        /* CPU Cluster 2 (Prime: X4 x1) - sensors from tsens1/tsens2 */
+        cpu7_thermal: cpu7-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens1 0>;
+            trips {
+                cpu7_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                cpu7_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                cpu7_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                cpu7_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                cpu7_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&cpu7_alert0>; cooling-device = <&cpu7_cooling 0 10>; };
+                map1 { trip = <&cpu7_alert1>; cooling-device = <&cpu7_cooling 0 9>; };
+                map2 { trip = <&cpu7_alert2>; cooling-device = <&cpu7_cooling 0 8>; };
+                map3 { trip = <&cpu7_alert3>; cooling-device = <&cpu7_cooling 0 7>; };
+                map4 { trip = <&cpu7_crit>; cooling-device = <&cpu7_cooling 0 0>; };
+            };
+        };
+
+        /* GPU Thermal (Adreno 735) - sensors from tsens1/tsens2 */
+        gpu_thermal: gpu-thermal {
+            polling-delay-passive = <250>;
+            polling-delay = <1000>;
+            thermal-sensors = <&tsens1 1>;
+            trips {
+                gpu_alert0: alert0 { temperature = <70000>; hysteresis = <2000>; type = "passive"; };
+                gpu_alert1: alert1 { temperature = <80000>; hysteresis = <2000>; type = "passive"; };
+                gpu_alert2: alert2 { temperature = <85000>; hysteresis = <2000>; type = "passive"; };
+                gpu_alert3: alert3 { temperature = <90000>; hysteresis = <2000>; type = "passive"; };
+                gpu_crit: crit { temperature = <95000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&gpu_alert0>; cooling-device = <&gpu_cooling 0 10>; };
+                map1 { trip = <&gpu_alert1>; cooling-device = <&gpu_cooling 0 9>; };
+                map2 { trip = <&gpu_alert2>; cooling-device = <&gpu_cooling 0 8>; };
+                map3 { trip = <&gpu_alert3>; cooling-device = <&gpu_cooling 0 7>; };
+                map4 { trip = <&gpu_crit>; cooling-device = <&gpu_cooling 0 0>; };
+            };
+        };
+
+        /* Battery Thermal - sensors from tsens0 */
+        battery_thermal: battery-thermal {
+            polling-delay-passive = <1000>;
+            polling-delay = <5000>;
+            thermal-sensors = <&tsens0 7>;
+            trips {
+                bat_half: half-speed { temperature = <50000>; hysteresis = <2000>; type = "passive"; };
+                bat_low: lowest-speed { temperature = <58000>; hysteresis = <2000>; type = "passive"; };
+                bat_crit: crit { temperature = <65000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&bat_half>; cooling-device = <&cpu0_cooling 0 5>; };
+                map0 { trip = <&bat_half>; cooling-device = <&cpu1_cooling 0 5>; };
+                map0 { trip = <&bat_half>; cooling-device = <&cpu2_cooling 0 5>; };
+                map0 { trip = <&bat_half>; cooling-device = <&cpu3_cooling 0 5>; };
+                map0 { trip = <&bat_half>; cooling-device = <&cpu4_cooling 0 5>; };
+                map0 { trip = <&bat_half>; cooling-device = <&cpu5_cooling 0 5>; };
+                map0 { trip = <&bat_half>; cooling-device = <&cpu6_cooling 0 5>; };
+                map0 { trip = <&bat_half>; cooling-device = <&cpu7_cooling 0 5>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu0_cooling 0 0>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu1_cooling 0 0>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu2_cooling 0 0>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu3_cooling 0 0>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu4_cooling 0 0>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu5_cooling 0 0>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu6_cooling 0 0>; };
+                map1 { trip = <&bat_low>; cooling-device = <&cpu7_cooling 0 0>; };
+            };
+        };
+
+        /* Skin/Ambient Thermal - additional sensors */
+        skin_thermal: skin-thermal {
+            polling-delay-passive = <1000>;
+            polling-delay = <5000>;
+            thermal-sensors = <&tsens2 0>;
+            trips {
+                skin_alert0: alert0 { temperature = <45000>; hysteresis = <2000>; type = "passive"; };
+                skin_alert1: alert1 { temperature = <50000>; hysteresis = <2000>; type = "passive"; };
+                skin_crit: crit { temperature = <55000>; hysteresis = <2000>; type = "critical"; };
+            };
+            cooling-maps {
+                map0 { trip = <&skin_alert0>; cooling-device = <&cpu0_cooling 0 8>; };
+                map1 { trip = <&skin_alert1>; cooling-device = <&cpu0_cooling 0 5>; };
+            };
+        };
+    };
+
+    /* ─── CPU Cooling Devices (SCMI DVFS) ─── */
+    /* Each cluster has its own SCMI performance domain */
+
+    cpu0_cooling: cpu0-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 0>;
+        scmi-perf-domain = <0>;  /* Cluster 0: small (A520 x3) */
+    };
+
+    cpu1_cooling: cpu1-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 0>;
+        scmi-perf-domain = <0>;
+    };
+
+    cpu2_cooling: cpu2-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 0>;
+        scmi-perf-domain = <0>;
+    };
+
+    cpu3_cooling: cpu3-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 1>;
+        scmi-perf-domain = <1>;  /* Cluster 1: big (A720 x4) */
+    };
+
+    cpu4_cooling: cpu4-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 1>;
+        scmi-perf-domain = <1>;
+    };
+
+    cpu5_cooling: cpu5-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 1>;
+        scmi-perf-domain = <1>;
+    };
+
+    cpu6_cooling: cpu6-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 1>;
+        scmi-perf-domain = <1>;
+    };
+
+    cpu7_cooling: cpu7-cooling {
+        compatible = "arm,scmi-cpu-cooling";
+        #cooling-cells = <2>;
+        clocks = <&scmi_clk 2>;
+        scmi-perf-domain = <2>;  /* Cluster 2: prime (X4 x1) */
+    };
+
+    gpu_cooling: gpu-cooling {
+        compatible = "qcom,adreno-cooling";
+        #cooling-cells = <2>;
+        clocks = <&gcc GCC_GPU_CLK>;
+        /* GPU cooling via GMU frequency scaling */
+    };
+
+    /* ─── SCMI Clock Provider (for cooling devices) ─── */
+    scmi_clk: scmi-clock {
+        compatible = "arm,scmi-clock";
+        #clock-cells = <1>;
+        clocks = <&scmi_mailbox>;
+        clock-names = "scmi";
+    };
+};
+
+/* ─── Reserved Memory for SCMI/Shared Memory ─── */
+&reserved-memory {
+    /* SCMI shared memory for CPUSYS mailbox */
+    scmi_shmem: scmi-shmem@81d00000 {
+        compatible = "shared-dma-pool";
+        reg = <0x0 0x81D00000 0x0 0x200000>;  /* SMEM at 0x81D00000, 2MB */
+        no-map;
+        reusable;
+    };
+};

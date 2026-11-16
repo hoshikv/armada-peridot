@@ -1,36 +1,199 @@
 {
-  "media_sha256": "b58ff65760578b03d30e56e5b00dfe2088bd149801d4b69bc79268617e612840",
-  "size_mib": 2040,
-  "phone_storage_writes": false,
-  "native_display_enabled": true,
-  "gpu_max_hz": 222000000,
-  "runtime_verified": true,
-  "wifi_enabled": true,
-  "purpose": "Thermal-controlled RAM test with native Steam UI",
-  "thermal_runtime_verified": true,
-  "cpu_max_target_khz": 1500000,
-  "cpu_boot_online": 1,
-  "cpu_runtime_online_target": 8,
-  "thermal_throttle_millicelsius": [
-    70000,
-    80000
-  ],
-  "thermal_reboot_millicelsius": 85000,
-  "thermal_emulation_test_verified": true,
-  "steam_ui_verified": true,
-  "physical_desktop_and_touch_user_confirmed": true,
-  "simulated_75c_test": {
-    "guard_limits_khz": [
-      960000,
-      1017600
-    ],
-    "cpu0_kernel_cooling_state_before": 0,
-    "cpu0_kernel_cooling_state_during": 1,
-    "normal_state_restored": true,
-    "actual_cpu_after_test_celsius": 48.6
+  "project": "armada-dodge-peridot",
+  "device": "Xiaomi POCO F6 / Redmi Turbo 3 (peridot)",
+  "soc": "SM8635 (Snapdragon 8s Gen 3)",
+  "build_date": "2026-11-16",
+  "kernel_version": "6.12+",
+  "toolchain": {
+    "compiler": "clang 18+",
+    "linker": "lld 18+",
+    "cross_compile": "aarch64-linux-gnu-",
+    "arch": "arm64"
   },
-  "host_policy_tests_passed": 8,
-  "real_heating_stress_test_performed": false,
-  "battery_skin_charging_thermal_verified": false,
-  "steam_further_setup_deferred": true
+  "thermal": {
+    "tsens_blocks": 3,
+    "sensors_per_block": 27,
+    "total_sensors": 81,
+    "tsens_addresses": [
+      "0x0C222000",
+      "0x0C223000",
+      "0x0C224000"
+    ],
+    "cpu_clusters": 3,
+    "cluster_topology": {
+      "cluster0": {"name": "small", "cpus": [0,1,2], "arch": "Cortex-A520", "scmi_domain": 0},
+      "cluster1": {"name": "big", "cpus": [3,4,5,6], "arch": "Cortex-A720", "scmi_domain": 1},
+      "cluster2": {"name": "prime", "cpus": [7], "arch": "Cortex-X4", "scmi_domain": 2}
+    },
+    "thermal_limits_celsius": {
+      "core_passive": 95,
+      "other_sensors": 100,
+      "emergency": 115,
+      "battery_half": 50,
+      "battery_lowest": 58
+    },
+    "cooling_trips_celsius": [70, 80, 85, 90, 95],
+    "scmi_dvfs_domains": 3,
+    "apps_rsc_base": "0x17A20000",
+    "cpusys_sram_base": "0x14600000",
+    "poll_interval_ms": 250,
+    "watchdog_timeout_s": 12
+  },
+  "gpu": {
+    "model": "Adreno 735",
+    "chip_id": "0x43030B00",
+    "gmu_version": "0x07020100",
+    "gmem_kb": 512,
+    "max_freq_mhz": 800,
+    "thermal_cap_mhz": 222,
+    "registers": {
+      "gpu_cc": "0x03D90000",
+      "gmu": "0x03D68000",
+      "gbif": "0x03D0F000",
+      "cx_misc": "0x03D9E000",
+      "rscc": "0x03D50000",
+      "smmu": "0x03DA0000"
+    },
+    "firmware": [
+      "a660_zap.mdt",
+      "a660_gmu.bin",
+      "a660_sqe.fw"
+    ]
+  },
+  "display": {
+    "resolution": "1220x2712",
+    "refresh_hz": 120,
+    "interface": "MIPI DSI 4-lane",
+    "color_depth": "10-bit RGB",
+    "compression": "DSC",
+    "dsc_slices": 2,
+    "dsc_slice_height": 8,
+    "dsi_mode": "video_sync_pulse",
+    "panel_timing": {
+      "hactive": 1220,
+      "vactive": 2712,
+      "hfp": 80,
+      "hsa": 8,
+      "hbp": 80,
+      "vfp": 24,
+      "vsa": 4,
+      "vbp": 16,
+      "pixclk_mhz": 432
+    }
+  },
+  "touchscreen": {
+    "controller": "Goodix GT9916R (Berlin-D)",
+    "interface": "SPI via QUPv3 SE4",
+    "spi_base": "0x00A90000",
+    "spi_frequency_hz": 4000000,
+    "gpios": {
+      "miso": 16,
+      "mosi": 17,
+      "clk": 18,
+      "cs": 19,
+      "int": 129,
+      "reset": 128
+    },
+    "power": {
+      "vdd_1v8": "LDOB23 via RPMh",
+      "vdd_3v3": "LDOB13 via RPMh"
+    },
+    "resolution": {
+      "max_x": 19520,
+      "max_y": 43400
+    },
+    "max_points": 10,
+    "report_rate_hz": 240
+  },
+  "wifi": {
+    "controller": "WCN6750",
+    "driver": "ath11k",
+    "interface": "PCIe Gen3 x1",
+    "wpss_base": "0x9BB00000",
+    "wpss_size_mb": 25,
+    "bdf": "n16t",
+    "firmware": [
+      "ath11k/WCN6750/hw2.0/firmware.bin",
+      "ath11k/WCN6750/hw2.0/board.bin",
+      "ath11k/WCN6750/hw2.0/board-2.bin"
+    ]
+  },
+  "bluetooth": {
+    "controller": "WCN6750",
+    "transport": "H4 UART",
+    "uart_base": "0x00888000",
+    "uart_qup": "QUPv3 SE2",
+    "baudrate": 3000000,
+    "gpios": {
+      "tx": 20,
+      "rx": 21,
+      "shutdown": 131,
+      "wake": 132
+    },
+    "firmware": [
+      "qca/btfw32.tlv",
+      "qca/btfw32.cfg"
+    ]
+  },
+  "cpu": {
+    "total_cores": 8,
+    "boot_cpu": 7,
+    "clusters": [
+      {"id": 0, "name": "small", "cores": 3, "arch": "Cortex-A520"},
+      {"id": 1, "name": "big", "cores": 4, "arch": "Cortex-A720"},
+      {"id": 2, "name": "prime", "cores": 1, "arch": "Cortex-X4"}
+    ],
+    "psci_method": "hvc",
+    "cpufreq_driver": "qcom-scmi"
+  },
+  "memory": {
+    "ddr_base": "0x80000000",
+    "regions": [
+      {"base": "0x80000000", "size": "2GB"},
+      {"base": "0x100000000", "size": "2GB"}
+    ],
+    "reserved": {
+      "smem": {"base": "0x81D00000", "size": "2MB"},
+      "aop_cmd_db": {"base": "0x81C60000", "size": "128KB"},
+      "wpss": {"base": "0x9BB00000", "size": "25MB"},
+      "adsp": {"base": "0x9D400000", "size": "56MB"},
+      "mpss": {"base": "0x8BC00000", "size": "205MB", "status": "disabled"},
+      "gpu_uc": {"base": "0x86000000", "size": "16MB"},
+      "gpu_cached": {"base": "0x87000000", "size": "64MB"},
+      "framebuffer": {"base": "0xE3940000", "size": "43MB"},
+      "scmi_shmem": {"base": "0x81D20000", "size": "64KB"}
+    }
+  },
+  "boot": {
+    "payload_base": "0xF0000000",
+    "fd_base": "0xA7100000",
+    "fd_size": "0x300000",
+    "fb_base": "0xE3940000",
+    "media_base": "0x90000000",
+    "media_size": "0x80000000",
+    "bootargs": "console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0x888000 bootcpu=7 cpus=8 cpufreq=1 fb_hz=120 fb_threads=6 touch_no_rpmh=1 touch_poll_us=4000 thermal=2 metal=1 androidboot.hardware=peridot androidboot.bootdevice=ufs"
+  },
+  "components_status": {
+    "thermal_guard": "planned",
+    "thermal_watchdog": "planned",
+    "gpu_driver": "planned",
+    "display_driver": "planned",
+    "touchscreen_driver": "planned",
+    "wifi_driver": "planned",
+    "bluetooth_driver": "planned",
+    "cpu_cpufreq": "planned",
+    "battery_monitor": "deferred",
+    "audio": "deferred",
+    "camera": "deferred",
+    "modem": "deferred",
+    "deep_suspend": "deferred",
+    "ufs_storage": "disabled_for_ram_boot"
+  },
+  "upstream_sources": {
+    "armada_dodge": "https://github.com/faridbtw/armada-dodge",
+    "xnu_kernel_peridot": "https://github.com/slayedkaito/xnu-kernel-peridot-amiaxf",
+    "linux_kernel": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+    "armada_os": "https://github.com/faridbtw/armada",
+    "omarchy_mobile": "https://github.com/omarchy/linux-omarchy-mobile"
+  }
 }

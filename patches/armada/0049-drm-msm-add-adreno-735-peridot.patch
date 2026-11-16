@@ -1,0 +1,102 @@
+From: Peridot Port <peridot@armada-dodge>
+Date: Mon, 16 Nov 2026 00:00:00 +0000
+Subject: [PATCH] drm/msm: Add Adreno 735 (SM8635/Peridot) GPU support
+
+Add support for Adreno 735 GPU found in Snapdragon 8s Gen 3 (SM8635)
+used in Xiaomi POCO F6 / Redmi Turbo 3 (peridot).
+
+Chip ID: 0x43030B00
+GMU Version: 0x07020100
+
+Register addresses from xnu-kernel-peridot-amiaxf:
+- GPU CC: 0x03D90000 (size 0xA000)
+- GMU: 0x03D68000 (size 0x37000)
+- GBIF: 0x03D0F000
+- CX_MISC: 0x03D9E000
+- RSCC: 0x03D50000
+- SMMU: 0x03DA0000 (size 0x40000)
+- GCC: 0x00100000
+
+Key clocks (GCC offsets):
+- GCC_GPU_CFG_AHB: 0x71004
+- GCC_GPU_MEMNOC_GFX: 0x71010
+- GCC_GPU_SNOC_DVM_GFX: 0x71018
+- GCC_DDRSS_GPU_AXI: 0x7115C
+- GPUCC_CX_GDSCR: 0x908C (CX power switch)
+- GPUCC_GX_GDSCR: 0x9034 (GX/3D core power switch)
+- GPUCC_CX_GMU_CBCR: 0x90E4 (GMU clock)
+- GPUCC_AHB_CBCR: 0x90C8 (GPU register bus clock)
+
+Firmware files (from /vendor/firmware_mnt/image):
+- a660_zap.mdt - Zap shader (signed)
+- a660_gmu.bin - GMU firmware
+- a660_sqe.fw - SQE microcode
+
+Signed-off-by: Peridot Port <peridot@armada-dodge>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gen7.c | 45 +++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a7xx_gmu.c    | 12 +++++++++
+ 2 files changed, 57 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gen7.c b/drivers/gpu/drm/msm/adreno/adreno_gen7.c
+index xxxxxxx..yyyyyyy 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gen7.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gen7.c
+@@ -XX,6 +XX,51 @@ static const struct adreno_gpu_core a735_core = {
+ };
+ 
++static const struct adreno_gpu_core a735_peridot_core = {
++	.rev = ADRENO_REV(7, 3, 5),
++	.name = "Adreno 735 (Peridot)",
++	.gmu_ver = 0x07020100,
++	.chip_id = 0x43030B00,
++	.pte_size = 4,
++	.gmem_size = 0x80000,  /* 512KB GMEM */
++	.gmem_align = 4096,
++	.nr_rings = 8,
++	.nr_ibs = 16,
++	.has_preemption = true,
++	.has_cp_hwsched = true,
++	.has_gmu = true,
++	.has_llcc = true,
++	.has_lm = true,
++	.has_secure_cam = false,
++	.smmu_version = 0x2000,  /* MMU-500 */
++	.max_freq = 800000000,   /* 800 MHz max (capped to 222 MHz in practice) */
++	.base_freq = 200000000,  /* 200 MHz base */
++	.min_freq = 100000000,   /* 100 MHz min */
++};
++
+ static const struct adreno_gpu_core *adreno_gen7_cores[] = {
+ 	&a730_core,
+ 	&a735_core,
++	&a735_peridot_core,
+ 	NULL,
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a7xx_gmu.c b/drivers/gpu/drm/msm/adreno/a7xx_gmu.c
+index xxxxxxx..yyyyyyy 100644
+--- a/drivers/gpu/drm/msm/adreno/a7xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a7xx_gmu.c
+@@ -XX,6 +XX,18 @@ static const struct a7xx_gmu_core a735_gmu = {
+ };
+ 
++static const struct a7xx_gmu_core a735_peridot_gmu = {
++	.base = &a735_peridot_core,
++	.fw_name = "a660_gmu.bin",
++	.zap_name = "a660_zap.mdt",
++	.sqe_name = "a660_sqe.fw",
++	.hfi_version = 0x3000000,
++	.features = A7XX_GMU_FEATURE_HFI_V3 |
++		    A7XX_GMU_FEATURE_RPMH |
++		    A7XX_GMU_FEATURE_SLEEP |
++		    A7XX_GMU_FEATURE_DCVS,
++	.irq = 0,  /* Filled in at probe from DT */
++};
++
+ static const struct a7xx_gpu_info a7xx_gpu_info[] = {
+ 	{ .core = &a730_core, .gmu = &a730_gmu },
+ 	{ .core = &a735_core, .gmu = &a735_gmu },
++	{ .core = &a735_peridot_core, .gmu = &a735_peridot_gmu },
+ 	{},
+ };

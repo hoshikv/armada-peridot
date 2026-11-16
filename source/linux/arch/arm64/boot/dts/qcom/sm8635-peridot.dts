@@ -1,0 +1,347 @@
+/*
+ * Xiaomi POCO F6 / Redmi Turbo 3 (Peridot) Device Tree
+ * SoC: SM8635 (Snapdragon 8s Gen 3)
+ *
+ * Main device tree integrating all Peridot-specific hardware.
+ * Adapted from armada-dodge sm8750-dodge.dts and xnu-kernel-peridot DT.
+ */
+
+/dts-v1/;
+
+#include "sm8635.dtsi"
+#include "sm8635-peridot.dtsi"
+
+/ {
+    model = "Xiaomi POCO F6 / Redmi Turbo 3 (Peridot)";
+    compatible = "xiaomi,peridot", "qcom,sm8635";
+
+    aliases {
+        serial0 = &qupv3_0_geni_se;
+        serial1 = &qupv3_1_geni_se;
+        serial2 = &qupv3_2_geni_se;
+        gpu0 = &kgsl_3d0;
+        thermal0 = &tsens0;
+        thermal1 = &tsens1;
+        thermal2 = &tsens2;
+        i2c0 = &i2c0;
+        i2c1 = &i2c1;
+        i2c2 = &i2c2;
+        i2c3 = &i2c3;
+        i2c4 = &i2c4;
+        i2c5 = &i2c5;
+        i2c6 = &i2c6;
+        i2c7 = &i2c7;
+        i2c8 = &i2c8;
+        i2c9 = &i2c9;
+        i2c10 = &i2c10;
+        i2c11 = &i2c11;
+        i2c12 = &i2c12;
+        i2c13 = &i2c13;
+        i2c14 = &i2c14;
+        i2c15 = &i2c15;
+    };
+
+    chosen {
+        bootargs = "console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0x888000 "
+                   "bootcpu=7 cpus=8 cpufreq=1 "
+                   "fb_hz=120 fb_threads=6 "
+                   "touch_no_rpmh=1 touch_poll_us=4000 "
+                   "thermal=2 metal=1 "
+                   "androidboot.hardware=peridot androidboot.bootdevice=ufs";
+        stdout-path = "serial0:115200n8";
+    };
+
+    memory@80000000 {
+        device_type = "memory";
+        reg = <0x0 0x80000000 0x0 0x80000000>,  /* 2GB at 0x80000000 */
+              <0x0 0x100000000 0x0 0x80000000>; /* 2GB at 0x100000000 (4GB total) */
+        /* Additional memory regions would be added for 8GB/12GB variants */
+    };
+
+    reserved-memory {
+        #address-cells = <2>;
+        #size-cells = <2>;
+        ranges;
+
+        /* SMEM - Shared memory for inter-processor comms */
+        smem: smem@81D00000 {
+            compatible = "qcom,smem";
+            reg = <0x0 0x81D00000 0x0 0x200000>;  /* 2MB */
+            no-map;
+        };
+
+        /* AOP CMD DB */
+        aop_cmd_db: aop-cmd-db@81C60000 {
+            compatible = "qcom,aop-cmd-db";
+            reg = <0x0 0x81C60000 0x0 0x20000>;  /* 128KB */
+            no-map;
+        };
+
+        /* WPSS (WiFi DSP) */
+        wpss_mem: wpss@9BB00000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x9BB00000 0x0 0x1900000>;  /* 25MB */
+            no-map;
+            reusable;
+        };
+
+        /* ADSP (Audio DSP) */
+        adsp_mem: adsp@9D400000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x9D400000 0x0 0x3800000>;  /* 56MB */
+            no-map;
+            reusable;
+        };
+
+        /* MPSS (Modem) - disabled for RAM boot */
+        mpss_mem: mpss@8BC00000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x8BC00000 0x0 0xCD00000>;  /* 205MB */
+            no-map;
+            status = "disabled";
+        };
+
+        /* GPU uncached memory */
+        gpu_uc_mem: gpu-uc@86000000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x86000000 0x0 0x1000000>;  /* 16MB */
+            no-map;
+            reusable;
+        };
+
+        /* GPU cached memory */
+        gpu_cached_mem: gpu-cached@87000000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x87000000 0x0 0x4000000>;  /* 64MB */
+            no-map;
+            reusable;
+        };
+
+        /* Framebuffer / Splash */
+        splash_mem: splash@E3940000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0xE3940000 0x0 0x2B00000>;  /* 43MB */
+            no-map;
+            reusable;
+        };
+
+        /* SCMI shared memory */
+        scmi_shmem: scmi-shmem@81D20000 {
+            compatible = "shared-dma-pool";
+            reg = <0x0 0x81D20000 0x0 0x10000>;  /* 64KB */
+            no-map;
+            reusable;
+        };
+    };
+
+    /* ─── CPUs (8 cores, 3 clusters) ─── */
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        enable-method = "psci";
+
+        cpu0: cpu@0 { device_type = "cpu"; compatible = "arm,cortex-a520"; reg = <0x0>; };
+        cpu1: cpu@1 { device_type = "cpu"; compatible = "arm,cortex-a520"; reg = <0x1>; };
+        cpu2: cpu@2 { device_type = "cpu"; compatible = "arm,cortex-a520"; reg = <0x2>; };
+        cpu3: cpu@3 { device_type = "cpu"; compatible = "arm,cortex-a720"; reg = <0x3>; };
+        cpu4: cpu@4 { device_type = "cpu"; compatible = "arm,cortex-a720"; reg = <0x4>; };
+        cpu5: cpu@5 { device_type = "cpu"; compatible = "arm,cortex-a720"; reg = <0x5>; };
+        cpu6: cpu@6 { device_type = "cpu"; compatible = "arm,cortex-a720"; reg = <0x6>; };
+        cpu7: cpu@7 { device_type = "cpu"; compatible = "arm,cortex-x4"; reg = <0x7>; };
+    };
+
+    /* CPU topology for scheduler */
+    cpu-map {
+        cluster0 {
+            core0 { cpu = <&cpu0>; };
+            core1 { cpu = <&cpu1>; };
+            core2 { cpu = <&cpu2>; };
+        };
+        cluster1 {
+            core0 { cpu = <&cpu3>; };
+            core1 { cpu = <&cpu4>; };
+            core2 { cpu = <&cpu5>; };
+            core3 { cpu = <&cpu6>; };
+        };
+        cluster2 {
+            core0 { cpu = <&cpu7>; };
+        };
+    };
+
+    /* PSCI idle states */
+    arm,psci {
+        compatible = "arm,psci-1.0";
+        method = "hvc";
+        cpu_suspend = <0xC4000001>;
+        cpu_off = <0x84000002>;
+        cpu_on = <0xC4000003>;
+        migrate = <0xC4000005>;
+    };
+
+    /* ─── Include component DTs ─── */
+    #include "sm8635-thermal.dtsi"
+    #include "sm8635-gpu.dtsi"
+    #include "sm8635-display.dtsi"
+    #include "sm8635-touch.dtsi"
+    #include "sm8635-wifi-bt.dtsi"
+
+    /* ─── UFS (disabled for RAM boot) ─── */
+    ufshc@1D84000 {
+        status = "disabled";
+    };
+
+    /* ─── TLMM (GPIO) ─── */
+    tlmm: pinctrl@F100000 {
+        compatible = "qcom,tlmm-sm8635";
+        reg = <0x0 0x0F100000 0x0 0x100000>;
+        interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+        gpio-controller;
+        #gpio-cells = <2>;
+        interrupt-controller;
+        #interrupt-cells = <2>;
+        status = "okay";
+    };
+
+    /* ─── SPMI (PMIC) ─── */
+    spmi: spmi@C440000 {
+        compatible = "qcom,spmi-pmic-arb";
+        reg = <0x0 0x0C440000 0x0 0x10000>;
+        interrupts = <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        status = "okay";
+    };
+
+    /* ─── RPMh (Power Management) ─── */
+    rpmh: rpmh@18200000 {
+        compatible = "qcom,rpmh-sm8635";
+        reg = <0x0 0x18200000 0x0 0x10000>;
+        interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+        status = "okay";
+
+        /* RPMh command database */
+        cmd_db: cmd-db@80860000 {
+            compatible = "qcom,rpmh-cmd-db";
+            reg = <0x0 0x80860000 0x0 0x10000>;
+        };
+    };
+
+    /* ─── IPCC (Inter-processor Communication) ─── */
+    ipcc: ipcc@408000 {
+        compatible = "qcom,ipcc";
+        reg = <0x0 0x00408000 0x0 0x1000>;
+        interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+        #mbox-cells = <1>;
+        status = "okay";
+    };
+
+    /* ─── AOP Mailbox ─── */
+    aop_mbox: mbox@C300000 {
+        compatible = "qcom,aop-mbox";
+        reg = <0x0 0x0C300000 0x0 0x10000>;
+        interrupts = <GIC_SPI 270 IRQ_TYPE_LEVEL_HIGH>;
+        #mbox-cells = <1>;
+        status = "okay";
+    };
+
+    /* ─── GCC (Global Clock Controller) ─── */
+    gcc: clock-controller@100000 {
+        compatible = "qcom,gcc-sm8635";
+        reg = <0x0 0x00100000 0x0 0x100000>;
+        #clock-cells = <1>;
+        #reset-cells = <1>;
+        status = "okay";
+    };
+
+    /* ─── CPUSYS SRAM (for SCMI mailbox) ─── */
+    cpusys_sram: mmio-sram@14600000 {
+        compatible = "mmio-sram";
+        reg = <0x0 0x14600000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges = <0 0x0 0x14600000 0x10000>;
+
+        scmi_mailbox: scmi-mailbox@0 {
+            compatible = "qcom,scmi-mailbox";
+            reg = <0x0 0x1000>;
+            interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+            qcom,smmu = <&apps_smmu>;
+        };
+    };
+
+    /* ─── CPACP SRAM ─── */
+    cpacp_sram: mmio-sram@14610000 {
+        compatible = "mmio-sram";
+        reg = <0x0 0x14610000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+    };
+
+    /* ─── APPS SMMU ─── */
+    apps_smmu: iommu@15000000 {
+        compatible = "arm,smmu-v3";
+        reg = <0x0 0x15000000 0x0 0x100000>;
+        #iommu-cells = <0>;
+        interrupts = <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
+                     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+
+    /* ─── I2C Controllers ─── */
+    i2c0: i2c@880000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x00880000 0x0 0x10000>; status = "disabled"; };
+    i2c1: i2c@884000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x00884000 0x0 0x10000>; status = "disabled"; };
+    i2c2: i2c@890000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x00890000 0x0 0x10000>; status = "disabled"; };
+    i2c3: i2c@894000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x00894000 0x0 0x10000>; status = "disabled"; };
+    i2c4: i2c@8A0000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008A0000 0x0 0x10000>; status = "disabled"; };
+    i2c5: i2c@8A4000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008A4000 0x0 0x10000>; status = "disabled"; };
+    i2c6: i2c@8AC000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008AC000 0x0 0x10000>; status = "disabled"; };
+    i2c7: i2c@8B0000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008B0000 0x0 0x10000>; status = "disabled"; };
+    i2c8: i2c@8B4000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008B4000 0x0 0x10000>; status = "disabled"; };
+    i2c9: i2c@8BC000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008BC000 0x0 0x10000>; status = "disabled"; };
+    i2c10: i2c@8C0000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008C0000 0x0 0x10000>; status = "disabled"; };
+    i2c11: i2c@8C4000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008C4000 0x0 0x10000>; status = "disabled"; };
+    i2c12: i2c@8D0000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008D0000 0x0 0x10000>; status = "disabled"; };
+    i2c13: i2c@8D4000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008D4000 0x0 0x10000>; status = "disabled"; };
+    i2c14: i2c@8DC000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008DC000 0x0 0x10000>; status = "disabled"; };
+    i2c15: i2c@8E0000 { compatible = "qcom,geni-i2c"; reg = <0x0 0x008E0000 0x0 0x10000>; status = "disabled"; };
+
+    /* ─── QUPv3 SPI Controllers ─── */
+    qupv3_0_geni_se: spi@888000 {
+        compatible = "qcom,qupv3-spi";
+        reg = <0x0 0x00888000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        clocks = <&gcc GCC_QUPV3_0_GENI_SE_CLK>;
+        clock-names = "se_clk";
+        interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";  /* For BT UART */
+    };
+
+    qupv3_1_geni_se: spi@A90000 {
+        compatible = "qcom,qupv3-spi";
+        reg = <0x0 0x00A90000 0x0 0x10000>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        clocks = <&gcc GCC_QUPV3_1_GENI_SE_CLK>;
+        clock-names = "se_clk";
+        interrupts = <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";  /* For Touch SPI */
+    };
+
+    /* ─── Serial Console (QUPv3 SE2 - BT UART pins) ─── */
+    serial0: serial@888000 {
+        compatible = "qcom,geni-serial";
+        reg = <0x0 0x00888000 0x0 0x10000>;
+        clocks = <&gcc GCC_QUPV3_0_GENI_SE_CLK>;
+        clock-names = "se_clk";
+        interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+    };
+};
+
+/* ─── Include SoC-level DT ─── */
+#include "sm8635.dtsi"

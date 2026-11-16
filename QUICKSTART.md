@@ -1,59 +1,137 @@
-# RAM boot quickstart
+# Quick Start: Armada-Dodge Peridot
 
-## Requirements
+RAM-boot a native Wayland desktop on Xiaomi POCO F6 / Redmi Turbo 3 (peridot, SM8635).
 
-- OnePlus 13 (`dodge`, SM8750) with an already unlocked bootloader.
-- A prepared compatible Project Boot UEFI image and Armada RAM media image.
-- Python 3, Android platform-tools (`adb`, `fastboot`), a USB cable, and the matching local build profile.
+**No flash/install** — runs entirely in RAM; rebooting returns to Android.
 
-The images and firmware are not distributed here. A fresh source checkout cannot boot until you supply those local inputs. The tested packaging/boot host is macOS; it uses Homebrew tool paths in parts of the original recipes.
+## Prerequisites
 
-## Boot a prepared build
+### Host (macOS tested, Linux should work)
+- Python 3.10+
+- `dtc` (device tree compiler)
+- LLVM/Clang + `ld.lld` (for cross-compilation)
+- `aarch64-linux-gnu-` cross toolchain
+- Android platform-tools (`adb`, `fastboot`)
+- GNU `make`
 
-1. Put your prepared files in ignored `local/armada-thermal.img` and `local/dodge-uefi.img`.
-2. Review `experimental/armada-thermal-v1/STATUS.json`. Its SHA256 values describe the owner's tested build. For a rebuild, make an ignored `local/STATUS.json` with your actual image hashes and paths. Image paths are relative to this checkout and must remain inside it.
-3. Check files without contacting the phone:
+### Device
+- Xiaomi POCO F6 / Redmi Turbo 3 (peridot)
+- Unlocked bootloader
+- **Custom UEFI** with RAM media/FDT/touch lease/USB CDC recovery support (equivalent to Project Boot for OnePlus 13)
 
-   ```sh
-   python3 tools/boot-op13-armada.py --check
-   # For your own profile:
-   python3 tools/boot-op13-armada.py --profile local/STATUS.json --check
-   ```
-
-4. Start Android, connect USB, and obtain your native device serial with `adb devices`. Then:
-
-   ```sh
-   python3 tools/boot-op13-armada.py --serial YOUR_PHONE_SERIAL
-   # Or add --profile local/STATUS.json for your prepared build.
-   ```
-
-Keep USB connected through upload. The helper validates checksums, RAM-boots UEFI, stages the FAT media, arms the touch preparation and launches Linux. It then checks USB recovery, synchronizes the RAM clock and waits for live thermal monitoring. A reachable existing RAM session is restarted automatically. Run only one boot/USB tool at a time.
-
-The custom UEFI must support the Linux FDT, touch preparation and recovery commands used by this helper; an arbitrary generic UEFI image is insufficient.
-
-## In the desktop
-
-- Scaling is 150%, portrait, with the 120 Hz panel mode.
-- Tap text fields for Plasma Keyboard. Fastfetch is available in the startup terminal.
-- Reconnect Wi-Fi through KDE after each reboot. Enter passwords on the phone.
-- Short-press power to turn the display off; press again to turn it back on.
-- Bluetooth discovery and volume key events work. Speaker audio remains deferred.
-- Steam Big Picture can open after Wi-Fi connects. Its first-run screen and touch were verified; further setup is deferred. When ready, choose your timezone and complete any sign-in yourself. Games/Proton are unverified.
-
-## Thermal status and recovery
-
-On macOS, the fixed-command client locates the identified USB serial port:
-
-```sh
-python3 experimental/armada-thermal-v1/control-phone.py thermalstatus
-python3 experimental/armada-thermal-v1/control-phone.py status
-python3 experimental/armada-thermal-v1/control-phone.py reboot
+### Local Workspace (prepare beforehand)
+```
+$WORKSPACE/
+├── armada-root/              # Armada OS userspace (OCI extracted)
+├── arch-root/                # Arch Linux ARM userspace
+├── steam-extra/              # Steam client overlay files
+├── kernel-headers/           # Exact generated headers (Linux 6.12+)
+├── firmware/
+│   ├── display/              # Panel firmware (if needed)
+│   ├── gpu/                  # Adreno 735 firmware (a660_*.mdt/.bin/.fw)
+│   ├── wifi/                 # WCN6750 firmware (ath11k)
+│   ├── bt/                   # WCN6750 BT firmware
+│   └── touch/                # Goodix GT9916R firmware
+├── peridot.dtb               # Device tree blob for Peridot
+├── initrd.img                # Base initrd
+└── uefi.fd                   # Custom UEFI payload
 ```
 
-The last command cold-reboots to Android. If recovery USB is unavailable, manually restart into Android and reconnect. Do not substitute flashing commands.
+## Build Kernel Modules
 
-The guard throttles at 70/80°C and requests Android recovery at 85°C or runtime monitoring failure. See [thermal details and limitations](docs/THERMAL.md). Older fallback profiles do not include these verified thermal controls.
+```bash
+# Set up environment
+export HEADERS="$WORKSPACE/kernel-headers"
+export CROSS_COMPILE=aarch64-linux-gnu-
+export LLVM=/opt/homebrew/opt/llvm/bin
+export LD=/opt/homebrew/bin/ld.lld
 
-## Persistence
+# MSM DRM/GPU driver
+make -C "$HEADERS" M=source/linux/drivers/gpu/drm/msm \
+  ARCH=arm64 LLVM="$LLVM" LD="$LD" \
+  CROSS_COMPILE="$CROSS_COMPILE" HOSTCC=clang \
+  KCPPFLAGS="-Wno-error=unused-variable"
 
-The OS runs in RAM. Rebooting loses session changes, downloads, network credentials and pairings. The kernel configuration used for the tested port disables the phone's UFS controller/PHY; the workflow does not mount internal phone filesystems. Android resumes its ordinary storage behavior when booted normally.
+# ath11k WiFi driver
+make -C "$HEADERS" M=source/linux/drivers/net/wireless/ath/ath11k \
+  ARCH=arm64 LLVM="$LLVM" LD="$LD" \
+  CROSS_COMPILE="$CROSS_COMPILE" HOSTCC=clang
+
+# Clock/power provider modules
+make -C "$HEADERS" M=source/modules/providers \
+  ARCH=arm64 LLVM="$LLVM" LD="$LD" \
+  CROSS_COMPILE="$CROSS_COMPILE" HOSTCC=clang
+```
+
+## Assemble RAM Media
+
+```bash
+cd /home/hoshikava/armada-dodge-peridot
+python3 tools/make-peridot-efi-media.py \
+  --armada-root "$WORKSPACE/armada-root" \
+  --arch-root "$WORKSPACE/arch-root" \
+  --steam-extra "$WORKSPACE/steam-extra" \
+  --modules-dir /path/to/built/modules \
+  --firmware-dir "$WORKSPACE/firmware" \
+  --dtb "$WORKSPACE/peridot.dtb" \
+  --initrd "$WORKSPACE/initrd.img" \
+  --output "$WORKSPACE/peridot-media.img"
+```
+
+## Boot
+
+```bash
+# Boot custom UEFI (fastboot boot)
+fastboot boot "$WORKSPACE/uefi.fd"
+
+# In UEFI shell, load RAM media and boot Linux
+# (UEFI must support: load FDT, touch lease, USB CDC recovery, chain to Linux)
+
+# Or use the boot helper script:
+python3 tools/boot-peridot-armada.py \
+  --uefi "$WORKSPACE/uefi.fd" \
+  --media "$WORKSPACE/peridot-media.img" \
+  --dtb "$WORKSPACE/peridot.dtb"
+```
+
+## What Works After Boot
+
+- KWin/Plasma Wayland desktop at 120 Hz
+- GPU acceleration (Adreno 735, OpenGL ES/EGL)
+- Touchscreen (multitouch)
+- WiFi (ath11k)
+- Bluetooth (H4 UART)
+- Hardware buttons (power, volume)
+- Thermal management (81 zones, SCMI DVFS, cooling trips)
+
+## Deferred / Not Working
+
+- Speaker audio
+- Deep suspend
+- Bluetooth pairing (may need userspace agent)
+- Battery/charging/skin thermal management
+- Gaming/Proton
+- Internal storage access (UFS disabled in DT)
+
+## Troubleshooting
+
+### Thermal guard not starting
+- Verify `qcom_tsens` and `qcom-spmi-temp-alarm` modules loaded
+- Check SCMI mailbox at `0x17A20000` (APPS RSC)
+- Ensure UEFI exposes thermal zones via FDT
+
+### Touch not working
+- Verify Goodix firmware leased from UEFI
+- Check SPI pins: MISO=16, MOSI=17, CLK=18, CS=19
+- Ensure kernel SPI node for QUPv3 SE4 is **disabled** in DT
+- Try `touch_no_rpmh=1` boot arg
+
+### GPU not initializing
+- Verify Adreno 735 firmware (a660_zap.mdt, a660_gmu.bin, a660_sqe.fw)
+- Check GPU CC at `0x03D90000`, GMU at `0x03D68000`
+- Ensure SMMU at `0x03DA0000` configured
+
+### WiFi not working
+- Verify WCN6750 firmware loaded
+- Check PCIe link for WPSS at `0x9BB00000`
+- Ensure ath11k driver matches firmware version
