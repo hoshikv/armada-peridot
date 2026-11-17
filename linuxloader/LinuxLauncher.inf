@@ -1,0 +1,33 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = LinuxLauncher
+  FILE_GUID                      = 700F8184-0A77-4BCA-B9A7-3B2FDE7D232E
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = LinuxLauncherEntryPoint
+
+[Sources]
+  LinuxLauncher.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  DevicePathLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiLib
+
+[Guids]
+  gEfiEventReadyToBootGuid
+  gFdtTableGuid
+  gLinuxEfiInitrdMediaGuid
+
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gEfiLoadFile2ProtocolGuid
+
+[Depex]
+  TRUE

@@ -1,0 +1,23 @@
+diff --git a/Platforms/Xiaomi/peridotPkg/peridot.dsc b/Platforms/Xiaomi/peridotPkg/peridot.dsc
+index 9aa3c51..507b8ba 100755
+--- a/Platforms/Xiaomi/peridotPkg/peridot.dsc
++++ b/Platforms/Xiaomi/peridotPkg/peridot.dsc
+@@ -84,3 +84,4 @@
+   # ACPI Tables
+   #
+   peridot/AcpiTables.inf
++  SiliciumPkg/Applications/LinuxLauncher/LinuxLauncher.inf
+diff --git a/Platforms/Xiaomi/peridotPkg/peridot.fdf b/Platforms/Xiaomi/peridotPkg/peridot.fdf
+index 1447dc1..813e1e7 100644
+--- a/Platforms/Xiaomi/peridotPkg/peridot.fdf
++++ b/Platforms/Xiaomi/peridotPkg/peridot.fdf
+@@ -88,6 +88,9 @@ READ_LOCK_STATUS   = TRUE
+   # RAM Manager
+   INF SiliciumPkg/Drivers/RamManagerDxe/RamManagerDxe.inf
+ 
++  # Linux Launcher
++  INF SiliciumPkg/Applications/LinuxLauncher/LinuxLauncher.inf
++
+   # SmBios
+   INF MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
+   INF SiliciumPkg/Drivers/SmBiosTableDxe/SmBiosTableDxe.inf
