@@ -4,6 +4,31 @@ RAM-boot a native Wayland desktop on Xiaomi POCO F6 / Redmi Turbo 3 (peridot, SM
 
 **No flash/install** — runs entirely in RAM; rebooting returns to Android.
 
+## Current Bring-up Path (Linux 6.12 + `fastboot boot`)
+
+Before a working UEFI payload exists, use the CI artifacts from
+[`hoshikv/armada-builder`](https://github.com/hoshikv/armada-builder).
+
+1. Download the `armada-peridot-build` artifact from the latest green run
+   (contains `peridot-boot.img`, header v2: Image + initrd + patched stock DTB).
+2. Reboot to the bootloader and boot it without flashing:
+
+   ```bash
+   adb reboot bootloader
+   fastboot boot peridot-boot.img
+   ```
+
+3. The initramfs mirrors its output to the ramoops `pmsg` region, so logs
+   survive a reboot back to Android:
+
+   ```bash
+   adb shell su -c 'mount -t pstore pstore /sys/fs/pstore || true; cat /sys/fs/pstore/pmsg-ramoops-0'
+   ```
+
+   Look for the `=== peridot initramfs start ===` / `=== peridot initramfs end ===`
+   markers and the `dmesg` dump between them. If nothing appears, the kernel
+   never reached the initramfs.
+
 ## Prerequisites
 
 ### Host (macOS tested, Linux should work)
